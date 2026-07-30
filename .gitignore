@@ -1,0 +1,31 @@
+# FrogPaper Website - Git Ignore
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+*.log
+
+# Node modules (if any tools are added later)
+node_modules/
+
+# Build outputs (if any build tools are added later)
+dist/
+build/
