@@ -21,8 +21,10 @@ Visit the live website at: `https://sunnyskyess420.github.io/frogpaper-website/`
 
 ## 📥 Download
 
-Download FrogPaper from the official releases:
-- [GitHub Releases](https://github.com/sunnyskyess420/frogpaper/releases)
+Download FrogPaper directly (Windows executable):
+- [Download FrogPaper.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.0.0/FrogPaper.exe)
+
+Or visit the [GitHub Releases page](https://github.com/sunnyskyess420/frogpaper/releases) for more options.
 
 ## ☕ Support
 
