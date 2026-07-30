@@ -8,7 +8,7 @@ FrogPaper is a free, open-source Windows desktop application that generates, cur
 
 ## 🌐 Live Site
 
-Visit the live website at: `https://YOUR_USERNAME.github.io/frogpaper-website/`
+Visit the live website at: `https://sunnyskyess420.github.io/frogpaper-website/`
 
 ## 🚀 Features
 
@@ -27,7 +27,7 @@ Download FrogPaper from the official releases:
 ## ☕ Support
 
 If you enjoy FrogPaper, consider supporting the project:
-- [Buy Me a Coffee](https://buymeacoffee.com/yourusername)
+- [Buy Me a Coffee](https://buymeacoffee.com/alively142)
 
 ## 🛠️ Tech Stack
 
