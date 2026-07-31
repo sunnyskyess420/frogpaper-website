@@ -457,18 +457,31 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.fade').forEach(el => observer.observe(el));
 
-    // Visitor Counter using free counter service
+    // Visitor Counter using free hit counter service
     async function updateVisitorCounter() {
       try {
-        // Using a simple hit counter that works with static sites
-        const response = await fetch('https://api.countapi.xyz/hit/frogpaper-website/visits');
+        // Using hit counter that works with static sites
+        const response = await fetch('https://hits.dwyl.com/user/sunnyskyess420/frogpaper-website.json');
+        if (!response.ok) throw new Error('API request failed');
+        
         const data = await response.json();
-        if (data.value) {
-          document.getElementById('visitor-counter').textContent = data.value.toLocaleString();
+        if (data.total_hits !== undefined) {
+          document.getElementById('visitor-counter').textContent = data.total_hits.toLocaleString();
+        } else {
+          throw new Error('Invalid response format');
         }
       } catch (error) {
         console.error('Failed to fetch visitor count:', error);
-        document.getElementById('visitor-counter').textContent = 'N/A';
+        // Fallback: Use local storage to at least show incremental counts for the current user
+        try {
+          let localCount = parseInt(localStorage.getItem('frogpaper-visits') || '0');
+          localCount++;
+          localStorage.setItem('frogpaper-visits', localCount.toString());
+          document.getElementById('visitor-counter').textContent = localCount + '+';
+        } catch (localError) {
+          console.error('Local storage also failed:', localError);
+          document.getElementById('visitor-counter').textContent = 'N/A';
+        }
       }
     }
 
