@@ -6,16 +6,16 @@
   <title>FrogPaper — AI Wallpaper Studio for Windows</title>
   <meta name="description" content="A cozy AI wallpaper studio that generates, curates, and rotates stunning wallpapers right from your desktop. No browser. No server. Just imagination." />
   <meta property="og:title" content="FrogPaper — AI Wallpaper Studio for Windows" />
-<meta property="og:description" content="A cozy AI wallpaper studio that generates, curates, and rotates stunning wallpapers right from your desktop. No browser. No server. Just imagination." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://sunnyskyess420.github.io/frogpaper-website/" />
-<meta property="og:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="FrogPaper — AI Wallpaper Studio for Windows" />
-<meta name="twitter:description" content="A cozy AI wallpaper studio that generates, curates, and rotates stunning wallpapers right from your desktop." />
-<meta name="twitter:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg" />
+  <meta property="og:description" content="A cozy AI wallpaper studio that generates, curates, and rotates stunning wallpapers right from your desktop. No browser. No server. Just imagination." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sunnyskyess420.github.io/frogpaper-website/" />
+  <meta property="og:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FrogPaper — AI Wallpaper Studio for Windows" />
+  <meta name="twitter:description" content="A cozy AI wallpaper studio that generates, curates, and rotates stunning wallpapers right from your desktop." />
+  <meta name="twitter:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg" />
   <style>
     /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,14 +54,6 @@
       max-width: 72rem; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 1.5rem; height: 4rem;
-    }
-    @media (max-width: 640px) {
-      .nav-inner { padding: 0 1rem; }
-      .nav-logo { font-size: 1.125rem; }
-      .nav-actions { gap: 0.75rem; }
-      .nav-donate span { display: none; }
-      .nav-donate { padding: 0.5rem; }
-      .nav-download { padding: 0.5rem 0.75rem; font-size: 0.8125rem; }
     }
     @media (max-width: 640px) {
       .nav-inner { padding: 0 1rem; }
@@ -206,6 +198,121 @@
     .feature-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
     .feature-card p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.7; }
 
+    /* ── New Badge ── */
+    .badge-new {
+      display: inline-block; background: var(--frog); color: var(--surface);
+      font-size: 0.625rem; font-weight: 700; padding: 0.125rem 0.5rem;
+      border-radius: 999px; margin-left: 0.5rem; text-transform: uppercase;
+      letter-spacing: 0.05em; vertical-align: middle;
+    }
+
+    /* ── Downloads Section ── */
+    .downloads-grid {
+      display: grid; gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) { .downloads-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .download-card {
+      background: var(--surface-light); border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 1rem; padding: 2rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+    }
+    .download-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px -8px rgba(74,222,128,0.12);
+      border-color: rgba(74,222,128,0.35);
+    }
+    .download-card.latest {
+      border-color: rgba(74,222,128,0.3);
+    }
+    .download-card.latest::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--frog), var(--frog-dark));
+      border-radius: 1rem 1rem 0 0;
+    }
+    .download-version {
+      font-size: 0.75rem; font-weight: 600; color: var(--frog);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem;
+    }
+    .download-card h3 {
+      font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;
+    }
+    .download-card p {
+      color: var(--text-secondary); font-size: 0.875rem; line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .download-features {
+      list-style: none; padding: 0; margin: 0 0 1.5rem 0;
+    }
+    .download-features li {
+      color: var(--text-secondary); font-size: 0.8125rem;
+      padding: 0.25rem 0; padding-left: 1.25rem; position: relative;
+    }
+    .download-features li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.625rem;
+      width: 0.375rem; height: 0.375rem;
+      background: var(--frog); border-radius: 50%;
+    }
+    .btn-download {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--frog); color: var(--surface);
+      font-weight: 700; padding: 0.75rem 1.5rem; border-radius: 0.625rem;
+      font-size: 0.9375rem; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px -4px rgba(74,222,128,0.35);
+    }
+    .btn-download.secondary {
+      background: transparent; color: var(--frog);
+      border: 1px solid rgba(74,222,128,0.3);
+    }
+    .btn-download.secondary:hover {
+      border-color: rgba(74,222,128,0.6);
+      background: rgba(74,222,128,0.05);
+    }
+    .btn-download svg { flex-shrink: 0; }
+    .download-meta {
+      margin-top: 1rem; font-size: 0.75rem; color: var(--text-secondary);
+      opacity: 0.7;
+    }
+
+    /* ── Changelog ── */
+    .changelog { max-width: 48rem; margin: 0 auto; }
+    .changelog-entry {
+      border-left: 2px solid rgba(74,222,128,0.2);
+      padding: 0 0 2rem 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .changelog-entry:last-child { border-left-color: transparent; margin-bottom: 0; padding-bottom: 0; }
+    .changelog-entry::before {
+      content: '';
+      position: absolute; left: -6px; top: 0.25rem;
+      width: 10px; height: 10px;
+      background: var(--frog); border-radius: 50%;
+    }
+    .changelog-entry h3 {
+      font-size: 1rem; font-weight: 700; color: var(--frog);
+      margin-bottom: 0.5rem;
+    }
+    .changelog-entry h3 span {
+      color: var(--text-primary); font-weight: 600;
+    }
+    .changelog-entry ul {
+      list-style: none; padding: 0;
+    }
+    .changelog-entry ul li {
+      color: var(--text-secondary); font-size: 0.875rem;
+      padding: 0.2rem 0; padding-left: 1rem; position: relative;
+    }
+    .changelog-entry ul li::before {
+      content: '\2013'; position: absolute; left: 0; color: rgba(74,222,128,0.4);
+    }
+
     /* ── Steps ── */
     .steps-grid { display: grid; gap: 3rem; grid-template-columns: 1fr; }
     @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -318,7 +425,7 @@
           <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M2 21V9h2v12H2Zm18-11c0-1.66-1.34-3-3-3h-1V5c0-1.66-1.34-3-3-3h-2c-1.66 0-3 1.34-3 3v2H7c-1.66 0-3 1.34-3 3v6c0 1.66 1.34 3 3 3h10c1.66 0 3-1.34 3-3v-6Zm-9-4h2c.55 0 1 .45 1 1v2h-4V5c0-.55.45-1 1-1Zm7 10c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-6c0-.55.45-1 1-1h10c.55 0 1 .45 1 1v6Z"/></svg>
           Donate
         </a>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.0.2/FrogPaper-Setup-1.0.2.exe" target="_blank" rel="noopener noreferrer" class="nav-download">Download</a>
+        <a href="#downloads" class="nav-download">Download</a>
       </div>
     </nav>
   </header>
@@ -333,12 +440,12 @@
         <h1>Generate. Curate. Rotate. <span>Beautifully.</span></h1>
         <p class="hero-sub">
           FrogPaper is a cozy desktop studio that combines prompt building,
-          AI image generation, style filtering, and automatic wallpaper
+          AI image generation, style filtering, portrait export, and automatic wallpaper
           rotation — all in one window. No browser. No server. Just your
           imagination.
         </p>
         <div class="hero-buttons">
-          <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.0.2/FrogPaper-Setup-1.0.2.exe" target="_blank" rel="noopener noreferrer" class="btn-primary">Download for Free</a>
+          <a href="#downloads" class="btn-primary">Download for Free</a>
           <a href="https://github.com/sunnyskyess420/frogpaper" target="_blank" rel="noopener noreferrer" class="btn-secondary">View on GitHub</a>
         </div>
         <div class="screenshot-wrap">
@@ -372,7 +479,7 @@
           <div class="feature-icon">
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21ZM16.5 7.5h.008v.008H16.5V7.5Z"/></svg>
           </div>
-          <h3>Gallery & Curation</h3>
+          <h3>Gallery &amp; Curation</h3>
           <p>7 gallery views with favorites, tagging, sorting, and filtering. Browse, organize, and manage your entire wallpaper collection from one panel.</p>
         </div>
         <div class="feature-card">
@@ -381,6 +488,13 @@
           </div>
           <h3>19 Style Filters</h3>
           <p>Transform any wallpaper with local artistic filters — Oil Painting, Cyberpunk Neon, Gouache, Vaporwave, and more. All processed on your machine, no cloud needed.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>
+          </div>
+          <h3>Portrait Export <span class="badge-new">New</span></h3>
+          <p>Bulk export all portrait (9:16) images to any destination — SD cards, USB drives, or local folders. Perfect for getting wallpapers onto your phone.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">
@@ -393,9 +507,90 @@
           <div class="feature-icon">
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
           </div>
-          <h3>Fully Private & Local</h3>
+          <h3>Fully Private &amp; Local</h3>
           <p>All images stay on your machine. Only text prompts are sent to your chosen AI provider. No images, filenames, or personal data ever leave your PC.</p>
         </div>
+      </div>
+    </section>
+
+    <!-- Downloads -->
+    <section class="section fade" id="downloads">
+      <h2 class="section-title">Downloads</h2>
+      <p class="section-sub">Free and open source. Pick the version that's right for you.</p>
+      <div class="downloads-grid">
+
+        <!-- v1.1.0 -->
+        <div class="download-card latest">
+          <p class="download-version">Latest &mdash; v1.1.0</p>
+          <h3>Portrait Export Feature</h3>
+          <p>Bulk export portrait images to SD cards, USB drives, or any folder. Includes all v1.0.2 features.</p>
+          <ul class="download-features">
+            <li>Bulk portrait (9:16) export to any destination</li>
+            <li>Export to SD cards, USB drives, local folders</li>
+            <li>Export button in all 7 gallery views</li>
+            <li>Automatic duplicate filename handling</li>
+            <li>Everything from v1.0.2 included</li>
+          </ul>
+          <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.0/FrogPaper-Setup-1.1.0.exe" target="_blank" rel="noopener noreferrer" class="btn-download">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+            Download v1.1.0 Installer
+          </a>
+          <div class="download-meta">Windows &bull; Installer (.exe) &bull; Free</div>
+        </div>
+
+        <!-- v1.0.2 -->
+        <div class="download-card">
+          <p class="download-version">Previous &mdash; v1.0.2</p>
+          <h3>Gallery &amp; Style System</h3>
+          <p>The original feature-packed release with gallery, style filters, text overlays, tagging, and slideshow.</p>
+          <ul class="download-features">
+            <li>7 gallery views with sorting &amp; filtering</li>
+            <li>19 artistic style filters</li>
+            <li>Text overlay system</li>
+            <li>Tag system &amp; metadata management</li>
+            <li>Slideshow automation &amp; sessions</li>
+          </ul>
+          <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.0.2/FrogPaper-Setup-1.0.2.exe" target="_blank" rel="noopener noreferrer" class="btn-download secondary">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+            Download v1.0.2 Installer
+          </a>
+          <div class="download-meta">Windows &bull; Installer (.exe) &bull; Free</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Changelog -->
+    <section class="section fade">
+      <h2 class="section-title">What's New</h2>
+      <div class="changelog" style="margin-top:3rem;">
+
+        <div class="changelog-entry">
+          <h3>v1.1.0 <span>&mdash; Portrait Export Feature</span></h3>
+          <ul>
+            <li>Bulk export all portrait (9:16) images from every folder</li>
+            <li>Choose any export destination: SD cards, USB drives, local folders</li>
+            <li>Export button available in all 7 gallery views</li>
+            <li>Progress feedback, error handling, and MTP device guidance</li>
+            <li>Automatic duplicate filename handling</li>
+            <li>Direct copy to destination with no intermediate folders</li>
+            <li>Fixed gallery card clicking bug (ValueError)</li>
+            <li>Fixed view switching to preserve export button visibility</li>
+          </ul>
+        </div>
+
+        <div class="changelog-entry">
+          <h3>v1.0.2 <span>&mdash; Gallery &amp; Style System</span></h3>
+          <ul>
+            <li>Gallery system with 7 views and sorting</li>
+            <li>Style transfer with 19 artistic filters</li>
+            <li>Text overlay system with 7 positions</li>
+            <li>Tag system and metadata management</li>
+            <li>Slideshow automation with fullscreen-pause detection</li>
+            <li>Session management and recipe library</li>
+          </ul>
+        </div>
+
       </div>
     </section>
 
@@ -410,13 +605,13 @@
         </div>
         <div class="step">
           <span class="step-num">02</span>
-          <h3>Generate & Curate</h3>
+          <h3>Generate &amp; Curate</h3>
           <p>Hit Generate and watch your wallpaper come to life. Apply style filters, add text overlays, tag favorites, and build your personal collection across 7 gallery views.</p>
         </div>
         <div class="step">
           <span class="step-num">03</span>
-          <h3>Set & Forget</h3>
-          <p>Apply any image as your Windows wallpaper with one click, or let the slideshow rotate through your collection automatically. It even pauses when you’re in a fullscreen app.</p>
+          <h3>Set &amp; Forget</h3>
+          <p>Apply any image as your Windows wallpaper with one click, or let the slideshow rotate through your collection automatically. It even pauses when you're in a fullscreen app.</p>
         </div>
       </div>
     </section>
@@ -426,7 +621,7 @@
       <div class="cta-box">
         <h2>Ready to Make Your Desktop <span>Unforgettable</span>?</h2>
         <p>FrogPaper is free and open source. Download it now and start generating stunning wallpapers in minutes.</p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.0.2/FrogPaper-Setup-1.0.2.exe" target="_blank" rel="noopener noreferrer" class="btn-primary">Download FrogPaper</a>
+        <a href="#downloads" class="btn-primary">Download FrogPaper</a>
       </div>
     </section>
 
@@ -471,7 +666,6 @@
     // Visitor Counter using free hit counter service
     async function updateVisitorCounter() {
       try {
-        // Using hit counter that works with static sites
         const response = await fetch('https://hits.dwyl.com/user/sunnyskyess420/frogpaper-website.json');
         if (!response.ok) throw new Error('API request failed');
         
@@ -483,7 +677,6 @@
         }
       } catch (error) {
         console.error('Failed to fetch visitor count:', error);
-        // Fallback: Use local storage to at least show incremental counts for the current user
         try {
           let localCount = parseInt(localStorage.getItem('frogpaper-visits') || '0');
           localCount++;
@@ -502,7 +695,6 @@
         const response = await fetch('https://api.github.com/repos/sunnyskyess420/frogpaper/releases/tags/v1.0.2');
         const data = await response.json();
         if (data.assets) {
-          // Count downloads specifically from the installer
           const installer = data.assets.find(asset => asset.name === 'FrogPaper-Setup-1.0.2.exe');
           const downloadCount = installer ? installer.download_count : 0;
           document.getElementById('download-counter').textContent = downloadCount.toLocaleString();
