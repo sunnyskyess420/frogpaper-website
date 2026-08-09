@@ -688,6 +688,28 @@
       </div>
     </section>
 
+    <!-- Community Forum -->
+    <section class="section fade" id="community">
+      <h2 class="section-title">Community</h2>
+      <p class="section-sub">Have a question, idea, or just want to show off your wallpapers? Drop a comment below.</p>
+      <div class="community-box">
+        <div id="disqus_thread"></div>
+        <script>
+          var disqus_config = function () {
+            this.page.url = 'https://sunnyskyess420.github.io/frogpaper-website/';
+            this.page.identifier = 'frogpaper-home';
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://frogpaper.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="section fade">
       <div class="cta-box">
@@ -725,28 +747,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Community Forum -->
-  <section class="section fade" id="community">
-    <h2 class="section-title">Community</h2>
-    <p class="section-sub">Have a question, idea, or just want to show off your wallpapers? Drop a comment below.</p>
-    <div class="community-box">
-      <div id="disqus_thread"></div>
-      <script>
-        var disqus_config = function () {
-          this.page.url = 'https://sunnyskyess420.github.io/frogpaper-website/';
-          this.page.identifier = 'frogpaper-home';
-        };
-        (function() {
-          var d = document, s = d.createElement('script');
-          s.src = 'https://frogpaper.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-        })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-  </section>
 
   <script>
     // Fade-in on scroll
