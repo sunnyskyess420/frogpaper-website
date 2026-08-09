@@ -324,6 +324,8 @@
     .roadmap-card p{color:var(--text-secondary);font-size:.875rem;line-height:1.7}
     .badge-soon{display:inline-block;background:rgba(74,222,128,.15);color:var(--frog);font-size:.625rem;font-weight:700;padding:.125rem .5rem;border-radius:999px;text-transform:uppercase;letter-spacing:.05em;vertical-align:middle}
     .phase-tag{display:inline-block;font-size:.6875rem;font-weight:600;color:var(--text-secondary);background:rgba(255,255,255,.05);padding:.125rem .5rem;border-radius:999px;margin-bottom:.75rem}
+    .giscus-section{max-width:72rem;margin:0 auto;padding:0 1.5rem 6rem}
+    .giscus-wrapper{max-width:48rem;margin:0 auto;border-radius:1rem;overflow:hidden;background:var(--surface-light);border:1px solid rgba(255,255,255,.05);padding:1.5rem}
 
     /* ── Steps ── */
     .steps-grid { display: grid; gap: 3rem; grid-template-columns: 1fr; }
@@ -721,6 +723,29 @@
       </div>
     </div>
   </footer>
+
+  <!-- Community Forum -->
+  <section class="section fade" id="community">
+    <h2 class="section-title">Community</h2>
+    <p class="section-sub">Have a question, idea, or just want to show off your wallpapers? Drop a comment below.</p>
+    <div class="giscus-wrapper">
+      <script src="https://giscus.app/client.js"
+              data-repo="sunnyskyess420/frogpaper-website"
+              data-repo-id="R_kgDOTnyhug"
+              data-category="General"
+              data-category-id="DIC_kwDOTnyhus4DC-hS"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="bottom"
+              data-theme="dark"
+              data-lang="en"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </div>
+  </section>
 
   <script>
     // Fade-in on scroll
