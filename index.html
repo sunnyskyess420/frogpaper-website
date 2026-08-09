@@ -326,6 +326,8 @@
     .phase-tag{display:inline-block;font-size:.6875rem;font-weight:600;color:var(--text-secondary);background:rgba(255,255,255,.05);padding:.125rem .5rem;border-radius:999px;margin-bottom:.75rem}
     .giscus-section{max-width:72rem;margin:0 auto;padding:0 1.5rem 6rem}
     .giscus-wrapper{max-width:48rem;margin:0 auto;border-radius:1rem;overflow:hidden;background:var(--surface-light);border:1px solid rgba(255,255,255,.05);padding:1.5rem}
+    #disqus_thread{max-width:48rem;margin:0 auto}
+    .community-box{max-width:48rem;margin:0 auto;border-radius:1rem;overflow:hidden;background:var(--surface-light);border:1px solid rgba(255,255,255,.05);padding:1.5rem}
 
     /* ── Steps ── */
     .steps-grid { display: grid; gap: 3rem; grid-template-columns: 1fr; }
@@ -728,22 +730,21 @@
   <section class="section fade" id="community">
     <h2 class="section-title">Community</h2>
     <p class="section-sub">Have a question, idea, or just want to show off your wallpapers? Drop a comment below.</p>
-    <div class="giscus-wrapper">
-      <script src="https://giscus.app/client.js"
-              data-repo="sunnyskyess420/frogpaper-website"
-              data-repo-id="R_kgDOTnyhug"
-              data-category="General"
-              data-category-id="DIC_kwDOTnyhus4DC-hS"
-              data-mapping="pathname"
-              data-strict="0"
-              data-reactions-enabled="1"
-              data-emit-metadata="0"
-              data-input-position="bottom"
-              data-theme="dark"
-              data-lang="en"
-              crossorigin="anonymous"
-              async>
+    <div class="community-box">
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https://sunnyskyess420.github.io/frogpaper-website/';
+          this.page.identifier = 'frogpaper-home';
+        };
+        (function() {
+          var d = document, s = d.createElement('script');
+          s.src = 'https://frogpaper.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
       </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
   </section>
 
