@@ -915,16 +915,20 @@
       }
     }
 
-    // Download Counter using GitHub API
+    // Download Counter using GitHub API — sums all releases
     async function updateDownloadCounter() {
       try {
-        const response = await fetch('https://api.github.com/repos/sunnyskyess420/frogpaper/releases/tags/v1.0.2');
-        const data = await response.json();
-        if (data.assets) {
-          const installer = data.assets.find(asset => asset.name === 'FrogPaper-Setup-1.0.2.exe');
-          const downloadCount = installer ? installer.download_count : 0;
-          document.getElementById('download-counter').textContent = downloadCount.toLocaleString();
+        const tags = ['v1.0.2', 'v1.1.0', 'v1.1.1'];
+        let total = 0;
+        for (const tag of tags) {
+          const response = await fetch(`https://api.github.com/repos/sunnyskyess420/frogpaper/releases/tags/${tag}`);
+          const data = await response.json();
+          if (data.assets) {
+            const installer = data.assets.find(asset => asset.name.endsWith('.exe') && asset.name.includes('Setup'));
+            if (installer) total += installer.download_count;
+          }
         }
+        document.getElementById('download-counter').textContent = total.toLocaleString();
       } catch (error) {
         console.error('Failed to fetch download count:', error);
         document.getElementById('download-counter').textContent = 'N/A';
