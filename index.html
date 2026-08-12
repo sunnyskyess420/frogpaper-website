@@ -497,6 +497,91 @@
       .stat-value { font-size: 1rem; }
     }
 
+    /* ── Tutorials Section ── */
+    .tutorials-grid {
+      display: grid; gap: 1.25rem;
+      grid-template-columns: 1fr;
+      max-width: 56rem; margin: 0 auto;
+    }
+    @media (min-width: 768px) { .tutorials-grid { grid-template-columns: repeat(2, 1fr); } }
+    .tutorial-card {
+      background: var(--surface-light); border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 1rem; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .tutorial-card:hover {
+      border-color: rgba(74,222,128,0.3);
+    }
+    .tutorial-card.open {
+      border-color: rgba(74,222,128,0.4);
+      box-shadow: 0 12px 40px -8px rgba(74,222,128,0.12);
+    }
+    .tutorial-header {
+      padding: 1.25rem 1.5rem; cursor: pointer;
+      display: flex; align-items: flex-start; gap: 1rem;
+      transition: background 0.2s;
+    }
+    .tutorial-header:hover { background: rgba(255,255,255,0.02); }
+    .tutorial-icon {
+      flex-shrink: 0; width: 2.5rem; height: 2.5rem; border-radius: 0.625rem;
+      background: rgba(74,222,128,0.1); color: var(--frog);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; transition: background 0.25s, transform 0.25s;
+    }
+    .tutorial-card.open .tutorial-icon {
+      background: rgba(74,222,128,0.2);
+      transform: scale(1.05);
+    }
+    .tutorial-info { flex: 1; min-width: 0; }
+    .tutorial-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .tutorial-info p { color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.5; }
+    .tutorial-toggle {
+      flex-shrink: 0; width: 1.5rem; height: 1.5rem;
+      color: var(--text-secondary); transition: transform 0.3s, color 0.3s;
+    }
+    .tutorial-card.open .tutorial-toggle { transform: rotate(180deg); color: var(--frog); }
+    .tutorial-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .tutorial-card.open .tutorial-body {
+      max-height: 2000px;
+    }
+    .tutorial-steps {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .tutorial-step {
+      padding: 0.75rem 0 0.75rem 2rem;
+      position: relative;
+    }
+    .tutorial-step + .tutorial-step {
+      border-top: 1px solid rgba(255,255,255,0.03);
+    }
+    .tutorial-step::before {
+      content: attr(data-step);
+      position: absolute; left: 0; top: 0.75rem;
+      font-size: 0.6875rem; font-weight: 700;
+      color: var(--frog); opacity: 0.6;
+      width: 1.5rem; text-align: right;
+    }
+    .tutorial-step h4 {
+      font-size: 0.875rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    .tutorial-step p {
+      color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.65;
+    }
+    .tutorial-badge {
+      display: inline-block; font-size: 0.6875rem; font-weight: 600;
+      padding: 0.125rem 0.5rem; border-radius: 999px;
+      margin-left: 0.5rem; vertical-align: middle;
+      letter-spacing: 0.03em;
+    }
+    .tutorial-badge.beginner { background: rgba(74,222,128,0.15); color: var(--frog); }
+    .tutorial-badge.intermediate { background: rgba(96,165,250,0.15); color: #60a5fa; }
+    .tutorial-badge.advanced { background: rgba(251,146,60,0.15); color: #fb923c; }
+
     /* ── Fade-in animation ── */
     .fade { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
     .fade.visible { opacity: 1; transform: translateY(0); }
@@ -516,6 +601,7 @@
           <svg width="16" height="16" fill="#FFDD00" viewBox="0 0 24 24"><path d="M18.5 3H6c-1.1 0-2 .9-2 2v1h17V5c0-1.1-.9-2-2-2zm-14 4v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7h-14zm4 9.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-6c0-.28.22-.5.5-.5s.5.22.5.5v6zm3 0c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-6c0-.28.22-.5.5-.5s.5.22.5.5v6zm3 0c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-6c0-.28.22-.5.5-.5s.5.22.5.5v6zM20 3.5c0-.28-.22-.5-.5-.5S19 3.22 19 3.5V6h1V3.5zM5 3.5c0-.28-.22-.5-.5-.5S4 3.22 4 3.5V6h1V3.5z"/></svg>
           <span>Buy me a coffee</span>
         </a>
+        <a href="#tutorials" class="nav-download">Tutorials</a>
         <a href="#downloads" class="nav-download">Download</a>
       </div>
     </nav>
@@ -744,6 +830,107 @@
       </div>
     </section>
 
+    <!-- Tutorials -->
+    <section class="section fade" id="tutorials">
+      <h2 class="section-title">Tutorials</h2>
+      <p class="section-sub">Step-by-step guides to get the most out of FrogPaper. Click any tutorial to expand it.</p>
+      <div class="tutorials-grid">
+
+        <!-- Quick Start Guide -->
+        <div class="tutorial-card">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-icon">
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/></svg>
+            </div>
+            <div class="tutorial-info">
+              <h3>Quick Start Guide <span class="tutorial-badge beginner">Beginner</span></h3>
+              <p>Learn the basics of FrogPaper in 5 minutes</p>
+            </div>
+            <svg class="tutorial-toggle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+          </div>
+          <div class="tutorial-body"><div class="tutorial-steps">
+            <div class="tutorial-step" data-step="1"><h4>Welcome to FrogPaper!</h4><p>FrogPaper is your AI-powered wallpaper studio. Let's get you started with the basics in just 5 minutes.</p></div>
+            <div class="tutorial-step" data-step="2"><h4>The Prompt Builder</h4><p>On the left side, you'll find the Prompt Builder. This is where you create your wallpaper descriptions using dropdown menus for different artistic elements.</p></div>
+            <div class="tutorial-step" data-step="3"><h4>Choose Your Subject</h4><p>Start by selecting a subject from the dropdown. This could be anything from a frog to a mountain to a cityscape.</p></div>
+            <div class="tutorial-step" data-step="4"><h4>Add Artistic Style</h4><p>Select artistic modes, lighting, colors, and settings to define your wallpaper's style. Try Digital Art mode with Dramatic Lighting!</p></div>
+            <div class="tutorial-step" data-step="5"><h4>Generate Your Wallpaper</h4><p>Click the Generate button to create your wallpaper using AI. It usually takes 10-30 seconds depending on your provider.</p></div>
+            <div class="tutorial-step" data-step="6"><h4>Preview and Apply</h4><p>Your generated wallpaper appears in the center preview. Click Set as Wallpaper to apply it to your desktop!</p></div>
+            <div class="tutorial-step" data-step="7"><h4>Save Your Favorites</h4><p>Use the gallery on the right to save, organize, and manage your wallpaper collection. You can create multiple galleries!</p></div>
+          </div></div>
+        </div>
+
+        <!-- Feature Tour -->
+        <div class="tutorial-card">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-icon">
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75 15 3.75m-6 3 6-3m-6 3v6m6-9v12M3 9.75 9 6.75m-6 3 6-3m-6 3v6m6-9v12m9-3-6 3m6-3-6 3m6-3v6m-6-9v12"/></svg>
+            </div>
+            <div class="tutorial-info">
+              <h3>Feature Tour <span class="tutorial-badge beginner">Beginner</span></h3>
+              <p>Explore all major features of FrogPaper</p>
+            </div>
+            <svg class="tutorial-toggle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+          </div>
+          <div class="tutorial-body"><div class="tutorial-steps">
+            <div class="tutorial-step" data-step="1"><h4>Prompt Builder</h4><p>The left panel contains the structured prompt builder with 6 dropdown categories: Subject, Mode, Lighting, Color, Setting, and Atmosphere.</p></div>
+            <div class="tutorial-step" data-step="2"><h4>Preview Area</h4><p>The center area shows your generated wallpaper with live preview and style filter controls.</p></div>
+            <div class="tutorial-step" data-step="3"><h4>Gallery System</h4><p>The right panel contains 7 different gallery views including Favorites, Recent, and custom collections for organizing your wallpapers.</p></div>
+            <div class="tutorial-step" data-step="4"><h4>Style Filters</h4><p>Apply 19 different artistic filters like Oil Painting, Cyberpunk Neon, or Vaporwave to transform your wallpapers.</p></div>
+            <div class="tutorial-step" data-step="5"><h4>Settings Panel</h4><p>Configure AI providers, API tokens, slideshow timing, startup options, and app appearance.</p></div>
+            <div class="tutorial-step" data-step="6"><h4>System Tray</h4><p>Minimize to tray for background operation. Right-click the tray icon for quick access to wallpaper controls.</p></div>
+            <div class="tutorial-step" data-step="7"><h4>Slideshow Mode</h4><p>Set up automatic wallpaper rotation with customizable timing from 1-60 minutes.</p></div>
+            <div class="tutorial-step" data-step="8"><h4>Recipe Library</h4><p>Save and reuse your favorite prompt combinations as recipes for quick access.</p></div>
+          </div></div>
+        </div>
+
+        <!-- Interactive Practice -->
+        <div class="tutorial-card">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-icon">
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42"/></svg>
+            </div>
+            <div class="tutorial-info">
+              <h3>Interactive Practice <span class="tutorial-badge beginner">Beginner</span></h3>
+              <p>Generate your first wallpaper with guided assistance</p>
+            </div>
+            <svg class="tutorial-toggle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+          </div>
+          <div class="tutorial-body"><div class="tutorial-steps">
+            <div class="tutorial-step" data-step="1"><h4>Let's Create Together!</h4><p>Follow each step and we'll help you create your first wallpaper from scratch.</p></div>
+            <div class="tutorial-step" data-step="2"><h4>Step 1: Choose a Subject</h4><p>Select a subject from the Subject dropdown. Try something like peaceful forest or sunset beach.</p></div>
+            <div class="tutorial-step" data-step="3"><h4>Step 2: Pick an Art Mode</h4><p>Choose an artistic mode. Digital Art or Oil Painting work great for beginners!</p></div>
+            <div class="tutorial-step" data-step="4"><h4>Step 3: Add Lighting</h4><p>Select lighting to set the mood. Golden Hour or Dramatic Lighting create beautiful effects.</p></div>
+            <div class="tutorial-step" data-step="5"><h4>Step 4: Choose Colors</h4><p>Pick a color palette. Try Vibrant for eye-catching results or Monochrome for artistic effects.</p></div>
+            <div class="tutorial-step" data-step="6"><h4>Step 5: Generate!</h4><p>Now click the Generate button and watch your creation come to life!</p></div>
+          </div></div>
+        </div>
+
+        <!-- Model Setup Guide -->
+        <div class="tutorial-card">
+          <div class="tutorial-header" onclick="toggleTutorial(this)">
+            <div class="tutorial-icon">
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>
+            </div>
+            <div class="tutorial-info">
+              <h3>Model Setup Guide <span class="tutorial-badge intermediate">Intermediate</span></h3>
+              <p>Configure AI providers and set up models</p>
+            </div>
+            <svg class="tutorial-toggle" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+          </div>
+          <div class="tutorial-body"><div class="tutorial-steps">
+            <div class="tutorial-step" data-step="1"><h4>AI Provider Setup</h4><p>FrogPaper supports multiple AI providers. Let's configure them for the best experience.</p></div>
+            <div class="tutorial-step" data-step="2"><h4>Option 1: Pollinations.ai (Free)</h4><p>The easiest option! Pollinations.ai is completely free and requires no setup. Just select it from the provider dropdown and you're ready to generate.</p></div>
+            <div class="tutorial-step" data-step="3"><h4>Option 2: Cloudflare Workers AI</h4><p>You'll need an API token from dash.cloudflare.com and your Account ID. Go to Workers AI, click Use REST API, and create a token.</p></div>
+            <div class="tutorial-step" data-step="4"><h4>Setting Up Cloudflare</h4><p>In Settings, select Cloudflare Workers AI from the provider dropdown. Enter your token in the Cloudflare Token field and your Account ID.</p></div>
+            <div class="tutorial-step" data-step="5"><h4>Option 3: HuggingFace</h4><p>HuggingFace offers access to many models. You'll need an API token from huggingface.co under Settings, then Access Tokens.</p></div>
+            <div class="tutorial-step" data-step="6"><h4>Choosing the Right Model</h4><p>FLUX models are great for realistic images, SDXL models work well for artistic styles. Experiment to find your favorites!</p></div>
+            <div class="tutorial-step" data-step="7"><h4>Testing Your Setup</h4><p>After configuring your provider and token, try generating a simple wallpaper. If it works, you're all set! If you see errors, try the free Pollinations.ai option.</p></div>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- Community Forum -->
     <section class="section fade" id="community">
       <h2 class="section-title">Community</h2>
@@ -933,6 +1120,15 @@
         console.error('Failed to fetch download count:', error);
         document.getElementById('download-counter').textContent = 'N/A';
       }
+    }
+
+    // Tutorial accordion toggle
+    function toggleTutorial(header) {
+      const card = header.closest('.tutorial-card');
+      const wasOpen = card.classList.contains('open');
+      // Close all others
+      document.querySelectorAll('.tutorial-card.open').forEach(c => c.classList.remove('open'));
+      if (!wasOpen) card.classList.add('open');
     }
 
     // Initialize counters
