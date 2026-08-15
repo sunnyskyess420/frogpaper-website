@@ -1,61 +1,42 @@
 # FrogPaper Website
 
-Official landing page for FrogPaper - the AI Wallpaper Studio for Windows.
-
-## 🐸 About FrogPaper
-
-FrogPaper is a free, open-source Windows desktop application that generates, curates, and rotates AI-powered wallpapers. It combines prompt building, AI image generation, style filtering, and automatic wallpaper rotation — all in one window.
+Official landing page for [FrogPaper](https://github.com/sunnyskyess420/frogpaper) — the AI Wallpaper Studio for Windows.
 
 ## 🌐 Live Site
 
-Visit the live website at: `https://sunnyskyess420.github.io/frogpaper-website/`
+**[sunnyskyess420.github.io/frogpaper-website](https://sunnyskyess420.github.io/frogpaper-website/)**
 
-## 🚀 Features
+## 🐸 About FrogPaper
 
-- **AI Image Generation** - Connects to Pollinations.ai, Cloudflare Workers AI, and HuggingFace
-- **Structured Prompt Builder** - 6 dropdown categories with negative prompt presets
-- **Gallery & Curation** - 7 gallery views with favorites, tagging, and filtering
-- **19 Style Filters** - Transform wallpapers with local artistic filters
-- **Auto-Rotation Slideshow** - Automatic wallpaper rotation with smart features
-- **Fully Private & Local** - All images stay on your machine
+FrogPaper is a free, open-source Windows desktop application that generates, curates, and rotates AI-powered wallpapers. It combines prompt building, AI image generation, style filtering, and automatic wallpaper rotation — all in one window, no browser needed.
 
-## 📥 Download
+## ✨ Landing Page Features
 
-Download FrogPaper directly (Windows installer):
-- [Download FrogPaper Installer](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.0.2/FrogPaper-Setup-1.0.2.exe)
+- **Dark theme** with green accent design system
+- **Wallpaper carousel** with 15 sample images and lightbox
+- **Live stats bar** — visit counter, GitHub stars, forks, and download count
+- **Feature grid** with scroll-triggered animations
+- **Comparison table** — FrogPaper vs browser AI vs wallpaper apps
+- **Download section** — direct installer links with total download counter
+- **Changelog** and privacy section
+- **Fully responsive** — mobile, tablet, and desktop
 
-Or visit the [GitHub Releases page](https://github.com/sunnyskyess420/frogpaper/releases) for more options.
+## 📥 Downloads
 
-## ☕ Support
-
-If you enjoy FrogPaper, consider supporting the project:
-- [Buy Me a Coffee](https://buymeacoffee.com/alively142)
+| Version | What's New | Link |
+|---------|-----------|------|
+| **v1.1.1** (latest) | Update checker + all v1.1.0 features | [FrogPaper-Setup-1.1.1.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.1/FrogPaper-Setup-1.1.1.exe) |
+| v1.1.0 | Portrait bulk export (9:16) | [FrogPaper-Setup-1.1.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.0/FrogPaper-Setup-1.1.0.exe) |
+| v1.0.2 | Gallery, 19 style filters, tagging, slideshow | [Releases page](https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.0.2) |
 
 ## 🛠️ Tech Stack
 
-- **Single-file HTML** - No build tools required
-- **Pure CSS** - No external frameworks
-- **Responsive Design** - Mobile-first approach
-- **Dark Theme** - Premium dark theme with green accents
+- **Next.js 16** (static export)
+- **TypeScript**
+- **Tailwind CSS v4**
+- **Lucide React** icons
+- **GitHub API** for live stats (stars, forks, downloads)
+- **CounterAPI** for site visit tracking
+- Deployed to **GitHub Pages** at `/frogpaper-website`
 
-## 📝 Development
-
-To make changes to the website:
-
-1. Clone this repository
-2. Edit `index.html` 
-3. Open the file in a browser to preview changes
-4. Commit and push to update the live site
-
-## 📄 License
-
-This website is part of the FrogPaper project. See the main [FrogPaper repository](https://github.com/sunnyskyess420/frogpaper) for license information.
-
-## 🙏 Acknowledgments
-
-- Built with love for the FrogPaper community
-- Inspired by beautiful desktop wallpapers everywhere
-
----
-
-*Lily pads optional. Wallpapers mandatory.* 🐸
+## 📂 Project Structure
