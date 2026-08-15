@@ -40,3 +40,66 @@ FrogPaper is a free, open-source Windows desktop application that generates, cur
 - Deployed to **GitHub Pages** at `/frogpaper-website`
 
 ## 📂 Project Structure
+
+```
+├── src/
+│   ├── app/
+│   │   ├── page.tsx          # Main page (all sections)
+│   │   ├── layout.tsx        # Root layout + metadata/SEO
+│   │   └── globals.css       # Theme variables + animations
+│   └── components/
+│       ├── frogpaper-nav.tsx         # Fixed nav + sticky download bar
+│       ├── frogpaper-hero.tsx        # Hero section with demo video
+│       ├── frogpaper-stats-bar.tsx   # Live counters (visits, stars, forks, downloads)
+│       ├── frogpaper-carousel.tsx    # Wallpaper slideshow + lightbox
+│       ├── frogpaper-features.tsx    # Feature grid with animations
+│       ├── frogpaper-how-it-works.tsx
+│       ├── frogpaper-privacy.tsx
+│       ├── frogpaper-comparison.tsx  # Comparison table
+│       ├── frogpaper-downloads.tsx   # Download cards + counter
+│       ├── frogpaper-changelog.tsx
+│       ├── frogpaper-final-cta.tsx
+│       └── frogpaper-footer.tsx
+├── public/
+│   ├── slideshow/            # Wallpaper images (20 PNGs)
+│   ├── logo.svg
+│   └── robots.txt
+├── next.config.ts             # Static export + basePath config
+└── package.json
+```
+
+## 🔧 Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+```
+
+## 📦 Building for Deployment
+
+The site uses two build configs:
+
+- **Preview** (`basePath: ""`) — for local testing with VS Code Live Server
+- **Deploy** (`basePath: "/frogpaper-website"`) — for GitHub Pages
+
+```bash
+npm run build
+# Output goes to out/
+```
+
+To deploy, push the contents of the deploy build (`out/`) to the `gh-pages` branch or use GitHub Actions.
+
+## ☕ Support
+
+If you enjoy FrogPaper, consider [buying the dev a coffee](https://buymeacoffee.com/alively142).
+
+## 📄 License
+
+This website is part of the FrogPaper project. See the main [FrogPaper repository](https://github.com/sunnyskyess420/frogpaper) for license information.
+
+---
+
+*Lily pads optional. Wallpapers mandatory.*
