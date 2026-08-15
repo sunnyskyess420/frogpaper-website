@@ -1,3 +1,3 @@
 :HL["/frogpaper-website/_next/static/chunks/34d933785a17edf3.css","style"]
-:HL["/frogpaper-website/_next/static/chunks/38a097b038c99d00.css","style"]
-0:{"buildId":"Eyc0vc_0Z3SYLkZ6bR0_0","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"/_not-found","paramType":null,"paramKey":"/_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+:HL["/frogpaper-website/_next/static/chunks/651cfbfa81e16606.css","style"]
+0:{"buildId":"6VA9Mhy_nNX80Sl49QZqR","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"/_not-found","paramType":null,"paramKey":"/_not-found","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
