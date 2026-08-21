@@ -1,6 +1,6 @@
 # FrogPaper Website
 
-Official landing page for [FrogPaper](https://github.com/sunnyskyess420/frogpaper) — the AI Wallpaper Studio for Windows.
+Official landing page for [FrogPaper](https://github.com/sunnyskyess420/frogpaper) — the AI Wallpaper Generator for Windows.
 
 ## 🌐 Live Site
 
@@ -10,87 +10,64 @@ Official landing page for [FrogPaper](https://github.com/sunnyskyess420/frogpape
 
 FrogPaper is a free, open-source Windows desktop application that generates, curates, and rotates AI-powered wallpapers. It combines prompt building, AI image generation, style filtering, and automatic wallpaper rotation — all in one window, no browser needed.
 
-## ✨ Landing Page Features
+## ✨ Website Features
 
-- **Dark theme** with green accent design system
-- **Wallpaper carousel** with 15 sample images and lightbox
-- **Live stats bar** — visit counter, GitHub stars, forks, and download count
-- **Feature grid** with scroll-triggered animations
+- **Dark theme** with green accent design
+- **Wallpaper carousel** with sample images and lightbox
+- **Feature grid** highlighting v1.2.0 capabilities
 - **Comparison table** — FrogPaper vs browser AI vs wallpaper apps
-- **Download section** — direct installer links with total download counter
-- **Changelog** and privacy section
+- **Direct download** buttons linking to the installer (.exe)
+- **Changelog** with clickable version history linking to GitHub releases
+- **Community Gallery** section linking to the wallpaper submission form
+- **Bonus Apps** section featuring related tools like Photo Sorter
+- **Privacy section** with clear data handling info
 - **Fully responsive** — mobile, tablet, and desktop
 
 ## 📥 Downloads
 
 | Version | What's New | Link |
 |---------|-----------|------|
-| **v1.1.1** (latest) | Update checker + all v1.1.0 features | [FrogPaper-Setup-1.1.1.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.1/FrogPaper-Setup-1.1.1.exe) |
-| v1.1.0 | Portrait bulk export (9:16) | [FrogPaper-Setup-1.1.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.0/FrogPaper-Setup-1.1.0.exe) |
+| **v1.2.0** (latest) | Cloud sync (Google Drive, OneDrive, Dropbox), secure sign-in, setup wizard | [FrogPaper-Setup-1.2.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/1.2.0/FrogPaper-Setup-1.2.0.exe) |
+| v1.1.1 | Improved update notifications, image tagging, reliability | [FrogPaper-Setup-1.1.1.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.1/FrogPaper-Setup-1.1.1.exe) |
+| v1.1.0 | Portrait export for mobile wallpapers | [FrogPaper-Setup-1.1.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.0/FrogPaper-Setup-1.1.0.exe) |
 | v1.0.2 | Gallery, 19 style filters, tagging, slideshow | [Releases page](https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.0.2) |
 
 ## 🛠️ Tech Stack
 
-- **Next.js 16** (static export)
-- **TypeScript**
-- **Tailwind CSS v4**
-- **Lucide React** icons
-- **GitHub API** for live stats (stars, forks, downloads)
-- **CounterAPI** for site visit tracking
-- Deployed to **GitHub Pages** at `/frogpaper-website`
+- **Static HTML/CSS/JS** — no build step, no framework
+- **Google Fonts** (Inter, JetBrains Mono)
+- **FormSubmit.co** for wallpaper submission form handling
+- Deployed to **GitHub Pages**
 
 ## 📂 Project Structure
 
 ```
-├── src/
-│   ├── app/
-│   │   ├── page.tsx          # Main page (all sections)
-│   │   ├── layout.tsx        # Root layout + metadata/SEO
-│   │   └── globals.css       # Theme variables + animations
-│   └── components/
-│       ├── frogpaper-nav.tsx         # Fixed nav + sticky download bar
-│       ├── frogpaper-hero.tsx        # Hero section with demo video
-│       ├── frogpaper-stats-bar.tsx   # Live counters (visits, stars, forks, downloads)
-│       ├── frogpaper-carousel.tsx    # Wallpaper slideshow + lightbox
-│       ├── frogpaper-features.tsx    # Feature grid with animations
-│       ├── frogpaper-how-it-works.tsx
-│       ├── frogpaper-privacy.tsx
-│       ├── frogpaper-comparison.tsx  # Comparison table
-│       ├── frogpaper-downloads.tsx   # Download cards + counter
-│       ├── frogpaper-changelog.tsx
-│       ├── frogpaper-final-cta.tsx
-│       └── frogpaper-footer.tsx
-├── public/
-│   ├── slideshow/            # Wallpaper images (20 PNGs)
-│   ├── logo.svg
-│   └── robots.txt
-├── next.config.ts             # Static export + basePath config
-└── package.json
+├── index.html              # Main landing page (all sections)
+├── submit-wallpaper.html   # Community wallpaper submission form
+├── 404.html                # Custom 404 error page
+├── _not-found.html         # GitHub Pages 404 fallback
+├── logo.svg                # FrogPaper logo (vector)
+├── logo.png                # FrogPaper logo (raster)
+├── frogpaper-preview.jpg   # App screenshot / preview image
+├── robots.txt              # Search engine crawl rules
+└── README.md               # This file
 ```
 
-## 🔧 Local Development
+## 🚀 Local Development
+
+No build step required — just open the files in a browser or use any local server.
 
 ```bash
-# Install dependencies
-npm install
+# Option 1: Open directly
+open index.html
 
-# Start dev server
-npm run dev
+# Option 2: Use a local server (e.g., VS Code Live Server or Python)
+python3 -m http.server 8000
 ```
 
-## 📦 Building for Deployment
+## 📦 Deployment
 
-The site uses two build configs:
-
-- **Preview** (`basePath: ""`) — for local testing with VS Code Live Server
-- **Deploy** (`basePath: "/frogpaper-website"`) — for GitHub Pages
-
-```bash
-npm run build
-# Output goes to out/
-```
-
-To deploy, push the contents of the deploy build (`out/`) to the `gh-pages` branch or use GitHub Actions.
+Push all files to the `gh-pages` branch (or your GitHub Pages branch). No build step is needed — the static HTML files are ready to serve as-is.
 
 ## ☕ Support
 

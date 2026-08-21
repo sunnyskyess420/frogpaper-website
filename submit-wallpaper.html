@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Wallpaper - FrogPaper</title>
+    <meta name="description" content="Share your best AI-generated wallpapers with the FrogPaper community.">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <script src="https://forminit.com/sdk/v1/forminit.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-primary: #0a0f0d;
+            --bg-secondary: #111a16;
+            --bg-card: #152019;
+            --bg-card-hover: #1a2b22;
+            --bg-input: #0d1410;
+            --accent: #2ecc71;
+            --accent-dark: #27ae60;
+            --accent-glow: rgba(46, 204, 113, 0.15);
+            --accent-glow-strong: rgba(46, 204, 113, 0.3);
+            --text-primary: #e8f5e9;
+            --text-secondary: #8faf99;
+            --text-muted: #5a7d65;
+            --border: #1e3328;
+            --border-light: #2a4535;
+            --border-focus: var(--accent);
+            --radius: 12px;
+            --radius-lg: 20px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+            --shadow-lg: 0 8px 48px rgba(0,0,0,0.4);
+            --error: #e74c3c;
+            --success: var(--accent);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(46,204,113,0.06) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(46,204,113,0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(10, 15, 13, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-brand img { width: 36px; height: 36px; border-radius: 8px; }
+        .nav-brand span { font-weight: 700; font-size: 1.15rem; letter-spacing: -0.02em; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); background: var(--accent-glow); }
+
+        /* ── Page Header ── */
+        .page-header {
+            padding: 140px 0 60px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 14px;
+        }
+
+        .page-header h1 .highlight { color: var(--accent); }
+
+        .page-header p {
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        /* ── Form Layout ── */
+        .form-wrapper {
+            max-width: 740px;
+            margin: 0 auto 100px;
+        }
+
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        /* ── Form Groups ── */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+            .form-card { padding: 24px; }
+        }
+
+        label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        label .required {
+            color: var(--accent);
+            margin-left: 2px;
+        }
+
+        label .hint {
+            display: block;
+            font-weight: 400;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-top: 4px;
+            letter-spacing: 0;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.92rem;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%235a7d65' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        /* ── File Upload ── */
+        .upload-zone {
+            border: 2px dashed var(--border-light);
+            border-radius: var(--radius);
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            background: var(--bg-input);
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-zone .upload-icon {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            background: var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .upload-zone .upload-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .upload-zone .upload-text span {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .upload-zone .upload-subtext {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .upload-zone .file-info {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 16px;
+            background: var(--accent-glow);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .upload-zone .file-info.visible { display: inline-block; }
+
+        /* ── Tags Input ── */
+        .tags-input-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            min-height: 46px;
+            cursor: text;
+            transition: all 0.2s;
+        }
+
+        .tags-input-wrapper:focus-within {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .tag-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-glow);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.82rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .tag-chip .remove-tag {
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .tag-chip .remove-tag:hover { opacity: 1; }
+
+        .tags-input-wrapper input {
+            border: none;
+            background: transparent;
+            padding: 4px 0;
+            flex: 1;
+            min-width: 100px;
+            box-shadow: none !important;
+        }
+
+        .tags-input-wrapper input:focus {
+            box-shadow: none !important;
+        }
+
+        /* ── Checkbox ── */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 1.5px solid var(--border-light);
+            border-radius: 5px;
+            background: var(--bg-input);
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .checkbox-group input[type="checkbox"]:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .checkbox-group input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            left: 5.5px;
+            top: 2px;
+            width: 6px;
+            height: 10px;
+            border: solid var(--bg-primary);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-group .checkbox-label {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .checkbox-group .checkbox-label a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .checkbox-group .checkbox-label a:hover { text-decoration: underline; }
+
+        /* ── Buttons ── */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 28px;
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            box-shadow: 0 0 50px var(--accent-glow-strong);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            color: var(--text-primary);
+            border-color: var(--border-light);
+        }
+
+        /* ── Success State ── */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .success-state.visible { display: block; }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            background: var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            animation: successPop 0.4s ease;
+        }
+
+        @keyframes successPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .success-state h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .success-state p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+        }
+
+        /* ── Error ── */
+        .field-error {
+            color: var(--error);
+            font-size: 0.78rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .field-error.visible { display: block; }
+
+        .form-group.error input,
+        .form-group.error select,
+        .form-group.error textarea,
+        .form-group.error .tags-input-wrapper {
+            border-color: var(--error) !important;
+            box-shadow: 0 0 0 3px rgba(231,76,60,0.15) !important;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-content p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ── Info Card ── */
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow);
+        }
+
+        .info-card h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        /* ── Process Steps ── */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent-glow);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ── Guidelines Box ── */
+        .guidelines-box {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .guidelines-box h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .guidelines-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .guidelines-box li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .guidelines-box li::before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .guidelines-box li:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            .info-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <img src="logo.png" alt="FrogPaper">
+                <span>FrogPaper</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#release">Release Notes</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Submit a <span class="highlight">Wallpaper</span></h1>
+            <p>Share your best AI-generated wallpapers with the FrogPaper community.</p>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="info-card">
+                <h2>How Submission Works</h2>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Submit Your Wallpaper</h3>
+                            <p>Fill out the form below with your wallpaper image, details, and description. Your submission will be sent for review.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Review Process</h3>
+                            <p>Submissions are reviewed for quality, originality, and appropriateness. This typically takes 1-3 business days.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Approval & Publication</h3>
+                            <p>Approved wallpapers are added to the community gallery slideshow on the main website. You'll receive an email notification when published.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guidelines-box">
+                    <h3>Submission Guidelines</h3>
+                    <ul>
+                        <li>Wallpapers must be AI-generated using FrogPaper or similar AI tools</li>
+                        <li>Accepted resolutions: 1920x1080 (Landscape), 1080x1920 (Portrait), or 1080x1080 (Square)</li>
+                        <li>File size: Maximum 5MB</li>
+                        <li>Accepted formats: PNG, JPG, WebP, BMP</li>
+                        <li>Content must be appropriate for all audiences</li>
+                        <li>You must have rights to share the image (original work or AI-generated with your prompt)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="form-card" id="formCard">
+
+                <!-- Submit Form -->
+                <form id="submitForm" action="https://forminit.com/f/qstw0s2prvz" method="POST" enctype="multipart/form-data" novalidate>
+
+                    <!-- File Upload -->
+                    <div class="form-group" id="fileGroup">
+                        <label>Wallpaper Image <span class="required">*</span></label>
+                        <div class="upload-zone" id="uploadZone">
+                            <input type="file" id="fileInput" name="fi-file-wallpaper" accept="image/png, image/jpeg, image/webp, image/bmp">
+                            <div class="upload-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            </div>
+                            <div class="upload-text"><span>Click to upload</span> or drag and drop</div>
+                            <div class="upload-subtext">PNG, JPG, WebP, or BMP (max 5MB)</div>
+                            <div class="file-info" id="fileInfo"></div>
+                        </div>
+                        <div class="field-error" id="fileError">Please select a wallpaper image to upload.</div>
+                    </div>
+
+                    <!-- Name & Email -->
+                    <div class="form-row">
+                        <div class="form-group" id="nameGroup">
+                            <label>Your Name <span class="required">*</span></label>
+                            <input type="text" id="nameInput" name="fi-sender-fullName" placeholder="Display name">
+                            <div class="field-error" id="nameError">Please enter your name.</div>
+                        </div>
+                        <div class="form-group" id="emailGroup">
+                            <label>Email <span class="required">*</span></label>
+                            <input type="email" id="emailInput" name="fi-sender-email" placeholder="you@example.com">
+                            <div class="field-error" id="emailError">Please enter a valid email address.</div>
+                        </div>
+                    </div>
+
+                    <!-- Title -->
+                    <div class="form-group" id="titleGroup">
+                        <label>Wallpaper Title <span class="required">*</span></label>
+                        <input type="text" id="titleInput" name="fi-text-title" placeholder="e.g. Neon Cityscape at Dusk">
+                        <div class="field-error" id="titleError">Please give your wallpaper a title.</div>
+                    </div>
+
+                    <!-- Style & Resolution -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Style Filter Used</label>
+                            <select id="styleSelect" name="fi-select-style">
+                                <option value="">None / Original</option>
+                                <option value="oil_painting">Oil Painting</option>
+                                <option value="watercolor">Watercolor</option>
+                                <option value="sketch">Sketch</option>
+                                <option value="line_art">Line Art</option>
+                                <option value="comic_book">Comic Book</option>
+                                <option value="manga">Manga</option>
+                                <option value="sepia">Sepia</option>
+                                <option value="bw">B&W</option>
+                                <option value="vintage">Vintage</option>
+                                <option value="posterize">Posterize</option>
+                                <option value="emboss">Emboss</option>
+                                <option value="edge_enhance">Edge Enhance</option>
+                                <option value="cyberpunk_neon">Cyberpunk Neon</option>
+                                <option value="vaporwave">Vaporwave</option>
+                                <option value="pixel_art">Pixel Art</option>
+                                <option value="sketch_pencil">Sketch Pencil</option>
+                                <option value="gouache">Gouache</option>
+                                <option value="art_deco">Art Deco</option>
+                                <option value="surreal_dali">Surreal Dali</option>
+                                <option value="3d_render">3D Render</option>
+                                <option value="anime_key">Anime Key</option>
+                                <option value="noir_bw">Noir B&W</option>
+                                <option value="vintage_sepia">Vintage Sepia</option>
+                                <option value="pop_art">Pop Art</option>
+                                <option value="impressionist">Impressionist</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Resolution</label>
+                            <select id="resSelect" name="fi-select-resolution">
+                                <option value="">Select resolution</option>
+                                <option value="1920x1080">1920 x 1080 (Landscape)</option>
+                                <option value="1080x1920">1080 x 1920 (Portrait)</option>
+                                <option value="1080x1080">1080 x 1080 (Square)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <span class="hint">Press Enter or comma to add a tag. Max 8 tags.</span>
+                        <div class="tags-input-wrapper" id="tagsWrapper">
+                            <input type="text" id="tagInput" placeholder="e.g. nature, dark, minimalist">
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label>Description</label>
+                        <span class="hint">Tell us about this wallpaper &mdash; prompt used, inspiration, etc.</span>
+                        <textarea id="descInput" name="fi-text-description" placeholder="Describe the wallpaper, the AI prompt you used, or anything you'd like others to know..."></textarea>
+                    </div>
+
+                    <!-- Agreement -->
+                    <div class="form-group">
+                        <label class="checkbox-group">
+                            <input type="checkbox" id="agreeCheck">
+                            <span class="checkbox-label">I confirm this is my original work (or AI-generated with my prompt) and I agree to <a href="#">community guidelines</a>.</span>
+                        </label>
+                        <div class="field-error" id="agreeError">You must agree to submit.</div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('submitForm').reset(); clearAllTags(); document.getElementById('fileInfo').classList.remove('visible');">Clear</button>
+                        <button type="submit" class="btn btn-primary">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            Submit Wallpaper
+                        </button>
+                    </div>
+                    <!-- Hidden field for tags -->
+                    <input type="hidden" id="tagsHidden" name="fi-text-tags" value="">
+                </form>
+
+                <!-- Success State -->
+                <div class="success-state" id="successState">
+                    <div class="success-icon">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h2>Wallpaper Submitted!</h2>
+                    <p>Thank you for sharing your creation with the FrogPaper community. We'll review it shortly.</p>
+                    <a href="index.html" class="btn btn-primary">Back to Home</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>FrogPaper v1.2.0 &mdash; AI Wallpaper Generator</p>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/sunnyskyess420/frogpaper" target="_blank">GitHub</a></li>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ── Tags System ──
+        const tags = [];
+        const MAX_TAGS = 8;
+        const tagInput = document.getElementById('tagInput');
+        const tagsWrapper = document.getElementById('tagsWrapper');
+
+        tagsWrapper.addEventListener('click', () => tagInput.focus());
+
+        tagInput.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ',') && tagInput.value.trim()) {
+                e.preventDefault();
+                addTag(tagInput.value.trim().replace(/,/g, ''));
+                tagInput.value = '';
+            }
+            if (e.key === 'Backspace' && !tagInput.value && tags.length) {
+                removeTag(tags.length - 1);
+            }
+        });
+
+        function addTag(text) {
+            if (tags.length >= MAX_TAGS) return;
+            if (tags.includes(text.toLowerCase())) return;
+            tags.push(text.toLowerCase());
+            renderTags();
+        }
+
+        function removeTag(index) {
+            tags.splice(index, 1);
+            renderTags();
+        }
+
+        function clearAllTags() {
+            tags.length = 0;
+            renderTags();
+        }
+
+        function renderTags() {
+            tagsWrapper.querySelectorAll('.tag-chip').forEach(el => el.remove());
+            tags.forEach((tag, i) => {
+                const chip = document.createElement('span');
+                chip.className = 'tag-chip';
+                chip.innerHTML = `${tag}<span class="remove-tag" onclick="removeTag(${i})">&times;</span>`;
+                tagsWrapper.insertBefore(chip, tagInput);
+            });
+            tagInput.placeholder = tags.length ? '' : 'e.g. nature, dark, minimalist';
+        }
+
+        // ── File Upload ──
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                showFileInfo(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) showFileInfo(fileInput.files[0]);
+        });
+
+        function showFileInfo(file) {
+            const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            fileInfo.textContent = `${file.name} (${sizeMB} MB)`;
+            fileInfo.classList.add('visible');
+            clearError('fileGroup');
+        }
+
+        // ── Form Validation ──
+        const submitForm = document.getElementById('submitForm');
+
+        submitForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let valid = true;
+
+            // File
+            if (!fileInput.files.length) {
+                showError('fileGroup', 'fileError');
+                valid = false;
+            } else { clearError('fileGroup'); }
+
+            // Name
+            if (!document.getElementById('nameInput').value.trim()) {
+                showError('nameGroup', 'nameError');
+                valid = false;
+            } else { clearError('nameGroup'); }
+
+            // Email
+            const email = document.getElementById('emailInput').value.trim();
+            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRe.test(email)) {
+                showError('emailGroup', 'emailError');
+                valid = false;
+            } else { clearError('emailGroup'); }
+
+            // Title
+            if (!document.getElementById('titleInput').value.trim()) {
+                showError('titleGroup', 'titleError');
+                valid = false;
+            } else { clearError('titleGroup'); }
+
+            // Agreement
+            if (!document.getElementById('agreeCheck').checked) {
+                document.getElementById('agreeError').classList.add('visible');
+                valid = false;
+            } else {
+                document.getElementById('agreeError').classList.remove('visible');
+            }
+
+            if (valid) {
+                // Populate tags hidden field
+                const tags = [];
+                document.querySelectorAll('#tagsWrapper .tag-chip').forEach(chip => {
+                    tags.push(chip.textContent.trim());
+                });
+                document.getElementById('tagsHidden').value = tags.join(', ');
+
+                const submitBtn = submitForm.querySelector('.btn-primary[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+
+                // Use iframe to submit so user stays on the page
+                let iframe = document.getElementById('submitFrame');
+                if (!iframe) {
+                    iframe = document.createElement('iframe');
+                    iframe.id = 'submitFrame';
+                    iframe.name = 'submitFrame';
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                }
+                submitForm.target = 'submitFrame';
+
+                iframe.onload = function() {
+                    submitForm.style.display = 'none';
+                    document.getElementById('successState').classList.add('visible');
+                };
+
+                iframe.onerror = function() {
+                    // iframe errors are hard to catch, but submission likely went through anyway
+                    submitForm.style.display = 'none';
+                    document.getElementById('successState').classList.add('visible');
+                };
+
+                submitForm.submit();
+            }
+        });
+
+        function showError(groupId, errorId) {
+            document.getElementById(groupId).classList.add('error');
+            document.getElementById(errorId).classList.add('visible');
+        }
+
+        function clearError(groupId) {
+            document.getElementById(groupId).classList.remove('error');
+            const err = document.getElementById(groupId).querySelector('.field-error');
+            if (err) err.classList.remove('visible');
+        }
+
+        // Clear errors on input
+        ['nameInput', 'emailInput', 'titleInput'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                clearError(id.replace('Input', 'Group'));
+            });
+        });
+    </script>
+
+</body>
+</html>
