@@ -1169,28 +1169,7 @@
                 <p>Explore beautiful AI-generated wallpapers created by the FrogPaper community. Have a wallpaper you're proud of? <a href="submit-wallpaper.html" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">Submit it here</a> and it'll be added to this slideshow for everyone to see.</p>
             </div>
             <div class="slideshow-container">
-                <div class="slideshow-wrapper" id="slideshowWrapper">
-                    <img src="slideshow/angel_of_war_darkfantasy_20260802_1.png" alt="Angel of War" class="slide">
-                    <img src="slideshow/baroque_peacock_midcentury_poster_20260515_1.png" alt="Baroque Peacock" class="slide">
-                    <img src="slideshow/castle_on_a_cliff_isometric_vector_20260517_1.png" alt="Castle on a Cliff" class="slide">
-                    <img src="slideshow/cyber_ninja_midcentury_poster_20260515_1.png" alt="Cyber Ninja" class="slide">
-                    <img src="slideshow/cyberpunk_hacker_realistic_20260814_1.png" alt="Cyberpunk Hacker" class="slide">
-                    <img src="slideshow/dragon_isometric_vector_20260516_1.png" alt="Dragon" class="slide">
-                    <img src="slideshow/dragon_watercolor_20260518_5.png" alt="Dragon Watercolor" class="slide">
-                    <img src="slideshow/frog_oil_painting_20260510_3.png" alt="Frog Oil Painting" class="slide">
-                    <img src="slideshow/frog_stained_glass_20260514_1.png" alt="Frog Stained Glass" class="slide">
-                    <img src="slideshow/frog_watercolor_storybook_20260511_1.png" alt="Frog Watercolor" class="slide">
-                    <img src="slideshow/hero_warrior_realistic_20260814_1.png" alt="Hero Warrior" class="slide">
-                    <img src="slideshow/mystical_owl_darkfantasy_20260814_2.png" alt="Mystical Owl Dark" class="slide">
-                    <img src="slideshow/mystical_owl_painterly_20260814_1.png" alt="Mystical Owl" class="slide">
-                    <img src="slideshow/racing_car_watercolor_20260518_1.png" alt="Racing Car" class="slide">
-                    <img src="slideshow/rogue_assassin_stylized_20260814_1.png" alt="Rogue Assassin" class="slide">
-                    <img src="slideshow/sea_serpent_productphoto_20260814_2.png" alt="Sea Serpent" class="slide">
-                    <img src="slideshow/sea_serpent_stylized_20260814_1.png" alt="Sea Serpent Stylized" class="slide">
-                    <img src="slideshow/steampunk_laboratory_watercolor_storybook_20260510_1.png" alt="Steampunk Laboratory" class="slide">
-                    <img src="slideshow/storm_caller_anime_20260813_1.png" alt="Storm Caller" class="slide">
-                    <img src="slideshow/undead_king_painterly_20260808_1.png" alt="Undead King" class="slide">
-                </div>
+                <div class="slideshow-wrapper" id="slideshowWrapper"></div>
                 <div class="slideshow-controls">
                     <button class="slideshow-btn prev" id="prevBtn">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1620,9 +1599,8 @@
     </footer>
 
     <script>
-        // ── Slideshow Functionality ──
+        // ── Slideshow Functionality (loads from JSON — no HTML editing needed) ──
         (function() {
-            const slides = document.querySelectorAll('.slide');
             const dotsContainer = document.getElementById('slideshowDots');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -1633,43 +1611,63 @@
             let currentSlide = 0;
             let autoPlayInterval;
 
-            // Create dots for existing slides & activate the first slide immediately
-            slides.forEach((_, index) => {
+            // Build a slide <img> + dot, optionally activate it
+            function addSlide(src, alt, isActive) {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = alt;
+                img.className = 'slide' + (isActive ? ' active' : '');
+                wrapper.appendChild(img);
                 const dot = document.createElement('div');
-                dot.className = 'dot' + (index === 0 ? ' active' : '');
-                dot.addEventListener('click', () => goToSlide(index));
+                dot.className = 'dot' + (isActive ? ' active' : '');
+                dot.addEventListener('click', () => goToSlide(Array.from(dotsContainer.children).indexOf(dot)));
                 dotsContainer.appendChild(dot);
-            });
-            // Make the first slide visible on load
-            if (slides.length > 0) slides[0].classList.add('active');
+                img.addEventListener('click', () => {
+                    lightboxImage.src = img.src;
+                    lightbox.classList.add('active');
+                    stopAutoPlay();
+                });
+                return img;
+            }
 
-            // Load community wallpapers from gallery.json
-            fetch('gallery.json')
+            // Load main slideshow from slideshow.json, then community from gallery.json
+            let slideCount = 0;
+
+            fetch('slideshow.json')
                 .then(r => r.json())
                 .then(wallpapers => {
-                    wallpapers.forEach(wp => {
-                        const img = document.createElement('img');
-                        img.src = 'gallery/' + wp.file;
-                        img.alt = wp.title + ' by ' + wp.author;
-                        img.className = 'slide';
-                        wrapper.appendChild(img);
-                        const dot = document.createElement('div');
-                        dot.className = 'dot';
-                        dot.addEventListener('click', () => goToSlide(Array.from(dotsContainer.children).indexOf(dot)));
-                        dotsContainer.appendChild(dot);
-                        // Add lightbox to new slide
-                        img.addEventListener('click', () => {
-                            lightboxImage.src = img.src;
-                            lightbox.classList.add('active');
-                            stopAutoPlay();
-                        });
+                    wallpapers.forEach((wp, i) => {
+                        addSlide('slideshow/' + wp.file, wp.title, i === 0);
+                        slideCount++;
                     });
+                    return fetch('gallery.json').then(r => r.json()).then(gw => ({ wallpapers: gw }));
                 })
-                .catch(() => { /* no community wallpapers yet, that's fine */ });
+                .then(({ wallpapers: community }) => {
+                    community.forEach(wp => {
+                        addSlide('gallery/' + wp.file, wp.title + ' by ' + wp.author, false);
+                        slideCount++;
+                    });
+                    startAutoPlay();
+                })
+                .catch(() => {
+                    // If slideshow.json fails, nothing to show — that's ok
+                    // Still try gallery.json as fallback
+                    fetch('gallery.json')
+                        .then(r => r.json())
+                        .then(community => {
+                            community.forEach((wp, i) => {
+                                addSlide('gallery/' + wp.file, wp.title + ' by ' + wp.author, i === 0);
+                                slideCount++;
+                            });
+                            startAutoPlay();
+                        })
+                        .catch(() => {});
+                });
 
             function goToSlide(index) {
                 const allSlides = document.querySelectorAll('.slide');
                 const allDots = dotsContainer.children;
+                if (allSlides.length === 0) return;
                 allSlides[currentSlide].classList.remove('active');
                 allDots[currentSlide].classList.remove('active');
                 currentSlide = index;
@@ -1707,15 +1705,6 @@
                 startAutoPlay();
             });
 
-            // Lightbox functionality
-            slides.forEach((slide, index) => {
-                slide.addEventListener('click', () => {
-                    lightboxImage.src = slide.src;
-                    lightbox.classList.add('active');
-                    stopAutoPlay();
-                });
-            });
-
             lightboxClose.addEventListener('click', () => {
                 lightbox.classList.remove('active');
                 startAutoPlay();
@@ -1727,9 +1716,6 @@
                     startAutoPlay();
                 }
             });
-
-            // Start autoplay
-            startAutoPlay();
 
             // Pause on hover
             const slideshowContainer = document.querySelector('.slideshow-container');
