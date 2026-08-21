@@ -1599,7 +1599,7 @@
     </footer>
 
     <script>
-        // ── Slideshow Functionality (loads from JSON — no HTML editing needed) ──
+        // ── Slideshow — loads everything from gallery.json ──
         (function() {
             const dotsContainer = document.getElementById('slideshowDots');
             const prevBtn = document.getElementById('prevBtn');
@@ -1611,7 +1611,6 @@
             let currentSlide = 0;
             let autoPlayInterval;
 
-            // Build a slide <img> + dot, optionally activate it
             function addSlide(src, alt, isActive) {
                 const img = document.createElement('img');
                 img.src = src;
@@ -1627,42 +1626,19 @@
                     lightbox.classList.add('active');
                     stopAutoPlay();
                 });
-                return img;
             }
 
-            // Load main slideshow from slideshow.json, then community from gallery.json
-            let slideCount = 0;
-
-            fetch('slideshow.json')
+            // Load all wallpapers from gallery.json
+            fetch('gallery.json')
                 .then(r => r.json())
                 .then(wallpapers => {
                     wallpapers.forEach((wp, i) => {
-                        addSlide('slideshow/' + wp.file, wp.title, i === 0);
-                        slideCount++;
-                    });
-                    return fetch('gallery.json').then(r => r.json()).then(gw => ({ wallpapers: gw }));
-                })
-                .then(({ wallpapers: community }) => {
-                    community.forEach(wp => {
-                        addSlide('gallery/' + wp.file, wp.title + ' by ' + wp.author, false);
-                        slideCount++;
+                        const alt = wp.author ? wp.title + ' by ' + wp.author : wp.title;
+                        addSlide('gallery/' + wp.file, alt, i === 0);
                     });
                     startAutoPlay();
                 })
-                .catch(() => {
-                    // If slideshow.json fails, nothing to show — that's ok
-                    // Still try gallery.json as fallback
-                    fetch('gallery.json')
-                        .then(r => r.json())
-                        .then(community => {
-                            community.forEach((wp, i) => {
-                                addSlide('gallery/' + wp.file, wp.title + ' by ' + wp.author, i === 0);
-                                slideCount++;
-                            });
-                            startAutoPlay();
-                        })
-                        .catch(() => {});
-                });
+                .catch(() => {});
 
             function goToSlide(index) {
                 const allSlides = document.querySelectorAll('.slide');
@@ -1677,47 +1653,17 @@
                 allDots[currentSlide].classList.add('active');
             }
 
-            function nextSlide() {
-                goToSlide(currentSlide + 1);
-            }
+            function nextSlide() { goToSlide(currentSlide + 1); }
+            function prevSlide() { goToSlide(currentSlide - 1); }
+            function startAutoPlay() { autoPlayInterval = setInterval(nextSlide, 5000); }
+            function stopAutoPlay() { clearInterval(autoPlayInterval); }
 
-            function prevSlide() {
-                goToSlide(currentSlide - 1);
-            }
+            prevBtn.addEventListener('click', () => { prevSlide(); stopAutoPlay(); startAutoPlay(); });
+            nextBtn.addEventListener('click', () => { nextSlide(); stopAutoPlay(); startAutoPlay(); });
 
-            function startAutoPlay() {
-                autoPlayInterval = setInterval(nextSlide, 5000);
-            }
+            lightboxClose.addEventListener('click', () => { lightbox.classList.remove('active'); startAutoPlay(); });
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { lightbox.classList.remove('active'); startAutoPlay(); } });
 
-            function stopAutoPlay() {
-                clearInterval(autoPlayInterval);
-            }
-
-            prevBtn.addEventListener('click', () => {
-                prevSlide();
-                stopAutoPlay();
-                startAutoPlay();
-            });
-
-            nextBtn.addEventListener('click', () => {
-                nextSlide();
-                stopAutoPlay();
-                startAutoPlay();
-            });
-
-            lightboxClose.addEventListener('click', () => {
-                lightbox.classList.remove('active');
-                startAutoPlay();
-            });
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.classList.remove('active');
-                    startAutoPlay();
-                }
-            });
-
-            // Pause on hover
             const slideshowContainer = document.querySelector('.slideshow-container');
             slideshowContainer.addEventListener('mouseenter', stopAutoPlay);
             slideshowContainer.addEventListener('mouseleave', startAutoPlay);
