@@ -687,6 +687,67 @@
             }
         }
 
+        /* ── Like Button (FrogPaper 👍) ── */
+        .like-button-wrap {
+            display: flex;
+            justify-content: center;
+            margin-top: 28px;
+        }
+        .like-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 999px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .like-button:hover:not(:disabled) {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+        .like-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+        .like-button.liked {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+        .like-button .like-icon {
+            width: 22px;
+            height: 22px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .like-button.liked .like-icon {
+            transform: scale(1.15) rotate(-8deg);
+        }
+        .like-button .like-count {
+            font-variant-numeric: tabular-nums;
+            min-width: 1ch;
+            font-weight: 700;
+        }
+        .like-button .like-label {
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        @media (max-width: 480px) {
+            .like-button {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+        }
+
         /* ── Slideshow ── */
         .slideshow-container {
             position: relative;
@@ -1198,6 +1259,17 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
                     Bonus Apps
                 </a>
+            </div>
+
+            <!-- 👍 Like Button (Firebase-backed) -->
+            <div class="like-button-wrap">
+                <button id="likeButton" class="like-button" type="button" aria-label="Like FrogPaper">
+                    <svg class="like-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                    </svg>
+                    <span class="like-count" id="likeCount">…</span>
+                    <span class="like-label" id="likeLabel">Likes</span>
+                </button>
             </div>
         </div>
     </section>
@@ -1828,6 +1900,125 @@
             window.__updateDownloadLinks = updateDownloadLinks;
             updateDownloadLinks();
         })();
+    </script>
+
+    <!-- ──────────────────────────────────────────────────────────── -->
+    <!-- 👍 FrogPaper Like Button — Firebase Realtime Database       -->
+    <!-- ──────────────────────────────────────────────────────────── -->
+    <script type="module">
+        // ============================================================
+        //  STEP 1: Paste your Firebase config here.
+        //  Get it from: Firebase Console → Project Settings →
+        //  General → "Your apps" → Web App → SDK setup & config
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCF6l-mzryRfq_XjiUUoLhFTdLM6N8kV9U",
+            authDomain: "frogpaper-website.firebaseapp.com",
+            projectId: "frogpaper-website",
+            storageBucket: "frogpaper-website.firebasestorage.app",
+            messagingSenderId: "504778482500",
+            appId: "1:504778482500:web:ca1d211678b29b16ab2d11"
+};
+
+
+        // ============================================================
+        //  STEP 2: behaviour config
+        // ============================================================
+        const LIKE_PATH   = 'frogpaper/likes';     // Firebase path where the count lives
+        const COOLDOWN_H  = 24;                     // re-like cooldown (hours)
+        const STORAGE_KEY = 'frogpaper_liked_at';   // localStorage key for cooldown
+
+        // ============================================================
+        //  Load Firebase SDK (modular v10+) from gstatic CDN
+        // ============================================================
+        try {
+            const appMod  = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+            const dbMod   = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js');
+
+            const app = appMod.initializeApp(firebaseConfig);
+            const db  = dbMod.getDatabase(app);
+            const ref = dbMod.ref(db, LIKE_PATH);
+
+            const btn       = document.getElementById('likeButton');
+            const countEl   = document.getElementById('likeCount');
+            const labelEl   = document.getElementById('likeLabel');
+            if (!btn || !countEl) throw new Error('Like button elements missing');
+
+            // ---- helpers ---------------------------------------------------
+            const hasLikedRecently = () => {
+                const ts = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+                if (!ts) return false;
+                return (Date.now() - ts) < COOLDOWN_H * 3600 * 1000;
+            };
+            const markLiked = () => localStorage.setItem(STORAGE_KEY, String(Date.now()));
+
+            const animateCount = (from, to) => {
+                const start = performance.now();
+                const dur = 700;
+                const step = (t) => {
+                    const p = Math.min(1, (t - start) / dur);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    countEl.textContent = Math.round(from + (to - from) * eased).toLocaleString();
+                    if (p < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+            };
+
+            // ---- initial state --------------------------------------------
+            // Disable button until we've fetched the current count
+            btn.disabled = true;
+            countEl.textContent = '…';
+
+            // Real-time subscription: count updates live across all visitors
+            dbMod.onValue(ref, (snap) => {
+                const current = snap.val() || 0;
+                const prev = parseInt(countEl.textContent.replace(/[^\d]/g, ''), 10) || 0;
+                animateCount(prev, current);
+                // If user already liked in the last 24h, render as "liked" state
+                if (hasLikedRecently()) {
+                    btn.classList.add('liked');
+                    btn.disabled = true;
+                    labelEl.textContent = 'Thanks! 🐸';
+                } else {
+                    btn.disabled = false;
+                    labelEl.textContent = 'Likes';
+                }
+            }, (err) => {
+                console.error('Firebase read error:', err);
+                countEl.textContent = '—';
+                labelEl.textContent = 'Unavailable';
+                btn.disabled = true;
+            });
+
+            // ---- click handler --------------------------------------------
+            btn.addEventListener('click', async () => {
+                if (btn.disabled) return;
+                if (hasLikedRecently()) {
+                    btn.disabled = true;
+                    btn.classList.add('liked');
+                    labelEl.textContent = 'Thanks! 🐸';
+                    return;
+                }
+                btn.disabled = true;
+                try {
+                    // Atomically increment the counter in Firebase
+                    const newCount = await dbMod.runTransaction(ref, (cur) => (cur || 0) + 1);
+                    markLiked();
+                    btn.classList.add('liked');
+                    labelEl.textContent = 'Thanks! 🐸';
+                    // optimistic count is updated by onValue listener
+                } catch (e) {
+                    console.error('Like failed:', e);
+                    btn.disabled = false;  // let them try again
+                }
+            });
+        } catch (e) {
+            console.error('Firebase like-button init failed:', e);
+            const b = document.getElementById('likeButton');
+            if (b) { b.disabled = true; b.title = 'Like button unavailable'; }
+            const c = document.getElementById('likeCount');
+            if (c) c.textContent = '—';
+        }
     </script>
 
 </body>
