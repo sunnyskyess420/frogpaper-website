@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FrogPaper v1.2.0 - AI Wallpaper Generator with Cloud Sync</title>
-    <meta name="description" content="FrogPaper is a powerful AI wallpaper generator featuring cloud sync, 25+ style filters, text overlays, and more.">
+    <title>FrogPaper v1.3.0 - AI Wallpaper Generator with Cloud Sync</title>
+    <meta name="description" content="FrogPaper is a powerful AI wallpaper generator featuring cloud sync, star-pinned prompt favorites, a redesigned settings hub, 25+ style filters, and more.">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
     <style>
@@ -551,29 +551,31 @@
             color: var(--text-secondary);
         }
 
-        /* ── Footer ── */
+        /* ── Footer (compact, mobile-friendly) ── */
         footer {
             border-top: 1px solid var(--border);
-            padding: 40px 0;
+            padding: 26px 0;
             margin-top: 40px;
         }
 
         .footer-content {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
+            gap: 10px;
         }
 
         .footer-content p {
             color: var(--text-muted);
-            font-size: 0.82rem;
+            font-size: 0.78rem;
         }
 
         .footer-links {
             display: flex;
-            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 20px;
             list-style: none;
         }
 
@@ -653,9 +655,9 @@
                 flex-direction: column;
                 align-items: center;
             }
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
+            footer {
+                margin-top: 28px;
+                padding: 20px 0;
             }
         }
 
@@ -814,6 +816,16 @@
                 width: 36px;
                 height: 36px;
             }
+            .slideshow-dots {
+                gap: 4px;
+                max-width: calc(100% - 88px);
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .dot {
+                width: 6px;
+                height: 6px;
+            }
         }
 
         /* ── Comparison Table ── */
@@ -858,6 +870,19 @@
 
         .comparison-table tr:last-child td {
             border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: 14px 16px;
+                white-space: nowrap;
+            }
         }
 
         .comparison-table .check {
@@ -1121,13 +1146,13 @@
         <div class="container">
             <a href="index.html" class="nav-brand">
                 <img src="logo.png" alt="FrogPaper">
-                <span>FrogPaper <span class="version-badge">v1.2.0</span></span>
+                <span>FrogPaper <span class="version-badge">v1.3.0</span></span>
             </a>
             <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#comparison">Comparison</a></li>
-                <li><a href="#changelog">Changelog</a></li>
-                <li><a href="#bonus-apps">Bonus Apps</a></li>
+                <li class="hide-mobile"><a href="#features">Features</a></li>
+                <li class="hide-mobile"><a href="#comparison">Comparison</a></li>
+                <li class="hide-mobile"><a href="#changelog">Changelog</a></li>
+                <li class="hide-mobile"><a href="#bonus-apps">Bonus Apps</a></li>
                 <li><a href="submit-wallpaper.html">Submit</a></li>
                 <li><a href="#download" class="btn-nav">Download</a></li>
             </ul>
@@ -1139,14 +1164,14 @@
         <div class="container">
             <div class="hero-badge">
                 <span class="pulse"></span>
-                Version 1.2.0 Now Available
+                Version 1.3.0 Now Available
             </div>
             <h1>AI Wallpapers,<br><span class="gradient-text">Seamlessly Synced</span></h1>
-            <p>Generate stunning AI wallpapers with 25+ style filters, text overlays, and automatic cloud sync across Google Drive, OneDrive, and Dropbox.</p>
+            <p>Generate stunning AI wallpapers with 25+ style filters, text overlays, and automatic cloud sync across Google Drive, OneDrive, and Dropbox — now with star-pinned favorites and a freshly redesigned settings layout.</p>
             <div class="hero-buttons">
-                <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/1.2.0/FrogPaper-Setup-1.2.0.exe" class="btn btn-primary">
+                <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.3.0/FrogPaper-Setup-1.3.0.exe" class="btn btn-primary">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download v1.2.0
+                    Download v1.3.0
                 </a>
                 <a href="submit-wallpaper.html" class="btn btn-secondary">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1203,7 +1228,7 @@
                 <div class="stat-label">Cloud Providers</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">v1.2.0</div>
+                <div class="stat-number">v1.3.0</div>
                 <div class="stat-label">Latest Release</div>
             </div>
             <div class="stat-item">
@@ -1217,45 +1242,45 @@
     <section class="section" id="features">
         <div class="container">
             <div class="section-header">
-                <div class="section-tag">New in v1.2.0</div>
-                <h2>Cloud Sync & More</h2>
-                <p>Your wallpapers follow you everywhere. Save them to the cloud and access them from any device, automatically.</p>
+                <div class="section-tag">New in v1.3.0</div>
+                <h2>Your Workflow, Your Way</h2>
+                <p>The latest update makes FrogPaper more personal and easier to set up than ever — star your favorite choices, enjoy a cleaner settings experience, and connect your cloud faster.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 17.27 18.18 21 16.54 13.97 22 9.24 14.81 9.24 12 2 9.19 9.24 2 9.24 7.46 13.97 5.82 21"/></svg>
                     </div>
-                    <h3>Connect Your Cloud Storage</h3>
-                    <p>Link your Google Drive, OneDrive, or Dropbox account and FrogPaper will sync your wallpaper collection there automatically.</p>
+                    <h3>Star-Pinned Favorites</h3>
+                    <p>Every dropdown option now carries its own star button. Pin your go-to subjects, moods, and lighting choices, and they rise to a Favorites section at the top of each list - one click away, always.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                     </div>
-                    <h3>Syncs as You Go</h3>
-                    <p>New wallpapers are uploaded to your cloud storage the moment they're created. No manual saving or dragging files around.</p>
+                    <h3>Redesigned Settings Hub</h3>
+                    <p>The settings window has been rebuilt around a clean sidebar navigation with tidy cards for every category - plus a smart save bar that tracks unsaved changes so nothing gets lost.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     </div>
-                    <h3>Secure Sign-In</h3>
-                    <p>Cloud connections use standard OAuth sign-in, the same secure method used by apps like Gmail and Spotify. Your credentials stay on your computer.</p>
+                    <h3>Clickable Setup Guides</h3>
+                    <p>Built-in cloud credential guides now start fully expanded, wrap perfectly at any window size, and turn every website address into a real link that opens straight in your browser.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                     </div>
-                    <h3>Smart File Syncing</h3>
-                    <p>Only changed files are uploaded, so syncing is fast and doesn't waste bandwidth. If the same file is edited on two devices, FrogPaper handles it gracefully.</p>
+                    <h3>Skip Updates You Don't Want</h3>
+                    <p>Not ready to update? The new "Skip This Version" button silences notifications for a specific release until something newer ships. You stay in control.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
-                    <h3>Easy Setup Wizard</h3>
-                    <p>A simple step-by-step guide walks you through connecting your cloud account. No tech skills needed, just follow the prompts.</p>
+                    <h3>Safer by Design</h3>
+                    <p>API keys and cloud secrets are never packed inside the downloaded EXE anymore. Fresh installs start from a clean template, and every build passes an automated secret scan first.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -1406,18 +1431,17 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-tag">Release Notes</div>
-                <h2>What's New in v1.2.0</h2>
-                <p>A big update that brings cloud syncing, better notifications, and improved reliability.</p>
+                <h2>What's New in v1.3.0</h2>
+                <p>A sharper, safer, more personal update — star your favorites, enjoy the redesigned settings window, and set up cloud sync faster than ever.</p>
             </div>
             <div class="release-notes">
                 <div class="release-category">
                     <h3>New Features</h3>
                     <ul class="release-list">
-                        <li><span class="bullet"></span>Cloud syncing with Google Drive, OneDrive, and Dropbox</li>
-                        <li><span class="bullet"></span>Wallpapers are uploaded to your cloud storage automatically</li>
-                        <li><span class="bullet"></span>Secure sign-in with OAuth, the same method used by major apps</li>
-                        <li><span class="bullet"></span>Fast syncing that only uploads what changed</li>
-                        <li><span class="bullet"></span>Simple setup wizard to connect your cloud account</li>
+                        <li><span class="bullet"></span>Star-pin any dropdown choice — favorites jump to the top of Subject, Mood, Lighting, and more</li>
+                        <li><span class="bullet"></span>Favorites manager to review every pin in one place (Settings > Advanced)</li>
+                        <li><span class="bullet"></span>"Skip This Version" button quiets update alerts until a newer release arrives</li>
+                        <li><span class="bullet"></span>Website links inside the Tutorials window are now clickable</li>
                     </ul>
                 </div>
                 <div class="release-category">
@@ -1425,27 +1449,28 @@
                     <div class="improvements-grid">
                         <div class="improvement-item">
                             <span class="check">&#10003;</span>
-                            <span class="text">Better update notifications</span>
+                            <span class="text">Redesigned settings window with sidebar navigation</span>
                         </div>
                         <div class="improvement-item">
                             <span class="check">&#10003;</span>
-                            <span class="text">Improved image tagging</span>
+                            <span class="text">Larger settings window (980x700) with card-based sections</span>
                         </div>
                         <div class="improvement-item">
                             <span class="check">&#10003;</span>
-                            <span class="text">Smoother performance</span>
+                            <span class="text">Cloud setup guides open pre-expanded with clickable links</span>
                         </div>
                         <div class="improvement-item">
                             <span class="check">&#10003;</span>
-                            <span class="text">New cloud sync tutorial</span>
+                            <span class="text">Sharper theming — every themed control renders correctly</span>
                         </div>
                     </div>
                 </div>
                 <div class="release-category">
                     <h3>Under the Hood</h3>
                     <ul class="release-list">
-                        <li><span class="bullet"></span>Added cloud provider libraries and secure sign-in support</li>
-                        <li><span class="bullet"></span>New file watching system that triggers sync when files change</li>
+                        <li><span class="bullet"></span>Credentials are no longer bundled into the EXE; fresh installs seed from a clean template</li>
+                        <li><span class="bullet"></span>Automated pre-build secret scan now blocks unsafe packaging</li>
+                        <li><span class="bullet"></span>Button labels are validated against their real background color (WCAG contrast) at runtime</li>
                     </ul>
                 </div>
             </div>
@@ -1461,6 +1486,11 @@
                 <p>Track the evolution of FrogPaper through its release history.</p>
             </div>
             <div class="changelog-list">
+                <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.3.0" target="_blank" class="changelog-item">
+                    <div class="changelog-version">v1.3.0</div>
+                    <div class="changelog-date">August 2026</div>
+                    <div class="changelog-description">Star-pinned dropdown favorites, a redesigned settings window with sidebar navigation, clickable cloud setup guides, skipped-version updates, and safer secret-free builds.</div>
+                </a>
                 <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/1.2.0" target="_blank" class="changelog-item">
                     <div class="changelog-version">v1.2.0</div>
                     <div class="changelog-date">August 2026</div>
@@ -1552,11 +1582,11 @@
     <section class="section" id="download">
         <div class="container" style="text-align:center;">
             <div class="section-header">
-                <h2>Get FrogPaper v1.2.0</h2>
+                <h2>Get FrogPaper v1.3.0</h2>
                 <p>Ready to transform your desktop? Download the latest version and start generating beautiful AI wallpapers.</p>
             </div>
             <div class="hero-buttons">
-                <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/1.2.0/FrogPaper-Setup-1.2.0.exe" class="btn btn-primary">
+                <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.3.0/FrogPaper-Setup-1.3.0.exe" class="btn btn-primary">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Download Installer
                 </a>
@@ -1583,21 +1613,13 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>FrogPaper v1.2.0 &mdash; AI Wallpaper Generator</p>
                 <ul class="footer-links">
-                    <li><a href="https://github.com/sunnyskyess420/frogpaper" target="blank">GitHub</a></li>
-                    <li><a href="https://www.facebook.com/profile.php?id=61593290983998" target="_blank">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: -2px;"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        Facebook
-                    </a></li>
-                    <li><a href="#gallery">Gallery</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#comparison">Comparison</a></li>
-                    <li><a href="#changelog">Changelog</a></li>
-                    <li><a href="#bonus-apps">Bonus Apps</a></li>
+                    <li><a href="https://github.com/sunnyskyess420/frogpaper" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.facebook.com/profile.php?id=61593290983998" target="_blank">Facebook</a></li>
                     <li><a href="#privacy">Privacy</a></li>
-                    <li><a href="submit-wallpaper.html">Submit Wallpaper</a></li>
+                    <li><a href="submit-wallpaper.html">Submit</a></li>
                 </ul>
+                <p>FrogPaper v1.3.0 &mdash; AI Wallpaper Generator</p>
             </div>
         </div>
     </footer>
@@ -1726,6 +1748,68 @@
                 }
             }, { threshold: 0.5 });
             observer.observe(document.getElementById('downloadCounter'));
+        })();
+
+        // ── Auto-link downloads to the latest real release ──
+        // Static hrefs above are pinned to v1.3.0. When the GitHub API reports
+        // a release NEWER than the pinned one, both download buttons are
+        // upgraded to it so links never go stale. Older or equal versions are
+        // ignored, so the buttons always offer at least the version this page
+        // was built for (e.g. before v1.3.0 is published, they stay on v1.3.0
+        // instead of falling back to v1.2.0).
+        (function() {
+            const API = 'https://api.github.com/repos/sunnyskyess420/frogpaper/releases/latest';
+
+            function parseVer(s) {
+                const m = String(s).match(/\d+(?:\.\d+)*/);
+                return m ? m[0].split('.').map(Number) : null;
+            }
+
+            function isNewer(a, b) {
+                const n = Math.max(a.length, b.length);
+                for (let i = 0; i < n; i++) {
+                    const x = a[i] || 0, y = b[i] || 0;
+                    if (x !== y) return x > y;
+                }
+                return false;
+            }
+
+            function relabel(btn, verClean) {
+                const node = Array.from(btn.childNodes).find(
+                    n => n.nodeType === 3 && /\s*Download\s+v?\d/.test(n.nodeValue)
+                );
+                if (node && verClean) {
+                    node.nodeValue = node.nodeValue.replace(
+                        /(Download\s+)v?\d[\w.]*/,
+                        '$1v' + verClean
+                    );
+                }
+            }
+
+            function updateDownloadLinks(fetchImpl) {
+                return (fetchImpl || fetch)(API)
+                    .then(r => { if (!r.ok) throw new Error('GitHub API unavailable'); return r.json(); })
+                    .then(rel => {
+                        if (!rel || rel.draft || !Array.isArray(rel.assets)) return;
+                        const latest = parseVer(rel.tag_name);
+                        if (!latest) return;
+                        const exe = rel.assets.find(a => /^FrogPaper-Setup-.*\.exe$/i.test(a.name));
+                        if (!exe || !exe.browser_download_url) return;
+                        document.querySelectorAll('a.btn-primary[href*="/releases/download/"]').forEach(btn => {
+                            const tagMatch = btn.getAttribute('href').match(/releases\/download\/([^\/]+)\//);
+                            const pinned = tagMatch ? parseVer(tagMatch[1]) : null;
+                            if (!pinned || isNewer(latest, pinned)) {
+                                btn.href = exe.browser_download_url;
+                                relabel(btn, String(rel.tag_name || '').replace(/^v/, ''));
+                            }
+                        });
+                    })
+                    .catch(() => {});
+            }
+
+            // Exposed for testing; production call runs once on page load.
+            window.__updateDownloadLinks = updateDownloadLinks;
+            updateDownloadLinks();
         })();
     </script>
 
