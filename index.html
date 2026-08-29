@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FrogPaper v1.4.0 - AI Wallpaper Generator with 6 Providers</title>
+    <title>FrogPaper v1.4.1 - AI Wallpaper Generator with 6 Providers</title>
     <meta name="description" content="FrogPaper is a powerful AI wallpaper generator with 6 provider backends, dynamic setup UI, 25+ style filters, cloud sync, and resolution freedom.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sunnyskyess420.github.io/frogpaper-website/">
-    <meta property="og:title" content="FrogPaper v1.4.0 - AI Wallpaper Generator with 6 Providers">
+    <meta property="og:title" content="FrogPaper v1.4.1 - AI Wallpaper Generator with 6 Providers">
     <meta property="og:description" content="FrogPaper is a powerful AI wallpaper generator with 6 provider backends, dynamic setup UI, 25+ style filters, cloud sync, and resolution freedom.">
     <meta property="og:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg">
     <meta property="og:image:width" content="1200">
@@ -18,7 +18,7 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="FrogPaper v1.4.0 - AI Wallpaper Generator with 6 Providers">
+    <meta name="twitter:title" content="FrogPaper v1.4.1 - AI Wallpaper Generator with 6 Providers">
     <meta name="twitter:description" content="AI wallpaper generator with 6 provider backends, dynamic setup UI, 25+ style filters, and cloud sync.">
     <meta name="twitter:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg">
 
@@ -1224,7 +1224,7 @@
         <div class="container">
             <a href="index.html" class="nav-brand">
                 <img src="logo.png" alt="FrogPaper">
-                <span>FrogPaper <span class="version-badge">v1.4.0</span></span>
+                <span>FrogPaper <span class="version-badge">v1.4.1</span></span>
             </a>
             <ul class="nav-links">
                 <li class="hide-mobile"><a href="#features">Features</a></li>
@@ -1242,14 +1242,14 @@
         <div class="container">
             <div class="hero-badge">
                 <span class="pulse"></span>
-                Version 1.4.0 Now Available
+                Version 1.4.1 Now Available
             </div>
             <h1>AI Wallpapers,<br><span class="gradient-text">Seamlessly Synced</span></h1>
             <p>Generate stunning AI wallpapers from 6 AI providers — Pollinations, Cloudflare, HuggingFace, Prodia, Replicate, and Fal.ai. Dynamic provider setup, auto-resize for any resolution, and one-click cloud sync.</p>
             <div class="hero-buttons">
-                <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.4.0/FrogPaper-Setup-1.4.0.exe" class="btn btn-primary">
+                <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.4.1/FrogPaper-Setup-1.4.1.exe" class="btn btn-primary">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Download v1.4.0
+                    Download v1.4.1
                 </a>
                 <a href="submit-wallpaper.html" class="btn btn-secondary">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1317,7 +1317,7 @@
                 <div class="stat-label">AI Providers</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">v1.4.0</div>
+                <div class="stat-number">v1.4.1</div>
                 <div class="stat-label">Latest Release</div>
             </div>
             <div class="stat-item">
@@ -1331,7 +1331,7 @@
     <section class="section" id="features">
         <div class="container">
             <div class="section-header">
-                <div class="section-tag">New in v1.4.0</div>
+                <div class="section-tag">New in v1.4.1</div>
                 <h2>Six AI Providers, One App</h2>
                 <p>Pick the generation backend that fits your budget and speed — free options, pay-per-image, or premium quality. Switch anytime with dynamic setup guides.</p>
             </div>
@@ -1520,8 +1520,8 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-tag">Release Notes</div>
-                <h2>What's New in v1.4.0</h2>
-                <p>Six AI generation backends, dynamic provider setup, automatic resolution scaling, and much faster image generation.</p>
+                <h2>What's New in v1.4.1</h2>
+                <p>Bug fix release with 39 fixes: stability, thread safety, gallery, settings, and tutorials. Includes all v1.4.0 features below.</p>
             </div>
             <div class="release-notes">
                 <div class="release-category">
@@ -1561,6 +1561,35 @@
                         <li><span class="bullet"></span>Removed dead import that caused spurious scheduler warnings on every settings save</li>
                     </ul>
                 </div>
+                <div class="release-category">
+                    <h3>Bug Fixes</h3>
+                    <div class="improvements-grid">
+                        <div class="improvement-item">
+                            <span class="check">&#10003;</span>
+                            <span class="text">Fixed gallery color parsing crash, dialog sizing, theme imports, and wallpaper module errors</span>
+                        </div>
+                        <div class="improvement-item">
+                            <span class="check">&#10003;</span>
+                            <span class="text">Moved thumbnail creation off background threads for crash-free gallery loading</span>
+                        </div>
+                        <div class="improvement-item">
+                            <span class="check">&#10003;</span>
+                            <span class="text">Fixed scroll region crashes on empty gallery views and after view switches</span>
+                        </div>
+                        <div class="improvement-item">
+                            <span class="check">&#10003;</span>
+                            <span class="text">Fixed bogus config writes on settings focus loss and duplicate config keys</span>
+                        </div>
+                        <div class="improvement-item">
+                            <span class="check">&#10003;</span>
+                            <span class="text">Fixed tutorial window text cutoff and floating buttons</span>
+                        </div>
+                        <div class="improvement-item">
+                            <span class="check">&#10003;</span>
+                            <span class="text">Removed 20 unsafe bare-except clauses and dead duplicate code</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1574,10 +1603,10 @@
                 <p>Track the evolution of FrogPaper through its release history.</p>
             </div>
             <div class="changelog-list">
-                <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.4.0" target="_blank" class="changelog-item">
-                    <div class="changelog-version">v1.4.0</div>
+                <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.4.1" target="_blank" class="changelog-item">
+                    <div class="changelog-version">v1.4.1</div>
                     <div class="changelog-date">August 2026</div>
-                    <div class="changelog-description">6 AI providers (Pollinations, Cloudflare, Prodia, Replicate, Fal.ai, HuggingFace), dynamic provider setup UI, universal auto-resize for any resolution, and ~8x faster Replicate generation.</div>
+                    <div class="changelog-description">6 AI providers, dynamic provider setup UI, universal auto-resize, ~8x faster Replicate generation, and 39 bug fixes across stability, thread safety, gallery, settings, and tutorials.</div>
                 </a>
                 <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.3.2" target="_blank" class="changelog-item">
                     <div class="changelog-version">v1.3.2</div>
@@ -1670,11 +1699,11 @@
     <section class="section" id="download">
         <div class="container" style="text-align:center;">
             <div class="section-header">
-                <h2>Get FrogPaper v1.4.0</h2>
+                <h2>Get FrogPaper v1.4.1</h2>
                 <p>Ready to transform your desktop? Download the latest version and start generating beautiful AI wallpapers.</p>
             </div>
             <div class="hero-buttons">
-                <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.4.0/FrogPaper-Setup-1.4.0.exe" class="btn btn-primary">
+                <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.4.1/FrogPaper-Setup-1.4.1.exe" class="btn btn-primary">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Download Installer
                 </a>
@@ -1707,7 +1736,7 @@
                     <li><a href="#privacy">Privacy</a></li>
                     <li><a href="submit-wallpaper.html">Submit</a></li>
                 </ul>
-                <p>FrogPaper v1.4.0 &mdash; AI Wallpaper Generator</p>
+                <p>FrogPaper v1.4.1 &mdash; AI Wallpaper Generator</p>
             </div>
         </div>
     </footer>
