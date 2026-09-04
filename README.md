@@ -27,7 +27,8 @@ FrogPaper is a free, open-source Windows desktop application that generates, cur
 
 | Version | What's New | Link |
 |---------|-----------|------|
-| **v1.3.0** (latest) | Star-pinned dropdown favorites, redesigned settings with sidebar navigation, clickable cloud setup guides | [FrogPaper-Setup-1.3.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.3.0/FrogPaper-Setup-1.3.0.exe) |
+| **v1.5.0** (latest) | Instant gallery, full keyboard navigation, friendly file errors, modular rewrite, 301-test CI | [FrogPaper-Setup-1.5.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.5.0/FrogPaper-Setup-1.5.0.exe) |
+| v1.3.0 | Star-pinned dropdown favorites, redesigned settings with sidebar navigation, clickable cloud setup guides | [FrogPaper-Setup-1.3.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.3.0/FrogPaper-Setup-1.3.0.exe) |
 | v1.2.0 | Cloud sync (Google Drive, OneDrive, Dropbox), secure sign-in, setup wizard | [FrogPaper-Setup-1.2.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/1.2.0/FrogPaper-Setup-1.2.0.exe) |
 | v1.1.1 | Improved update notifications, image tagging, reliability | [FrogPaper-Setup-1.1.1.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.1/FrogPaper-Setup-1.1.1.exe) |
 | v1.1.0 | Portrait export for mobile wallpapers | [FrogPaper-Setup-1.1.0.exe](https://github.com/sunnyskyess420/frogpaper/releases/download/v1.1.0/FrogPaper-Setup-1.1.0.exe) |
