@@ -614,6 +614,53 @@
             color: var(--accent);
         }
 
+        /* ── Buy Me a Coffee Button ── */
+        .bmc-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 8px 0 4px;
+        }
+        .bmc-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            height: 40px;
+            padding: 0 18px;
+            background: #75d562;
+            color: #000000;
+            font-family: 'Bree', 'Inter', system-ui, sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1;
+            text-decoration: none;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .bmc-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            color: #000000;
+        }
+        .bmc-button:active {
+            transform: translateY(0);
+        }
+        .bmc-button .bmc-emoji {
+            font-size: 18px;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+        }
+        .bmc-button .bmc-text {
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
         /* ── Download Counter ── */
         .download-counter {
             display: inline-flex;
@@ -1774,6 +1821,12 @@
                     <li><a href="#privacy">Privacy</a></li>
                     <li><a href="submit-wallpaper.html">Submit</a></li>
                 </ul>
+                <div class="bmc-wrapper">
+                    <a href="https://www.buymeacoffee.com/alively142" target="_blank" rel="noopener" class="bmc-button">
+                        <span class="bmc-emoji">🐸</span>
+                        <span class="bmc-text">Support FrogPaper</span>
+                    </a>
+                </div>
                 <p>FrogPaper v1.5.0 &mdash; AI Wallpaper Generator</p>
             </div>
         </div>
