@@ -1,0 +1,236 @@
+/* =============================================================
+   FrogPaper — styles.css
+   Custom design tokens, animations, and overrides on top of Tailwind.
+   ============================================================= */
+
+:root {
+  /* Color tokens (HSL channels, used via Tailwind config) */
+  --background: 156 14% 7%;
+  --foreground: 42 31% 94%;
+  --paper: 42 31% 94%;
+  --paper-foreground: 156 14% 7%;
+  --paper-muted: 136 8% 62%;
+  --primary: 136 12% 52%;
+  --secondary: 153 13% 26%;
+  --muted: 153 13% 11%;
+  --muted-foreground: 136 8% 62%;
+  --accent: 136 12% 52%;
+  --copper: 28 45% 55%;
+  --card: 153 13% 13%;
+  --card-foreground: 42 31% 94%;
+  --border: 153 12% 18%;
+  --destructive: 0 62% 45%;
+  --radius: 0.75rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  /* Layered ambient gradients matching the original */
+  background-image:
+    radial-gradient(120% 80% at 50% -10%, rgba(29, 37, 34, 0.9), rgba(0, 0, 0, 0) 60%),
+    radial-gradient(80% 60% at 90% 10%, rgba(118, 147, 126, 0.06), rgba(0, 0, 0, 0) 55%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Heading font with optical sizing */
+.font-heading {
+  font-family: 'Fraunces', ui-serif, Georgia, serif;
+  font-optical-sizing: auto;
+}
+
+/* Smooth focus outlines */
+*:focus-visible {
+  outline: 2px solid hsl(var(--copper));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* =============================================================
+   ANIMATIONS — mirror the original @keyframes set
+   ============================================================= */
+
+/* Sheen sweeps across gallery cards on hover */
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.sheen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent
+  );
+  transform: skewX(-18deg);
+  transition: left 0.7s ease;
+}
+article:hover .sheen::before {
+  left: 130%;
+}
+
+/* Floating decor — slow vertical drift */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(1deg); }
+}
+.float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(8px, -6px); }
+  50% { transform: translate(-4px, 8px); }
+  75% { transform: translate(-8px, -4px); }
+}
+
+/* Pulse — version pill / status dots */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Spin — reserved for loading indicators */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Accordion expansion (CSS-only fallback) */
+@keyframes accordion-down {
+  from { height: 0; opacity: 0; }
+  to { height: var(--radix-accordion-content-height, auto); opacity: 1; }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height, auto); opacity: 1; }
+  to { height: 0; opacity: 0; }
+}
+
+/* Enter / exit — used by IntersectionObserver fades */
+@keyframes enter {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes exit {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =============================================================
+   GALLERY — drag-to-scroll + snap-x carousel
+   ============================================================= */
+#galleryTrack {
+  cursor: grab;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  user-select: none;
+  will-change: transform;
+}
+#galleryTrack.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+}
+#galleryTrack > article {
+  scroll-snap-align: start;
+}
+
+/* =============================================================
+   COMPARISON TABLE — responsive tweaks
+   ============================================================= */
+@media (max-width: 640px) {
+  section#compare .grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    font-size: 0.78rem;
+    gap: 4px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* =============================================================
+   ACCORDION (details/summary) — polish the default marker
+   ============================================================= */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] > summary span {
+  transform: rotate(45deg);
+}
+details[open] summary + p {
+  animation: enter 0.3s ease both;
+}
+
+/* =============================================================
+   SCROLLBAR — subtle, themed
+   ============================================================= */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--copper) / 0.5);
+}
+
+/* =============================================================
+   SELECTION
+   ============================================================= */
+::selection {
+  background: hsl(var(--copper) / 0.3);
+  color: hsl(var(--paper));
+}
+
+/* =============================================================
+   REDUCED MOTION
+   ============================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .float-slow { animation: none; }
+}
