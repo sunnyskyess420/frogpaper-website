@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>FrogPaper — AI Wallpapers, Seamlessly Synced</title>
-<meta name="description" content="A cozy AI wallpaper studio that lives on your desktop. Generate, curate, and rotate AI-powered wallpapers — no browser, no server. Free & open source for Windows." />
+<meta name="description" content="A cozy AI wallpaper studio for desktop and Android. Generate, curate, and rotate AI-powered wallpapers — no browser, no server, and on your phone nothing is uploaded anywhere. Free & open source." />
 <link rel="icon" type="image/png" href="assets/img/favicon.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
 <link rel="manifest" href="manifest.json" />
@@ -89,13 +89,14 @@ tailwind.config = {
     </a>
 
     <span class="hidden md:inline-flex items-center rounded-full border border-copper/40 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-copper">
-      Version 1.5.0 Now Available
+      Desktop v1.5.0 · Android app out now
     </span>
   </div>
 
   <!-- Mobile drawer -->
   <nav id="mobileNav" class="hidden border-t border-border/60 bg-background/95 backdrop-blur-md">
     <div class="mx-auto flex max-w-content flex-col gap-1 px-6 py-4 text-sm">
+      <a href="#mobile" class="py-2 text-muted-foreground hover:text-foreground">Mobile App</a>
       <a href="#features" class="py-2 text-muted-foreground hover:text-foreground">Features</a>
       <a href="#sync" class="py-2 text-muted-foreground hover:text-foreground">Cloud Sync</a>
       <a href="#how" class="py-2 text-muted-foreground hover:text-foreground">How It Works</a>
@@ -137,13 +138,17 @@ tailwind.config = {
   </h1>
 
   <p class="mt-8 max-w-xl text-pretty text-lg leading-[1.6] text-muted-foreground md:text-xl">
-    Generate stunning AI wallpapers from 6 providers — Pollinations, Cloudflare, HuggingFace, Prodia, Replicate, and Fal.ai. A faster gallery, full keyboard control, and one-click cloud sync. No browser. No server. Just your desktop and your imagination.
+    Generate stunning AI wallpapers from 6 providers — Pollinations, Cloudflare, HuggingFace, Prodia, Replicate, and Fal.ai. A faster gallery, full keyboard control, and one-click cloud sync. No browser. No server. Just your desktop and your imagination. Now on your phone, too.
   </p>
 
   <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
     <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.5.0/FrogPaper-Setup-1.5.0.exe" download class="group inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
       Download v1.5.0
+    </a>
+    <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest" class="inline-flex items-center gap-2 rounded-full border border-copper/40 px-7 py-3.5 text-sm font-medium text-copper transition hover:bg-copper/10">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.4.4 0 0 0-.69-.4l-1.87 3.23a11.3 11.3 0 0 0-9.76 0L5.25 5.9a.4.4 0 0 0-.69.4L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
+      Get the Android app
     </a>
     <a href="#gallery" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-7 py-3.5 text-sm font-medium text-paper backdrop-blur transition hover:border-copper/40 hover:text-copper">
       Explore the gallery
@@ -322,7 +327,87 @@ tailwind.config = {
 </section>
 
 <!-- ============================================================= -->
-<!-- FEATURES -->
+<!-- MOBILE -->
+<!-- ============================================================= -->
+<section id="mobile" class="border-t border-border bg-card/20 px-6 py-24 md:py-32">
+  <div class="mx-auto max-w-content">
+    <div class="mb-16 max-w-2xl">
+      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Android App</span>
+      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
+        FrogPaper,<br/>
+        <em class="font-light italic">in your pocket.</em>
+      </h2>
+      <p class="mt-6 max-w-xl leading-[1.6] text-muted-foreground">
+        The same idea, rebuilt for a phone: describe a wallpaper in a few words and it appears.
+        No account, nothing to configure, and every wallpaper stays on your device.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest" class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
+          Download for Android — free
+        </a>
+        <a href="#made-with-frogpaper" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">
+          See the gallery
+          <span aria-hidden>→</span>
+        </a>
+      </div>
+      <p class="mt-5 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+        Android 7.0+ · 75 MB · no Play Store required
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
+        <h3 class="font-heading text-2xl font-medium text-paper">Words in, wallpapers out</h3>
+        <p class="mt-4 leading-[1.6] text-muted-foreground">
+          Two words is enough, or tap the dice for a surprise. The Build screen offers subject,
+          style, lighting, colour, mood and atmosphere to shape it.
+        </p>
+      </article>
+      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
+        <h3 class="font-heading text-2xl font-medium text-paper">Everything stays on your phone</h3>
+        <p class="mt-4 leading-[1.6] text-muted-foreground">
+          Wallpapers are saved on the device, never on a server. There is no account to make and
+          nothing is uploaded anywhere.
+        </p>
+      </article>
+      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
+        <h3 class="font-heading text-2xl font-medium text-paper">Free, and quietly useful</h3>
+        <p class="mt-4 leading-[1.6] text-muted-foreground">
+          It can change your wallpaper once a day on its own, works offline from the copies on
+          your phone, and needs no key at all to start.
+        </p>
+      </article>
+    </div>
+
+    <div id="made-with-frogpaper" class="mt-14 scroll-mt-24">
+      <p class="mb-6 text-[10px] uppercase tracking-[0.4em] text-copper">Made with FrogPaper</p>
+      <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
+          <img src="assets/img/mobile-example-dragon.jpg" alt="A small red dragon hovering over glowing lava" class="aspect-[9/16] w-full object-cover" loading="lazy" />
+          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Red dragon over lava</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
+          <img src="assets/img/mobile-example-moonlit.jpg" alt="A gothic figure on a vine swing beneath a red moon" class="aspect-[9/16] w-full object-cover" loading="lazy" />
+          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Moonlit gothic scene</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
+          <img src="assets/img/mobile-example-eagle.jpg" alt="A bald eagle flying over a mountain lake" class="aspect-[9/16] w-full object-cover" loading="lazy" />
+          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Eagle over the lake</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
+          <img src="assets/img/mobile-example-sunflowers.jpg" alt="A silhouetted figure in a field of sunflowers before a glowing sun" class="aspect-[9/16] w-full object-cover" loading="lazy" />
+          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Sunflowers at sundown</figcaption>
+        </figure>
+      </div>
+      <p class="mt-6 max-w-xl text-sm leading-[1.6] text-muted-foreground">
+        A few recent ones, straight off the phone. The only thing that changes between them is the
+        words used to ask.
+      </p>
+    </div>
+  </div>
+</section>
+
+ -->
 <!-- ============================================================= -->
 <section id="features" class="border-t border-border bg-card/20 px-6 py-24 md:py-32">
   <div class="mx-auto max-w-content">
@@ -843,6 +928,7 @@ tailwind.config = {
         <h4 class="mb-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Get the App</h4>
         <ul class="space-y-3 text-sm">
           <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.5.0/FrogPaper-Setup-1.5.0.exe" download class="text-paper/80 hover:text-copper">Download v1.5.0</a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest" class="text-paper/80 hover:text-copper">Android app — free APK</a></li>
           <li><a href="submit-wallpaper.html" class="text-paper/80 hover:text-copper">Submit a wallpaper</a></li>
           <li><a href="#sorter" class="text-paper/80 hover:text-copper">Bonus app — Photo Sorter</a></li>
         </ul>
