@@ -379,29 +379,35 @@ tailwind.config = {
       </article>
     </div>
 
-    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
-        <img src="assets/img/mobile-home.jpg" alt="FrogPaper for Android — home screen" class="w-full" loading="lazy" />
-        <figcaption class="border-t border-border px-5 py-3 text-xs text-muted-foreground">Home — one tap sets today's wallpaper</figcaption>
-      </figure>
-      <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
-        <img src="assets/img/mobile-gallery.jpg" alt="FrogPaper for Android — the gallery" class="w-full" loading="lazy" />
-        <figcaption class="border-t border-border px-5 py-3 text-xs text-muted-foreground">Gallery — your wallpapers, kept on your phone</figcaption>
-      </figure>
-      <article class="rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="font-heading text-xl font-medium text-paper">Good to know</h3>
-        <ul class="mt-4 space-y-2 text-sm leading-[1.6] text-muted-foreground">
-          <li>The first wallpaper can take up to a minute — the free service sleeps when idle, and Retry costs nothing.</li>
-          <li>Optional: add your own free Gemini or Hugging Face key for sharper results.</li>
-          <li>No ads, no tracking, no sign-up.</li>
-        </ul>
-      </article>
+    <div class="mt-14">
+      <p class="mb-6 text-[10px] uppercase tracking-[0.4em] text-copper">Made with FrogPaper</p>
+      <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
+          <img src="assets/img/mobile-example-dragon.jpg" alt="A small red dragon hovering over glowing lava" class="aspect-[9/16] w-full object-cover" loading="lazy" />
+          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Red dragon over lava</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
+          <img src="assets/img/mobile-example-moonlit.jpg" alt="A gothic figure on a vine swing beneath a red moon" class="aspect-[9/16] w-full object-cover" loading="lazy" />
+          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Moonlit gothic scene</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
+          <img src="assets/img/mobile-example-eagle.jpg" alt="A bald eagle flying over a mountain lake" class="aspect-[9/16] w-full object-cover" loading="lazy" />
+          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Eagle over the lake</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-2xl border border-border bg-background/60">
+          <img src="assets/img/mobile-example-sunflowers.jpg" alt="A silhouetted figure in a field of sunflowers before a glowing sun" class="aspect-[9/16] w-full object-cover" loading="lazy" />
+          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Sunflowers at sundown</figcaption>
+        </figure>
+      </div>
+      <p class="mt-6 max-w-xl text-sm leading-[1.6] text-muted-foreground">
+        A few recent ones, straight off the phone. The only thing that changes between them is the
+        words used to ask.
+      </p>
     </div>
   </div>
 </section>
 
-<!-- ============================================================= -->
-<!-- FEATURES -->
+ -->
 <!-- ============================================================= -->
 <section id="features" class="border-t border-border bg-card/20 px-6 py-24 md:py-32">
   <div class="mx-auto max-w-content">
