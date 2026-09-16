@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>FrogPaper — Downloads</title>
+<meta name="description" content="How many times FrogPaper Mobile has been downloaded." />
+<meta name="theme-color" content="#111815" />
+<link rel="icon" type="image/png" href="assets/img/favicon.png" />
+<link rel="manifest" href="manifest.json" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* Same palette as the main site: hsl tokens from styles.css */
+  :root { color-scheme: dark; }
+  body { background: hsl(var(--background)); color: hsl(var(--foreground)); font-family: ui-sans-serif, system-ui, sans-serif; }
+  .font-heading { font-family: Georgia, 'Times New Roman', serif; }
+  .big { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<header class="border-b border-border/60 bg-background/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-content items-center justify-between px-6 py-4">
+    <a href="index.html" class="font-heading text-sm uppercase tracking-[0.3em] text-foreground">FrogPaper</a>
+    <a href="index.html#mobile" class="text-[10px] uppercase tracking-[0.2em] text-copper hover:text-paper">Get the app</a>
+  </div>
+</header>
+
+<main class="mx-auto max-w-content px-6 py-16">
+
+  <div class="max-w-2xl">
+    <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Downloads</span>
+    <h1 class="mt-4 font-heading text-[clamp(34px,7vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
+      How many hands<br/>
+      <em class="font-light italic">it has reached.</em>
+    </h1>
+    <p class="mt-6 leading-[1.6] text-muted-foreground">
+      Straight from the public release page — nothing tracked, nothing counted but the file itself.
+      GitHub can lag a few minutes behind.
+    </p>
+  </div>
+
+  <div class="mt-12 rounded-2xl border border-border bg-card/60 p-8">
+    <div class="big text-[clamp(56px,16vw,104px)] font-semibold leading-none text-accent" id="total">—</div>
+    <div class="mt-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground" id="totalLabel">total downloads</div>
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <button id="refresh" class="inline-flex items-center gap-2 rounded-full border border-copper/40 px-5 py-2.5 text-xs font-medium text-copper transition hover:bg-copper/10">Refresh now</button>
+      <span class="text-xs text-muted-foreground" id="stamp">loading…</span>
+    </div>
+  </div>
+
+  <div class="mt-10">
+    <h2 class="mb-4 text-[10px] uppercase tracking-[0.4em] text-copper">By release</h2>
+    <div id="list" class="grid gap-4 sm:grid-cols-2"></div>
+  </div>
+
+  <p id="problem" class="mt-8 hidden rounded-2xl border border-border bg-background/60 p-5 text-sm leading-[1.6] text-muted-foreground"></p>
+
+  <div class="mt-14 flex flex-wrap gap-3">
+    <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest" class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">Open the latest release</a>
+    <a href="index.html#mobile" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">About the Android app</a>
+  </div>
+
+</main>
+
+<footer class="border-t border-border bg-card/20 px-6 py-10">
+  <div class="mx-auto flex max-w-content flex-wrap items-center justify-between gap-4 text-xs text-muted-foreground">
+    <span>FrogPaper — free &amp; open source</span>
+    <a href="index.html" class="hover:text-copper">Back to the site</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var API = 'https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases';
+  var totalEl = document.getElementById('total');
+  var labelEl = document.getElementById('totalLabel');
+  var stampEl = document.getElementById('stamp');
+  var listEl = document.getElementById('list');
+  var problemEl = document.getElementById('problem');
+
+  function esc(text) {
+    return String(text).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function render(releases) {
+    var total = 0;
+    releases.forEach(function (release) {
+      (release.assets || []).forEach(function (asset) { total += asset.download_count || 0; });
+    });
+    totalEl.textContent = total.toLocaleString();
+    labelEl.textContent = total === 1 ? 'total download' : 'total downloads';
+    stampEl.textContent = 'updated ' + new Date().toLocaleTimeString();
+
+    if (!releases.length) {
+      listEl.innerHTML = '<p class="text-sm text-muted-foreground">No releases published yet.</p>';
+      return;
+    }
+
+    listEl.innerHTML = releases.map(function (release) {
+      var count = (release.assets || []).reduce(function (sum, asset) { return sum + (asset.download_count || 0); }, 0);
+      var date = release.published_at ? new Date(release.published_at).toLocaleDateString() : '';
+      var isLatest = release === releases[0];
+      return '<div class="rounded-2xl border border-border bg-background/60 p-6">' +
+        '<div class="flex items-baseline justify-between gap-3">' +
+        '<span class="font-heading text-lg text-paper">' + esc(release.tag_name) + '</span>' +
+        '<span class="big text-2xl font-semibold text-accent">' + count.toLocaleString() + '</span>' +
+        '</div>' +
+        '<div class="mt-2 text-xs text-muted-foreground">' + esc(date) + (isLatest ? ' · latest' : '') + '</div>' +
+        '<a class="mt-3 inline-block text-xs text-copper hover:text-paper" href="' + esc(release.html_url) + '">View release →</a>' +
+        '</div>';
+    }).join('');
+  }
+
+  function load() {
+    problemEl.classList.add('hidden');
+    fetch(API + '?per_page=20', { headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (response) {
+        if (response.status === 404) { return []; }
+        if (!response.ok) { throw new Error('HTTP ' + response.status); }
+        return response.json();
+      })
+      .then(render)
+      .catch(function (error) {
+        problemEl.textContent = "Couldn't reach GitHub just now (" + error.message + "). Tap Refresh to try again.";
+        problemEl.classList.remove('hidden');
+        stampEl.textContent = 'no connection';
+        if (totalEl.textContent === '—') { totalEl.textContent = '?'; }
+      });
+  }
+
+  document.getElementById('refresh').addEventListener('click', load);
+  load();
+  setInterval(load, 300000);
+})();
+</script>
+</body>
+</html>
