@@ -150,7 +150,8 @@ article:hover .sheen::before {
 /* =============================================================
    GALLERY — drag-to-scroll + snap-x carousel
    ============================================================= */
-#galleryTrack {
+#galleryTrack,
+#madeTrack {
   cursor: grab;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -158,13 +159,21 @@ article:hover .sheen::before {
   user-select: none;
   will-change: transform;
 }
-#galleryTrack.is-dragging {
+#galleryTrack.is-dragging,
+#madeTrack.is-dragging {
   cursor: grabbing;
   scroll-behavior: auto;
   scroll-snap-type: none;
 }
-#galleryTrack > article {
+#galleryTrack > article,
+#madeTrack > figure {
   scroll-snap-align: start;
+}
+/* Stop the browser's native image-drag from hijacking the pointer drag */
+#galleryTrack img,
+#madeTrack img {
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 /* =============================================================
