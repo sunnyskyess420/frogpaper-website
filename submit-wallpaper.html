@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0B1220" />
 <title>Submit a Wallpaper — FrogPaper</title>
 <meta name="description" content="Share your best AI-generated wallpapers with the FrogPaper community. Reviewed submissions join the community gallery on the home page." />
 <link rel="icon" type="image/png" href="assets/img/favicon.png" />
 <link rel="manifest" href="manifest.json" />
 
 <!-- Fonts (same as index.html) -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
 <!-- Tailwind via CDN (config identical to index.html) -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -20,28 +18,28 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        background: 'hsl(156 14% 7%)',
-        foreground: 'hsl(42 31% 94%)',
-        paper: 'hsl(42 31% 94%)',
-        'paper-foreground': 'hsl(156 14% 7%)',
-        'paper-muted': 'hsl(136 8% 62%)',
-        primary: 'hsl(136 12% 52%)',
-        'primary-foreground': 'hsl(156 14% 7%)',
-        secondary: 'hsl(153 13% 26%)',
-        'secondary-foreground': 'hsl(42 31% 94%)',
-        muted: 'hsl(153 13% 11%)',
-        'muted-foreground': 'hsl(136 8% 62%)',
-        accent: 'hsl(136 12% 52%)',
-        'accent-foreground': 'hsl(156 14% 7%)',
-        copper: 'hsl(28 45% 55%)',
-        card: 'hsl(153 13% 13%)',
-        'card-foreground': 'hsl(42 31% 94%)',
-        border: 'hsl(153 12% 18%)',
-        destructive: 'hsl(0 62% 45%)',
+        background: '#0B1220',
+        foreground: '#E7EEF7',
+        paper: '#E7EEF7',
+        'paper-foreground': '#0B1220',
+        'paper-muted': '#8DA2BC',
+        primary: '#34D399',
+        'primary-foreground': '#0B1220',
+        secondary: '#1C2B45',
+        'secondary-foreground': '#E7EEF7',
+        muted: '#0F1828',
+        'muted-foreground': '#8DA2BC',
+        accent: '#34D399',
+        'accent-foreground': '#0B1220',
+        copper: '#10B981',
+        card: '#121D30',
+        'card-foreground': '#E7EEF7',
+        border: '#20304A',
+        destructive: '#F87171',
       },
       fontFamily: {
-        heading: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
-        body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
+        body: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       borderRadius: {
@@ -72,32 +70,32 @@ tailwind.config = {
   font-size: 10px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: hsl(136 8% 62%);
+  color: hsl(213 26% 65%);
 }
-.field-label .req { color: hsl(28 45% 55%); }
+.field-label .req { color: hsl(160 84% 39%); }
 
 .field-input {
   width: 100%;
   border-radius: 0.75rem;
-  border: 1px solid hsl(153 12% 18%);
-  background: hsl(153 13% 11% / 0.55);
+  border: 1px solid hsl(217 40% 21%);
+  background: hsl(218 47% 11% / 0.55);
   padding: 0.8rem 1rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: hsl(42 31% 94%);
+  color: hsl(214 40% 94%);
   transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
-.field-input::placeholder { color: hsl(136 8% 62% / 0.45); }
-.field-input:hover { border-color: hsl(153 12% 24%); }
+.field-input::placeholder { color: hsl(213 26% 65% / 0.45); }
+.field-input:hover { border-color: hsl(217 40% 27%); }
 .field-input:focus {
   outline: none;
-  border-color: hsl(28 45% 55% / 0.65);
-  background: hsl(153 13% 11% / 0.85);
-  box-shadow: 0 0 0 3px hsl(28 45% 55% / 0.12);
+  border-color: hsl(160 84% 39% / 0.65);
+  background: hsl(218 47% 11% / 0.85);
+  box-shadow: 0 0 0 3px hsl(160 84% 39% / 0.12);
 }
 select.field-input { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 2.75rem; }
-select.field-input option { background-color: hsl(156 14% 7%); color: hsl(42 31% 94%); }
-select.field-input:invalid, select.field-input option[value=""] { color: hsl(136 8% 62% / 0.55); }
+select.field-input option { background-color: hsl(220 49% 8%); color: hsl(214 40% 94%); }
+select.field-input:invalid, select.field-input option[value=""] { color: hsl(213 26% 65% / 0.55); }
 textarea.field-input { resize: vertical; min-height: 120px; }
 
 /* --- Validation --- */
@@ -107,10 +105,10 @@ textarea.field-input { resize: vertical; min-height: 120px; }
   gap: 6px;
   margin-top: 0.5rem;
   font-size: 12px;
-  color: hsl(0 62% 45%);
+  color: hsl(0 84% 71%);
 }
 .field-error.visible { display: flex; }
-.has-error .field-input { border-color: hsl(0 62% 45% / 0.65); }
+.has-error .field-input { border-color: hsl(0 84% 71% / 0.65); }
 
 /* --- Upload zone --- */
 .upload-zone {
@@ -121,16 +119,16 @@ textarea.field-input { resize: vertical; min-height: 120px; }
   gap: 0.5rem;
   width: 100%;
   padding: 2.5rem 1.5rem;
-  border: 1.5px dashed hsl(153 12% 22%);
+  border: 1.5px dashed hsl(217 40% 26%);
   border-radius: 0.75rem;
-  background: hsl(153 13% 11% / 0.35);
+  background: hsl(218 47% 11% / 0.35);
   cursor: pointer;
   text-align: center;
   transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
 }
 .upload-zone:hover, .upload-zone:focus-visible, .upload-zone.dragover {
-  border-color: hsl(28 45% 55% / 0.6);
-  background: hsl(153 13% 11% / 0.7);
+  border-color: hsl(160 84% 39% / 0.6);
+  background: hsl(218 47% 11% / 0.7);
 }
 .upload-zone.dragover { transform: scale(1.01); }
 
@@ -140,16 +138,16 @@ textarea.field-input { resize: vertical; min-height: 120px; }
   gap: 0.5rem;
   margin-top: 0.75rem;
   padding: 0.6rem 0.9rem;
-  border: 1px solid hsl(153 12% 18%);
+  border: 1px solid hsl(217 40% 21%);
   border-radius: 0.75rem;
-  background: hsl(153 13% 11% / 0.55);
+  background: hsl(218 47% 11% / 0.55);
   font-size: 12px;
-  color: hsl(42 31% 94%);
+  color: hsl(214 40% 94%);
   word-break: break-all;
 }
 #fileInfo.visible { display: flex; }
-#fileInfo .fi-name { color: hsl(42 31% 94%); }
-#fileInfo .fi-size { color: hsl(136 8% 62%); }
+#fileInfo .fi-name { color: hsl(214 40% 94%); }
+#fileInfo .fi-size { color: hsl(213 26% 65%); }
 
 /* --- Tag chips --- */
 .tags-wrapper {
@@ -157,16 +155,16 @@ textarea.field-input { resize: vertical; min-height: 120px; }
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid hsl(153 12% 18%);
+  border: 1px solid hsl(217 40% 21%);
   border-radius: 0.75rem;
-  background: hsl(153 13% 11% / 0.55);
+  background: hsl(218 47% 11% / 0.55);
   padding: 0.55rem 0.75rem;
   cursor: text;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .tags-wrapper:focus-within {
-  border-color: hsl(28 45% 55% / 0.65);
-  box-shadow: 0 0 0 3px hsl(28 45% 55% / 0.12);
+  border-color: hsl(160 84% 39% / 0.65);
+  box-shadow: 0 0 0 3px hsl(160 84% 39% / 0.12);
 }
 .tags-wrapper input {
   flex: 1;
@@ -175,29 +173,29 @@ textarea.field-input { resize: vertical; min-height: 120px; }
   background: transparent;
   padding: 0.25rem 0;
   font-size: 0.875rem;
-  color: hsl(42 31% 94%);
+  color: hsl(214 40% 94%);
 }
 .tags-wrapper input:focus { outline: none; box-shadow: none; }
-.tags-wrapper input::placeholder { color: hsl(136 8% 62% / 0.45); }
+.tags-wrapper input::placeholder { color: hsl(213 26% 65% / 0.45); }
 
 .tag-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid hsl(28 45% 55% / 0.35);
+  border: 1px solid hsl(160 84% 39% / 0.35);
   border-radius: 999px;
-  background: hsl(28 45% 55% / 0.12);
+  background: hsl(160 84% 39% / 0.12);
   padding: 4px 10px;
   font-size: 12px;
   line-height: 1.2;
-  color: hsl(28 45% 55%);
+  color: hsl(160 84% 39%);
   animation: enter 0.25s ease both;
 }
 .tag-chip .remove-tag { cursor: pointer; opacity: 0.65; font-size: 15px; line-height: 1; }
 .tag-chip .remove-tag:hover { opacity: 1; }
 
 /* --- Checkbox --- */
-.agree-box { accent-color: hsl(28 45% 55%); width: 16px; height: 16px; flex: none; }
+.agree-box { accent-color: hsl(160 84% 39%); width: 16px; height: 16px; flex: none; }
 
 /* --- Success state --- */
 #successState { display: none; }
@@ -252,7 +250,7 @@ textarea.field-input { resize: vertical; min-height: 120px; }
 <section class="relative overflow-hidden px-6 pt-36 pb-16 md:pt-44 md:pb-20 text-center">
   <!-- Ambient glow -->
   <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <div class="absolute inset-0" style="background: radial-gradient(80% 60% at 50% -10%, rgba(29,37,34,0.9), rgba(0,0,0,0) 60%), radial-gradient(60% 50% at 85% 15%, rgba(118,147,126,0.06), rgba(0,0,0,0) 55%);"></div>
+    <div class="absolute inset-0" style="background: radial-gradient(80% 60% at 50% -10%, rgba(11,18,32,0.92), rgba(0,0,0,0) 60%), radial-gradient(60% 50% at 85% 15%, rgba(52,211,153,0.07), rgba(0,0,0,0) 55%);"></div>
   </div>
 
   <span class="mb-8 inline-flex items-center rounded-full border border-copper/40 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-copper">
@@ -326,7 +324,7 @@ textarea.field-input { resize: vertical; min-height: 120px; }
           </button>
           <input type="file" id="fileInput" name="fi-file-wallpaper" accept="image/png, image/jpeg, image/webp, image/bmp" class="sr-only" />
           <div id="fileInfo" aria-live="polite">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="hsl(28 45% 55%)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="flex-none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="hsl(160 84% 39%)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="flex-none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             <span class="fi-name"></span>
             <span class="fi-size"></span>
           </div>

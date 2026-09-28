@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0B1220" />
 <title>FrogPaper — AI Wallpapers, Seamlessly Synced</title>
 <meta name="description" content="A cozy AI wallpaper studio for desktop and Android. Generate, curate, and rotate AI-powered wallpapers — no browser, no server, and on your phone nothing is uploaded anywhere. Free & open source." />
 <link rel="icon" type="image/png" href="assets/img/favicon.png" />
@@ -24,9 +25,6 @@
 <meta name="twitter:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg" />
 
 <!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
 <!-- Tailwind via CDN (config injected below) -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -35,28 +33,28 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        background: 'hsl(156 14% 7%)',
-        foreground: 'hsl(42 31% 94%)',
-        paper: 'hsl(42 31% 94%)',
-        'paper-foreground': 'hsl(156 14% 7%)',
-        'paper-muted': 'hsl(136 8% 62%)',
-        primary: 'hsl(136 12% 52%)',
-        'primary-foreground': 'hsl(156 14% 7%)',
-        secondary: 'hsl(153 13% 26%)',
-        'secondary-foreground': 'hsl(42 31% 94%)',
-        muted: 'hsl(153 13% 11%)',
-        'muted-foreground': 'hsl(136 8% 62%)',
-        accent: 'hsl(136 12% 52%)',
-        'accent-foreground': 'hsl(156 14% 7%)',
-        copper: 'hsl(28 45% 55%)',
-        card: 'hsl(153 13% 13%)',
-        'card-foreground': 'hsl(42 31% 94%)',
-        border: 'hsl(153 12% 18%)',
-        destructive: 'hsl(0 62% 45%)',
+        background: '#0B1220',
+        foreground: '#E7EEF7',
+        paper: '#E7EEF7',
+        'paper-foreground': '#0B1220',
+        'paper-muted': '#8DA2BC',
+        primary: '#34D399',
+        'primary-foreground': '#0B1220',
+        secondary: '#1C2B45',
+        'secondary-foreground': '#E7EEF7',
+        muted: '#0F1828',
+        'muted-foreground': '#8DA2BC',
+        accent: '#34D399',
+        'accent-foreground': '#0B1220',
+        copper: '#10B981',
+        card: '#121D30',
+        'card-foreground': '#E7EEF7',
+        border: '#20304A',
+        destructive: '#F87171',
       },
       fontFamily: {
-        heading: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
-        body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
+        body: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       borderRadius: {
@@ -117,7 +115,7 @@ tailwind.config = {
   <!-- Background image + vignette -->
   <div class="pointer-events-none absolute inset-0 -z-10">
     <img src="assets/img/hero-frog.webp" alt="" class="h-full w-full object-cover opacity-50" />
-    <div class="absolute inset-0" style="background: radial-gradient(120% 80% at 50% -10%, rgba(29,37,34,0.9), rgba(0,0,0,0) 60%), radial-gradient(80% 60% at 90% 10%, rgba(118,147,126,0.06), rgba(0,0,0,0) 55%);"></div>
+    <div class="absolute inset-0" style="background: radial-gradient(120% 80% at 50% -10%, rgba(11,18,32,0.92), rgba(0,0,0,0) 60%), radial-gradient(80% 60% at 90% 10%, rgba(52,211,153,0.07), rgba(0,0,0,0) 55%);"></div>
     <div class="absolute inset-0 bg-background/30"></div>
   </div>
 
@@ -568,7 +566,7 @@ tailwind.config = {
 
       <div class="group relative overflow-hidden rounded-2xl border border-border bg-card/40 p-8 transition hover:border-copper/40">
         <div class="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L6 6L0 12L6 18L12 24L18 18L24 12L18 6L12 0Z" opacity="0.9"/><path d="M12 6L9 9L6 12L9 15L12 18L15 15L18 12L15 9L12 6Z" fill="hsl(156 14% 7%)" opacity="0.5"/></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L6 6L0 12L6 18L12 24L18 18L24 12L18 6L12 0Z" opacity="0.9"/><path d="M12 6L9 9L6 12L9 15L12 18L15 15L18 12L15 9L12 6Z" fill="hsl(220 49% 8%)" opacity="0.5"/></svg>
         </div>
         <h3 class="font-heading text-3xl font-medium text-paper">Dropbox</h3>
         <p class="mt-3 text-muted-foreground">Auto-backup</p>

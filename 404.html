@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0B1220" />
 <title>404 — FrogPaper</title>
 <meta name="robots" content="noindex" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
 
 <!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
 <!-- Tailwind via CDN (config injected below) -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -20,19 +18,19 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        background: 'hsl(156 14% 7%)',
-        foreground: 'hsl(42 31% 94%)',
-        paper: 'hsl(42 31% 94%)',
-        'paper-foreground': 'hsl(156 14% 7%)',
-        muted: 'hsl(153 13% 11%)',
-        'muted-foreground': 'hsl(136 8% 62%)',
-        copper: 'hsl(28 45% 55%)',
-        card: 'hsl(153 13% 13%)',
-        border: 'hsl(153 12% 18%)',
+        background: '#0B1220',
+        foreground: '#E7EEF7',
+        paper: '#E7EEF7',
+        'paper-foreground': '#0B1220',
+        muted: '#0F1828',
+        'muted-foreground': '#8DA2BC',
+        copper: '#10B981',
+        card: '#121D30',
+        border: '#20304A',
       },
       fontFamily: {
-        heading: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
-        body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
+        body: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       maxWidth: { content: '1200px' },
     },
@@ -41,7 +39,7 @@ tailwind.config = {
 </script>
 <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="font-body flex min-h-[100svh] items-center justify-center bg-background px-6 text-foreground antialiased" style="background-image: radial-gradient(120% 80% at 50% -10%, rgba(29,37,34,0.9), rgba(0,0,0,0) 60%);">
+<body class="font-body flex min-h-[100svh] items-center justify-center bg-background px-6 text-foreground antialiased" style="background-image: radial-gradient(120% 80% at 50% -10%, rgba(11,18,32,0.92), rgba(0,0,0,0) 60%);">
   <main class="max-w-md py-24 text-center">
     <span class="mb-6 inline-flex items-center rounded-full border border-copper/40 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-copper">Error 404</span>
     <h1 class="font-heading text-[clamp(40px,7vw,64px)] font-semibold leading-[1.05] tracking-[-0.03em] text-paper">
