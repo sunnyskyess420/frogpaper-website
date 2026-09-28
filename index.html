@@ -1062,6 +1062,7 @@ tailwind.config = {
       <article class="rounded-2xl border border-border bg-card/40 p-8">
         <div class="flex flex-wrap items-baseline gap-4">
           <h3 class="font-heading text-2xl font-medium text-paper">v1.5.0</h3>
+          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.5.0"></span>
           <span class="text-[10px] uppercase tracking-[0.3em] text-copper">September 2026</span>
         </div>
         <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
@@ -1073,6 +1074,7 @@ tailwind.config = {
       <article class="rounded-2xl border border-border bg-card/40 p-8">
         <div class="flex flex-wrap items-baseline gap-4">
           <h3 class="font-heading text-2xl font-medium text-paper">v1.4.1</h3>
+          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.4.1"></span>
           <span class="text-[10px] uppercase tracking-[0.3em] text-copper">August 2026</span>
         </div>
         <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
@@ -1084,6 +1086,7 @@ tailwind.config = {
       <article class="rounded-2xl border border-border bg-card/40 p-8">
         <div class="flex flex-wrap items-baseline gap-4">
           <h3 class="font-heading text-2xl font-medium text-paper">v1.3.2</h3>
+          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.3.2"></span>
           <span class="text-[10px] uppercase tracking-[0.3em] text-copper">August 2026</span>
         </div>
         <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
@@ -1214,6 +1217,36 @@ tailwind.config = {
       });
   }
   load();
+})();
+</script>
+
+<!-- Version history: live download counts from the public GitHub API -->
+<script>
+(function () {
+  var badges = document.querySelectorAll('.release-downloads');
+  if (!badges.length) return;
+  var repos = ['sunnyskyess420/frogpaper', 'sunnyskyess420/frogpaper-mobile'];
+  var counts = {};
+  Promise.all(repos.map(function (r) {
+    return fetch('https://api.github.com/repos/' + r + '/releases?per_page=50', { headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (x) { return x.ok ? x.json() : []; })
+      .catch(function () { return []; });
+  })).then(function (lists) {
+    lists.forEach(function (rel) {
+      (rel || []).forEach(function (release) {
+        var n = (release.assets || []).reduce(function (s, a) { return s + (a.download_count || 0); }, 0);
+        counts[release.tag_name] = (counts[release.tag_name] || 0) + n;
+      });
+    });
+    badges.forEach(function (b) {
+      var n = counts[b.getAttribute('data-tag')];
+      if (typeof n === 'number') {
+        b.textContent = n.toLocaleString() + ' download' + (n === 1 ? '' : 's');
+        b.classList.remove('hidden');
+        b.classList.add('inline-flex');
+      }
+    });
+  });
 })();
 </script>
 
