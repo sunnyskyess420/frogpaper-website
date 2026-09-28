@@ -22,16 +22,18 @@
   }
 
   /* ------------------------------------------------------------------
-     2. GALLERY CAROUSEL — drag + arrow controls
+     2. CAROUSELS — drag + arrow controls (reused for both tracks)
      ------------------------------------------------------------------ */
-  const track = document.getElementById('galleryTrack');
-  const prevBtn = document.getElementById('galPrev');
-  const nextBtn = document.getElementById('galNext');
+  function initCarousel(trackId, prevId, nextId, fallbackCardWidth) {
+    const track = document.getElementById(trackId);
+    if (!track) return;
+    const prevBtn = document.getElementById(prevId);
+    const nextBtn = document.getElementById(nextId);
+    const fallback = fallbackCardWidth || 440;
 
-  if (track) {
     const cardWidth = () => {
-      const first = track.querySelector('article');
-      if (!first) return 440;
+      const first = track.querySelector('article, figure');
+      if (!first) return fallback;
       const gap = 20;
       return first.getBoundingClientRect().width + gap;
     };
@@ -96,6 +98,9 @@
       }
     });
   }
+
+  initCarousel('galleryTrack', 'galPrev', 'galNext', 440);
+  initCarousel('madeTrack', 'madePrev', 'madeNext', 240);
 
   /* ------------------------------------------------------------------
      3. STICKY HEADER — add shadow on scroll
