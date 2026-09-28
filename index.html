@@ -191,6 +191,62 @@ tailwind.config = {
 </section>
 
 <!-- ============================================================= -->
+<!-- TWO APPS -->
+<section id="apps" class="scroll-mt-24 border-t border-border px-6 py-24 md:py-32">
+  <div class="mx-auto max-w-content">
+    <div class="mb-14 max-w-2xl">
+      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Two apps, one idea</span>
+      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
+        FrogPaper is really<br/>
+        <em class="font-light italic">two different apps.</em>
+      </h2>
+      <p class="mt-6 max-w-xl leading-[1.6] text-muted-foreground">
+        A full desktop studio for Windows, and a phone-first studio for Android. They share the
+        same idea &mdash; words in, wallpapers out &mdash; but each one stands on its own. Here is
+        what each app actually does.
+      </p>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-2">
+      <article class="flex flex-col rounded-3xl border border-border bg-card/40 p-8">
+        <span class="inline-flex w-fit items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Windows &middot; desktop</span>
+        <h3 class="mt-5 font-heading text-3xl font-medium text-paper">FrogPaper for Windows</h3>
+        <p class="mt-3 leading-[1.6] text-muted-foreground">The full studio for your PC &mdash; generate, style, sort and sync a whole wallpaper library.</p>
+        <ul class="mt-6 space-y-3 text-sm leading-[1.6] text-muted-foreground">
+          <li>&bull; Generate from <span class="text-paper">6 AI providers</span> &mdash; Pollinations, Cloudflare, HuggingFace, Prodia, Replicate, Fal.ai</li>
+          <li>&bull; 25+ style filters, with control over size and seed</li>
+          <li>&bull; Sets and rotates your Windows wallpaper; browse it as a gallery</li>
+          <li>&bull; Cloud sync (Google Drive / OneDrive / Dropbox) and the Photo Sorter companion</li>
+          <li>&bull; Full keyboard control</li>
+        </ul>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.5.0/FrogPaper-Setup-1.5.0.exe" download class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">Download for Windows</a>
+          <a href="#downloads" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">Windows details</a>
+        </div>
+      </article>
+
+      <article class="flex flex-col rounded-3xl border border-copper/30 bg-copper/5 p-8">
+        <span class="inline-flex w-fit items-center rounded-full border border-copper/40 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-copper">Android &middot; mobile</span>
+        <h3 class="mt-5 font-heading text-3xl font-medium text-paper">FrogPaper Mobile</h3>
+        <p class="mt-3 leading-[1.6] text-muted-foreground">A phone-first studio &mdash; generate from a few words and keep every wallpaper on your own device.</p>
+        <ul class="mt-6 space-y-3 text-sm leading-[1.6] text-muted-foreground">
+          <li>&bull; Describe a wallpaper in a few words, or roll the dice for a surprise</li>
+          <li>&bull; <span class="text-paper">Build screen</span>: subject, style, lighting, colour, mood, atmosphere</li>
+          <li>&bull; Gallery on your phone &mdash; star favourites, search by prompt, sort &amp; filter</li>
+          <li>&bull; Long-press an image for set / save / share / delete, with a 5-second undo</li>
+          <li>&bull; Rotate automatically (every open or once a day); set the home or lock screen</li>
+          <li>&bull; Works offline from your copies; free engine by default, or bring your own key</li>
+          <li>&bull; No account, nothing uploaded anywhere</li>
+        </ul>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-1.9.58-release-signed.apk" download class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">Download for Android</a>
+          <a href="#android-releases" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">Release numbers</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- GALLERY -->
 <!-- ============================================================= -->
 <section id="gallery" class="px-6 py-24 md:py-32">
@@ -685,6 +741,28 @@ tailwind.config = {
 <!-- ============================================================= -->
 <!-- BONUS APP — PHOTO SORTER                                      -->
 <!-- ============================================================= -->
+<!-- ANDROID RELEASES -->
+<section id="android-releases" class="scroll-mt-24 border-t border-border bg-card/20 px-6 py-24 md:py-32">
+  <div class="mx-auto max-w-content">
+    <div class="mb-14 max-w-2xl">
+      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Android app</span>
+      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
+        Every Android release,<br/>
+        <em class="font-light italic">and its numbers.</em>
+      </h2>
+      <p class="mt-6 max-w-xl leading-[1.6] text-muted-foreground">
+        How many times each FrogPaper Mobile release has been downloaded &mdash; taken straight from
+        the public release page. Nothing tracked, nothing counted but the file itself. GitHub can
+        lag a few minutes behind.
+      </p>
+    </div>
+    <div id="androidReleases" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <p class="text-sm text-muted-foreground">Loading releases&hellip;</p>
+    </div>
+    <p id="androidReleasesProblem" class="mt-6 hidden text-sm leading-[1.6] text-muted-foreground"></p>
+  </div>
+</section>
+
 <section id="sorter" class="border-t border-border px-6 py-24 md:py-32">
   <div class="mx-auto grid max-w-content items-center gap-12 lg:grid-cols-2 lg:gap-16">
 
@@ -1086,5 +1164,58 @@ tailwind.config = {
 </footer>
 
 <script src="main.js" defer></script>
+<!-- Android releases: per-release download numbers from the public GitHub API -->
+<script>
+(function () {
+  var API = 'https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases?per_page=20';
+  var list = document.getElementById('androidReleases');
+  var problem = document.getElementById('androidReleasesProblem');
+  if (!list) return;
+  function esc(t) {
+    return String(t).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+  function load() {
+    if (problem) problem.classList.add('hidden');
+    fetch(API, { headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (r) {
+        if (r.status === 404) return [];
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (releases) {
+        if (!releases.length) {
+          list.innerHTML = '<p class="text-sm text-muted-foreground">No Android releases published yet.</p>';
+          return;
+        }
+        list.innerHTML = releases.map(function (rel) {
+          var count = (rel.assets || []).reduce(function (s, a) { return s + (a.download_count || 0); }, 0);
+          var date = rel.published_at ? new Date(rel.published_at).toLocaleDateString() : '';
+          var isLatest = rel === releases[0];
+          return '<div class="rounded-2xl border border-border bg-background/60 p-6">' +
+            '<div class="flex items-baseline justify-between gap-3">' +
+            '<span class="font-heading text-lg text-paper">' + esc(rel.tag_name) +
+            (isLatest ? ' <span class="align-top text-[10px] uppercase tracking-[0.2em] text-copper">latest</span>' : '') +
+            '</span>' +
+            '<span class="text-2xl font-semibold text-accent" style="font-variant-numeric:tabular-nums">' + count.toLocaleString() + '</span>' +
+            '</div>' +
+            '<div class="mt-2 text-xs text-muted-foreground">' + esc(date) + ' &middot; download' + (count === 1 ? '' : 's') + '</div>' +
+            '<a class="mt-3 inline-block text-xs text-copper hover:text-paper" href="' + esc(rel.html_url) + '">View release &rarr;</a>' +
+            '</div>';
+        }).join('');
+      })
+      .catch(function (e) {
+        if (problem) {
+          problem.textContent = "Couldn't reach GitHub just now (" + e.message + '). Reload to try again.';
+          problem.classList.remove('hidden');
+        }
+        list.innerHTML = '';
+      });
+  }
+  load();
+})();
+</script>
+
 </body>
 </html>
