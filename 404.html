@@ -11,32 +11,8 @@
 
 <!-- Fonts -->
 
-<!-- Tailwind via CDN (config injected below) -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        background: '#0B1220',
-        foreground: '#E7EEF7',
-        paper: '#E7EEF7',
-        'paper-foreground': '#0B1220',
-        muted: '#0F1828',
-        'muted-foreground': '#8DA2BC',
-        copper: '#10B981',
-        card: '#121D30',
-        border: '#20304A',
-      },
-      fontFamily: {
-        heading: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
-        body: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
-      },
-      maxWidth: { content: '1200px' },
-    },
-  },
-};
-</script>
+<!-- Tailwind CSS (locally generated) -->
+<link rel="stylesheet" href="output.css" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="font-body flex min-h-[100svh] items-center justify-center bg-background px-6 text-foreground antialiased" style="background-image: radial-gradient(120% 80% at 50% -10%, rgba(11,18,32,0.92), rgba(0,0,0,0) 60%);">

@@ -1,0 +1,12 @@
+{
+  "name": "frogpaper-website",
+  "version": "1.0.0",
+  "description": "FrogPaper website with local Tailwind CSS",
+  "scripts": {
+    "build-css": "tailwindcss -i ./input.css -o ./output.css --minify",
+    "watch-css": "tailwindcss -i ./input.css -o ./output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
