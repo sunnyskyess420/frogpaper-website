@@ -29,3 +29,4 @@ node_modules/
 # Build outputs (if any build tools are added later)
 dist/
 build/
+.lighthouseci/
