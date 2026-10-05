@@ -915,7 +915,7 @@
         What's new in v1.6.0
       </h2>
       <p class="mt-6 leading-relaxed text-muted-foreground">
-        The visual refresh: harmonized colours, surfaces, spacing, and type across all 18 themes — plus scrolling that finally works in every window, a launch that no longer flashes, and frogs that only visit when invited.
+        The visual refresh: harmonized colours, surfaces, spacing, and type across all 18 themes — plus scrolling that finally works in every window, a launch that no longer flashes, and frogs that now visit by your rules.
       </p>
     </div>
 
@@ -954,9 +954,9 @@
         <article class="rounded-2xl border border-border bg-background/60 p-8">
           <h3 class="mb-4 font-heading text-xl font-medium text-paper">Frog Sneak</h3>
           <ul class="space-y-3 text-sm leading-relaxed text-muted-foreground">
-            <li>The Frog Dial got manners — a new dropdown in Settings > Generation controls how often a frog sneaks into blank-subject random runs.</li>
-            <li>Pick your odds: off, rare (~5%), classic (~12%), or party (~50%). Default is classic.</li>
-            <li>No more hard-coded frog bias; daily runs vary it on their own.</li>
+            <li>A transparency note: earlier builds had a hard-coded frog bias that could add a frog cameo to blank-subject images without asking. That code is gone — no hidden behaviour remains.</li>
+            <li>In its place: a Frog sneak dropdown in Settings > Generation — off, rare (~5%), classic (~12%, default), or party (~50%).</li>
+            <li>Set it to off and frogs never appear; classic keeps the familiar frequency for continuity.</li>
           </ul>
         </article>
     </div>
@@ -1005,6 +1005,13 @@
             <span class="text-copper transition group-open:rotate-45">+</span>
           </summary>
           <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">Softly, yes — the Visual Refresh harmonizes colours, surfaces, spacing, and type across all 18 themes. Nothing moves; it just feels more finished.</p>
+        </details>
+        <details class="group py-4">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
+            Did older versions add frogs to my images without asking?
+            <span class="text-copper transition group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">Yes - earlier builds contained a hard-coded "frog bias" that could occasionally add a frog cameo to blank-subject images. It has been fully removed in v1.6.0, and frogs are now controlled by the Frog Sneak setting (Settings > Generation). Set it to off if you would rather they never appear - images you already have are untouched.</p>
         </details>
       </div>
     </div>
