@@ -242,4 +242,17 @@ details[open] summary + p {
     scroll-behavior: auto !important;
   }
   .float-slow { animation: none; }
+  .pumpkin-bob { animation: none; }
+}
+
+/* =============================================================
+   HALLOWEEN EDITION (v1.7.0) — seasonal accents
+   ============================================================= */
+@keyframes pumpkin-bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-4px) rotate(3deg); }
+}
+.pumpkin-bob {
+  display: inline-block;
+  animation: pumpkin-bob 3.5s ease-in-out infinite;
 }
