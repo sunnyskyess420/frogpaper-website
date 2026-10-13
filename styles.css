@@ -256,3 +256,19 @@ details[open] summary + p {
   display: inline-block;
   animation: pumpkin-bob 3.5s ease-in-out infinite;
 }
+
+/* =============================================================
+   HERO MASCOT — pirate Halloween frog
+   The prebuilt output.css doesn't include arbitrary Tailwind
+   h-[Npx] classes, so we drive the height directly from here.
+   Inline `style="height: 140px"` provides the mobile default;
+   media queries override at each breakpoint.
+   ============================================================= */
+.hero-mascot {
+  display: block;
+  width: auto;
+}
+@media (min-width: 640px)  { .hero-mascot { height: 165px !important; } }
+@media (min-width: 768px)  { .hero-mascot { height: 185px !important; } }
+@media (min-width: 1280px) { .hero-mascot { height: 210px !important; } }
+@media (min-width: 1536px) { .hero-mascot { height: 230px !important; } }

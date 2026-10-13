@@ -84,10 +84,20 @@
     <div class="absolute inset-0 bg-background/30"></div>
   </div>
 
-  <!-- Floating decor -->
-  <div class="pointer-events-none absolute right-[5%] top-[15%] hidden xl:block">
+  <!-- Pirate Halloween frog mascot — centered, bobbing with the same `float-slow`
+       animation as the original beret mascot used. Placed directly ABOVE the
+       orange Halloween Edition release badge and BELOW the fixed top nav bar.
+       Uses inline style + .hero-mascot class (in styles.css) instead of
+       Tailwind arbitrary h-[Npx] classes, because the prebuilt output.css
+       doesn't include those classes. -->
+  <div class="pointer-events-none mb-8 flex justify-center">
     <div class="float-slow">
-      <img src="assets/img/mascot-frog.png" alt="FrogPaper mascot — a friendly 3D frog artist wearing a beret and holding a rainbow paintbrush" class="h-[340px] w-auto drop-shadow-2xl xl:h-[380px] 2xl:h-[420px]" width="580" height="920" />
+      <img src="assets/img/mascot-frog-pirate-small.png"
+           alt="FrogPaper Halloween mascot — a friendly pirate frog waving from above the Halloween Edition release banner"
+           class="hero-mascot drop-shadow-2xl"
+           style="height: 140px; width: auto;"
+           width="359" height="520"
+           fetchpriority="high" />
     </div>
   </div>
 
