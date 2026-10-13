@@ -258,6 +258,24 @@ details[open] summary + p {
 }
 
 /* =============================================================
+   HERO FOOTER — "Est. 2026 / Scroll to unfold"
+   Hidden by default (display:none) to prevent overlap with the
+   button row on short viewports. Shown via flex on viewports
+   >= 1000px tall, where there's room for both the centered
+   content stack AND the absolute-positioned bottom footer.
+   1000px was chosen empirically: at 900px the buttons still
+   overlapped the footer by ~38px; at 1000px there's clear space.
+   ============================================================= */
+.hero-footer {
+  display: none;
+}
+@media (min-height: 1000px) {
+  .hero-footer {
+    display: flex;
+  }
+}
+
+/* =============================================================
    HERO MASCOT — pirate Halloween frog
    The prebuilt output.css doesn't include arbitrary Tailwind
    h-[Npx] classes, so we drive the height directly from here.

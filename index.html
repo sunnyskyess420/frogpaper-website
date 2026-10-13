@@ -132,7 +132,15 @@
     </a>
   </div>
 
-  <div class="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+  <!-- Hero footer ("Est. 2026 / Scroll to unfold") — hidden on viewports shorter than
+       900px to prevent overlap with the button row above. The hero content stack
+       (frog + badge + headline + paragraph + buttons) is tall enough on short viewports
+       that the absolutely-positioned bottom-8 footer would collide with the buttons.
+       `pointer-events-none` is a belt-and-suspenders guard so even if a future change
+       re-introduces a visual overlap, the footer cannot block button clicks.
+       The actual show/hide logic lives in styles.css under `.hero-footer` because
+       Tailwind's arbitrary `min-[900px]:flex` variant isn't in the prebuilt output.css. -->
+  <div class="hero-footer pointer-events-none absolute bottom-8 left-0 right-0 flex-col items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
     <span>Est. 2026 · Windows</span>
     <span class="flex items-center gap-2 text-copper/70">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
