@@ -1,9 +1,17 @@
-# FrogPaper — Static Website Clone
+# FrogPaper — Static Website
 
 A faithful static clone of the **FrogPaper** marketing site
 (originally hosted at `frog-paper-73709523.base44.app`), rebuilt as
 vanilla **HTML + Tailwind (CDN) + CSS + JS** so it can be deployed
 straight to **GitHub Pages** with zero build step.
+
+The site markets both FrogPaper apps: the Windows desktop release (pinned
+installer links) and **FrogPaper Mobile for Android**, whose download button
+always resolves
+`github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk`.
+Keep the APK asset name stable when publishing a mobile release, and refresh
+the hardcoded Android version/size in `index.html` (header banner, Downloads
+card, Mobile section, Release Notes card).
 
 ## What's inside
 
