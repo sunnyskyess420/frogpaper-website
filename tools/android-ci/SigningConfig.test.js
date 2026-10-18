@@ -11,7 +11,25 @@ Module._load = function (request) {
   return load.apply(this, arguments);
 };
 
-const { applySigningConfig } = require('./SigningConfig.js');
+// Works from either layout:
+//   tools/android-ci/SigningConfig.test.js              (next to SigningConfig.js)
+//   mobile-app/scripts/check-signing-config.js          (../src/plugins/SigningConfig/index.js)
+const fs = require('node:fs');
+const path = require('node:path');
+const candidates = [
+  './SigningConfig.js',
+  './index.js',
+  '../src/plugins/SigningConfig/index.js',
+  '../tools/android-ci/SigningConfig.js',
+];
+const pluginPath = candidates.find((p) => fs.existsSync(path.resolve(__dirname, p)));
+if (!pluginPath) {
+  console.error('Could not find SigningConfig.js. Looked in: ' + candidates.join(', '));
+  process.exit(1);
+}
+const resolved = path.resolve(__dirname, pluginPath);
+const { applySigningConfig } = require(resolved);
+console.log('plugin: ' + resolved);
 
 // The shape of android/app/build.gradle as expo prebuild (SDK 57) generates it.
 const TEMPLATE = `apply plugin: "com.android.application"
