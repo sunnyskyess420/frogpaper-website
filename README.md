@@ -61,13 +61,25 @@ frogpaper-website/
 4. In GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main` / root**.
 5. Wait ~30 seconds. Visit `https://<username>.github.io/<repo>/`.
 
-> No build step is required. The site uses Tailwind via CDN, so everything works as static files.
+> No build step is required to *deploy*: the compiled Tailwind stylesheet (`output.css`) is
+> committed alongside the pages. You only need the build when you add utility classes that
+> are not in it yet — run `npm run build-css` and commit the regenerated `output.css`.
+
+## Checks
+
+Every push to `main` runs two jobs from `.github/workflows/lighthouse.yml`:
+
+| Job | What it catches | Run it locally with |
+|---|---|---|
+| `html` | Broken markup: unclosed tags, stray `-->`, raw characters, duplicate IDs. Rules live in `.htmlvalidate.json`. | `npm ci && npm run validate:html` |
+| `lighthouse` | Performance, LCP, CLS and TBT regressions (thresholds in `lighthouserc.json`). | `npx @lhci/cli autorun` |
 
 ## Customisation
 
 | Want to… | Edit |
 |---|---|
 | Change the GitHub repo / download link | `index.html` — search for `github.com/sunnyskyess420/frogpaper` and replace with your repo URL |
+| Change the advertised Android version or APK size | Nothing to edit — `index.html` fills every `data-android-version` / `data-android-size` label from the newest `frogpaper-mobile` release. The text in the markup is only the offline fallback. |
 | Change the "Buy me a coffee" link | `index.html` — search for `buymeacoffee.com/alively142` |
 | Add a new gallery wallpaper | Drop the PNG in `assets/gallery/`, copy a `<article>` block in `#galleryTrack`, swap the `<img src>` and labels |
 | Re-theme the colors | `index.html` — the `tailwind.config` script in `<head>` (HSL channels) and `styles.css` `:root` |

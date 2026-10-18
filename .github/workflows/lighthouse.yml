@@ -1,8 +1,12 @@
 name: Lighthouse CI
 
-# Runs Lighthouse against the static site on every push to main and every PR.
-# Fails the build if Performance, LCP, CLS, or TBT regress beyond set thresholds.
-# Reports are uploaded to temporary public storage and linked in the run summary.
+# Runs on every push to main and every PR:
+#   - html job: html-validate over every page, so broken markup (stray comment
+#     terminators, unclosed tags, raw characters) fails the build instead of
+#     sitting in production. Rules live in .htmlvalidate.json.
+#   - lighthouse job: fails the build if Performance, LCP, CLS, or TBT regress
+#     beyond set thresholds. Reports are uploaded to temporary public storage
+#     and linked in the run summary.
 
 on:
   push:
@@ -16,6 +20,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  html:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Validate HTML
+        run: npm run validate:html
+
   lighthouse:
     runs-on: ubuntu-latest
     steps:
