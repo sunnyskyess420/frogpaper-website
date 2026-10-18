@@ -1,0 +1,194 @@
+name: Android release APK
+
+# Builds FrogPaper Mobile from source and attaches the APK to a GitHub release.
+#
+# Why CI does the signing: v1.12.0 shipped debug-signed because `expo prebuild`
+# regenerated android/ and the release signing config was gone. Here the keystore
+# is restored from repository secrets immediately before Gradle runs, the
+# SigningConfig config plugin points the release build at it, and apksigner must
+# report CN=FrogPaper or the job fails before anything is uploaded.
+#
+# Usage: push a tag (v1.13.0) or run this workflow manually with an existing tag.
+# Secrets required (Settings > Secrets and variables > Actions):
+#   ANDROID_KEYSTORE_BASE64    base64 of frogpaper-release.keystore (one line, no wrapping)
+#   ANDROID_KEYSTORE_PASSWORD  store password
+#   ANDROID_KEY_ALIAS          key alias (frogpaper)
+#   ANDROID_KEY_PASSWORD       key password
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to build and attach the APK to (e.g. v1.13.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  EXPECTED_KEY_FINGERPRINT: f59a1728b2c14921358137277d596125845b0a83f7e45aaf9c54137307bc0644
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile-app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: mobile-app/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Check the signing secrets are present
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          missing=""
+          [ -n "$KEYSTORE" ]   || missing="$missing ANDROID_KEYSTORE_BASE64"
+          [ -n "$STORE_PASS" ] || missing="$missing ANDROID_KEYSTORE_PASSWORD"
+          [ -n "$KEY_ALIAS" ]  || missing="$missing ANDROID_KEY_ALIAS"
+          [ -n "$KEY_PASS" ]   || missing="$missing ANDROID_KEY_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing"
+            echo "Add them under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Resolve the release tag and version
+        id: version
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          tag="$INPUT_TAG"
+          if [ -z "$tag" ]; then tag="${GITHUB_REF_NAME}"; fi
+          case "$tag" in v*) ;; *) echo "::error::Tag '$tag' must look like v1.2.3"; exit 1;; esac
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "name=${tag#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Stamp app.json with the tag's version
+        env:
+          VERSION: ${{ steps.version.outputs.name }}
+        run: |
+          node -e "
+            const fs = require('fs');
+            const file = 'app.json';
+            const app = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const before = app.expo.version;
+            app.expo.version = process.env.VERSION;
+            fs.writeFileSync(file, JSON.stringify(app, null, 2) + '\n');
+            console.log('app.json version ' + before + ' -> ' + app.expo.version);
+          "
+
+      - name: Regenerate the android project
+        run: npx expo prebuild --platform android --no-install --clean
+
+      - name: Confirm the signing config survived prebuild
+        run: |
+          if ! grep -q '@frogpaper-signing-start' android/app/build.gradle; then
+            echo "::error::android/app/build.gradle was not patched - is \"./src/plugins/SigningConfig\" in app.json plugins?"
+            exit 1
+          fi
+          grep -q 'signingConfig signingConfigs.release' android/app/build.gradle
+          echo "Signing config is in place."
+
+      - name: Restore the release keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > android/app/frogpaper-release.keystore
+          # The plugin reads storeFile relative to android/ (rootProject), matching
+          # the layout used on the build PC.
+          cat > android/keystore.properties <<EOF
+          storeFile=app/frogpaper-release.keystore
+          storePassword=$STORE_PASS
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASS
+          EOF
+          chmod 600 android/keystore.properties android/app/frogpaper-release.keystore
+          echo "Keystore and keystore.properties in place."
+
+      - name: Build the release APK
+        working-directory: mobile-app/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: Verify the signature - refuse to publish a debug build
+        id: verify
+        run: |
+          set -euo pipefail
+          apk="android/app/build/outputs/apk/release/app-release.apk"
+          test -f "$apk" || { echo "::error::No APK produced"; exit 1; }
+          apksigner="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)/apksigner"
+          "$apksigner" verify --print-certs "$apk" | tee certs.txt
+          if ! grep -q 'CN=FrogPaper' certs.txt; then
+            echo "::error::The APK is not signed with the FrogPaper release key - refusing to publish."
+            exit 1
+          fi
+          if ! grep -qi "$EXPECTED_KEY_FINGERPRINT" certs.txt; then
+            echo "::error::Signed with the right name but the wrong key - refusing to publish."
+            exit 1
+          fi
+          out="FrogPaper-release-signed.apk"
+          cp "$apk" "$out"
+          echo "sha256=$(sha256sum "$out" | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+          echo "size=$(stat -c%s "$out")" >> "$GITHUB_OUTPUT"
+
+      - name: Attach the APK to the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" FrogPaper-release-signed.apk --clobber
+          else
+            gh release create "$TAG" FrogPaper-release-signed.apk \
+              --title "FrogPaper Mobile ${TAG#v}" --generate-notes
+          fi
+
+      - name: Keep the APK as a workflow artifact too
+        uses: actions/upload-artifact@v4
+        with:
+          name: FrogPaper-release-signed
+          path: mobile-app/FrogPaper-release-signed.apk
+          retention-days: 30
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Android release" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- version: \`${{ steps.version.outputs.name }}\` (tag \`${{ steps.version.outputs.tag }}\`)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- APK SHA-256: \`${{ steps.verify.outputs.sha256 }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- APK size: ${{ steps.verify.outputs.size }} bytes" >> "$GITHUB_STEP_SUMMARY"
+          echo "- signing key: CN=FrogPaper, ${{ env.EXPECTED_KEY_FINGERPRINT }}" >> "$GITHUB_STEP_SUMMARY"
