@@ -52,7 +52,58 @@
 
   <div class="mt-10">
     <h2 class="mb-4 text-[10px] uppercase tracking-[0.4em] text-copper">By release</h2>
-    <div id="list" class="grid gap-4 sm:grid-cols-2"></div>
+    <div id="list" class="grid gap-4 sm:grid-cols-2">
+      <!-- Placeholders match the height of the six release cards so the
+           buttons below do not jump when the fetch resolves (CLS). -->
+      <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
+        <div class="flex items-center justify-between gap-3">
+          <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+          <span style="display:block;height:32px;width:40px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+        </div>
+        <div style="margin-top:8px;height:16px;width:96px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+        <div style="margin-top:12px;height:16px;width:80px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+      </div>
+      <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
+        <div class="flex items-center justify-between gap-3">
+          <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+          <span style="display:block;height:32px;width:40px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+        </div>
+        <div style="margin-top:8px;height:16px;width:96px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+        <div style="margin-top:12px;height:16px;width:80px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+      </div>
+      <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
+        <div class="flex items-center justify-between gap-3">
+          <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+          <span style="display:block;height:32px;width:40px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+        </div>
+        <div style="margin-top:8px;height:16px;width:96px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+        <div style="margin-top:12px;height:16px;width:80px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+      </div>
+      <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
+        <div class="flex items-center justify-between gap-3">
+          <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+          <span style="display:block;height:32px;width:40px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+        </div>
+        <div style="margin-top:8px;height:16px;width:96px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+        <div style="margin-top:12px;height:16px;width:80px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+      </div>
+      <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
+        <div class="flex items-center justify-between gap-3">
+          <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+          <span style="display:block;height:32px;width:40px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+        </div>
+        <div style="margin-top:8px;height:16px;width:96px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+        <div style="margin-top:12px;height:16px;width:80px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+      </div>
+      <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
+        <div class="flex items-center justify-between gap-3">
+          <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+          <span style="display:block;height:32px;width:40px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
+        </div>
+        <div style="margin-top:8px;height:16px;width:96px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+        <div style="margin-top:12px;height:16px;width:80px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
+      </div>
+    </div>
   </div>
 
   <p id="problem" class="mt-8 hidden rounded-2xl border border-border bg-background/60 p-5 text-sm leading-[1.6] text-muted-foreground"></p>
@@ -129,6 +180,7 @@
         problemEl.classList.remove('hidden');
         stampEl.textContent = 'no connection';
         if (totalEl.textContent === '—') { totalEl.textContent = '?'; }
+        listEl.innerHTML = '';
       });
   }
 
