@@ -1,216 +1,114 @@
-# FrogPaper Website — Lighthouse CI Fix
+# FrogPaper Website — localStorage Cache for GitHub API calls
 
-Branch: `website-redesign` (PR #2)
-Problem: GitHub Actions Lighthouse job fails with `categories:performance` and
-`total-blocking-time` returning `NaN` (Lighthouse couldn't compute a real
-numeric score).
+Branch: `main` (apply directly — no PR needed unless you want one)
+Goal: stop hitting GitHub's 60-requests-per-hour unauthenticated API limit
+when users browse the site. Cache API responses in `localStorage` for 1 hour.
 
-This folder contains three patched files plus this write-up. Each file has a
-`.original` companion so you can `diff` them to see exactly what changed.
+This folder contains two patched files. Each has a `.original` companion so
+you can `diff` to see what changed.
 
 ```
-frogpaper-fix/
+frogpaper-cache-fix/
 ├── CHANGES.md                       ← this file
-├── lighthouserc.json                ← patched
-├── lighthouserc.json.original       ← as-is from the branch
 ├── site.js                          ← patched
-├── site.js.original                 ← as-is from the branch
-├── submit-wallpaper.html            ← patched
-└── submit-wallpaper.html.original   ← as-is from the branch
+├── site.js.original                 ← as-is from main
+├── downloads.html                   ← patched
+└── downloads.html.original          ← as-is from main
 ```
 
-## Root-cause diagnosis
+## Why
 
-The NaN scores are caused by **three things working together**, not one bug:
+GitHub's unauthenticated API limit is **60 requests per hour per IP**. A
+single page load of `index.html` fires **13** of those requests:
 
-### 1. `site.js` fires ~13 unauthenticated GitHub API calls on every page load
+- 1× `/repos/sunnyskyess420/frogpaper-mobile/releases/latest` (Android version + APK size + download count)
+- 11× `/repos/sunnyskyess420/frogpaper/releases/tags/{v1.7.5 ... v1.3.2}` (one per release-tag link)
+- 1× `/repos/sunnyskyess420/frogpaper/releases/latest` (latest Windows download count)
 
-`index.html` includes 11 release-tag links (`<a data-release-tag="v1.7.5">`
-… `v1.3.2`) plus Android version/size/download spans and a Windows latest
-release counter. On load, `site.js` calls:
+That's 13 requests per visit. A user who opens the site, scrolls around,
+hits refresh a couple times, comes back later — they hit the limit. Then
+every download counter on the page is stuck on "Loading downloads…" for
+the next hour. The site looks broken, even though it isn't.
 
-- 1× `GET /repos/sunnyskyess420/frogpaper-mobile/releases/latest`
-- 11× `GET /repos/sunnyskyess420/frogpaper/releases/tags/{tag}` (one per release link)
-- 1× `GET /repos/sunnyskyess420/frogpaper/releases/latest`
+The numbers don't even change fast — a download count from 30 minutes ago
+is basically the same number.
 
-That's **13 unauthenticated requests per page load**. GitHub's unauthenticated
-rate limit is **60 requests per hour per IP**.
+## What changed
 
-CI runners on GitHub Actions share IP ranges across many repos and PRs, so a
-single Lighthouse run is often already rate-limited before it starts. When
-rate-limited, GitHub returns `403` immediately — but the in-flight `fetch()`
-promises still have to settle, and `site.js` also schedules
-`setInterval(fetchAndroidInfo, 60000)` and `setInterval(fetchDownloadCounts,
-60000)` which fire during Lighthouse's measurement window.
+### `site.js`
 
-The result: Lighthouse sees ongoing network activity and pending promise
-callbacks for a page that should be done loading. If the timing lines up
-badly, Lighthouse gives up waiting for the page to settle and returns `null`
-for performance and TBT. LHCI's assertion step then prints `NaN`.
+Added a `cachedFetch(url, options, force)` helper that wraps `fetch()` with
+a `localStorage` cache (1-hour TTL, namespaced under `fp:api:`).
 
-`downloads.html` makes its own additional call
-(`/repos/sunnyskyess420/frogpaper-mobile/releases?per_page=20`), and
-`submit-wallpaper.html` doesn't call the API at all — but see #2.
+Behavior:
+- **Cache hit, < 1 hour old** → return cached JSON immediately. **Zero network calls.** Numbers appear instantly.
+- **Cache hit, > 1 hour old** → fetch fresh; on success update the cache; on failure (rate limit, offline, DNS, etc.) fall back to the stale cache so the user still sees a number, not "Loading downloads…".
+- **Cache miss** → fetch fresh; on failure reject (caller keeps the static "Loading downloads…" fallback that was already in the markup).
 
-### 2. `submit-wallpaper.html` loads an external third-party script synchronously
+All three existing fetch sites now go through `cachedFetch`:
+- `fetchAndroidInfo()` — Android release info
+- `fetchDownloadCounts()` — per-release-tag counts
+- `fetchDownloadCounts()` — latest Windows release count
 
-```html
-<script src="https://forminit.com/sdk/v1/forminit.js"></script>
-```
+The 60-second poller still runs, but with `force=true` so it always *tries* to refresh. If the refresh fails, it falls back to stale cache instead of clearing the numbers.
 
-This tag sits in `<head>` with no `defer` or `async`. A synchronous
-`<script src>` blocks HTML parsing until the file downloads and executes.
-`forminit.com` is hosted on AmazonS3 and is reachable from a normal browser,
-but GitHub Actions runners sit on different IP ranges that third-party CDNs
-sometimes throttle, geoblock, or just serve slowly. If the request stalls,
-`DOMContentLoaded` never fires and Lighthouse times out → NaN.
+### `downloads.html`
 
-This is the single most likely cause of NaN specifically on
-`submit-wallpaper.html`.
+Same pattern in the page's inline `<script>` block. One API call
+(`/repos/sunnyskyess420/frogpaper-mobile/releases?per_page=20`) gets cached.
 
-### 3. `lighthouserc.json` treats noisy metrics as hard errors
+Also made the failure path smarter: if the network fails AND we have any
+cached version (even stale), we render the cached data with a small
+"offline — showing last known counts" notice instead of clearing the page
+and showing the error box.
 
-```json
-"categories:performance": ["error", {"minScore": 0.7}],
-"total-blocking-time":    ["error", {"maxNumericValue": 700}],
-```
+When rendering from cache, the timestamp label says "showing cached data —
+refresh for live counts" instead of "updated {time}" so the user knows what
+they're seeing.
 
-Performance score on GitHub Actions varies ±0.15 between runs of the same
-commit, because the runner's CPU, memory, and disk IO are shared. A `0.7`
-floor combined with that variance means the job fails intermittently even on
-a fast site. TBT is similarly noisy. Both being `error`-level means a single
-bad run fails the whole job.
+## What the user sees
 
-On top of that, `numberOfRuns: 3` triples the GitHub API load (13 × 3 = 39
-calls per URL, 117 per CI run for `index.html` alone) and triples the chance
-that one bad run fails the assertion step.
-
-`cumulative-layout-shift` is correctly kept as `error` — CLS is deterministic
-and a real regression signal. The other two are not.
-
-## The fixes
-
-### Fix 1 — `site.js`: skip GitHub API calls under Lighthouse
-
-Added a Lighthouse user-agent check at the top of the IIFE and gated both
-fetch blocks on it:
-
-```js
-var isLighthouse = navigator.userAgent.indexOf('Chrome-Lighthouse') !== -1;
-// ...
-if (!isLighthouse && (versionSpots.length || sizeSpots.length || androidDownloadSpots.length)) {
-  // ... fetchAndroidInfo() and setInterval(...)
-}
-if (!isLighthouse && (releaseLinks.length || windowsDownloadSpots.length)) {
-  // ... fetchDownloadCounts() and setInterval(...)
-}
-```
-
-Real visitors see no change — the Lighthouse UA string is only set when
-Chrome is launched by Lighthouse. In CI, the page now loads with zero
-network calls beyond the static assets, no pending promises, and no
-background polling.
-
-Also removed the duplicate `formatNumber` declaration at the end of the
-file (the function is already declared earlier in the IIFE — the second
-copy was dead code, harmless but pointless).
-
-### Fix 2 — `submit-wallpaper.html`: defer the forminit script
-
-```html
-<script src="https://forminit.com/sdk/v1/forminit.js" defer></script>
-```
-
-`defer` lets the parser continue, downloads the script in parallel, and
-executes it after HTML parsing completes but before `DOMContentLoaded`.
-The form SDK still initializes before the user can submit (the form is at
-the bottom of the page), but a slow forminit.com can no longer block
-Lighthouse from measuring the page.
-
-### Fix 3 — `lighthouserc.json`: realistic thresholds, fewer runs
-
-```json
-"numberOfRuns": 1,
-"assertions": {
-  "categories:performance": ["warn", {"minScore": 0.7}],
-  "categories:accessibility": ["warn", {"minScore": 0.85}],
-  "categories:best-practices": ["warn", {"minScore": 0.85}],
-  "categories:seo": ["warn", {"minScore": 0.85}],
-  "largest-contentful-paint": ["warn", {"maxNumericValue": 8000}],
-  "cumulative-layout-shift": ["error", {"maxNumericValue": 0.1}],
-  "total-blocking-time": ["warn", {"maxNumericValue": 700}],
-  "first-contentful-paint": ["warn", {"maxNumericValue": 3000}]
-}
-```
-
-Changes:
-
-- `categories:performance` — `error` → `warn`. Performance is too noisy on
-  shared CI runners to be a hard gate. Warnings still show up in the LHCI
-  report and PR comments, so regressions are visible — they just don't
-  block the merge.
-- `total-blocking-time` — `error` → `warn`. Same reasoning.
-- `cumulative-layout-shift` — kept as `error`. CLS is deterministic; if it
-  regresses past 0.1, that's a real bug.
-- `numberOfRuns` — `3` → `1`. One run is enough signal for a static site,
-  cuts CI time by ~3×, and eliminates 2/3 of the GitHub API load.
-
-This is the "downgrade the less reliable performance assertions from hard
-errors to warnings while keeping the validation gate meaningful" approach
-from the handoff note. Accessibility, best-practices, SEO, LCP, FCP, and CLS
-all still report. HTML validation (the other job in the workflow) is
-untouched and stays a hard gate.
+| Scenario | Before | After |
+|---|---|---|
+| First visit ever | ~1s "Loading downloads…", then numbers | Same (no cache yet) |
+| Second visit within 1 hour | ~1s "Loading downloads…", then numbers | Numbers appear **instantly** |
+| Visit after 1 hour | ~1s "Loading downloads…", then numbers | Brief flash, then fresh numbers |
+| Visit while offline / rate-limited | "Loading downloads…" stuck forever | Last known numbers shown, with note |
+| Page left open, 60s poll fires | Numbers update silently | Same (with `force=true`, still tries to refresh) |
+| Page left open, 60s poll fires but rate-limited | Numbers stay where they were | Numbers stay where they were (now backed by cache too) |
 
 ## How to apply
 
-Copy the three patched files over the originals in your local clone:
+Same process as the last batch:
 
 ```powershell
-# from your repo root on the website-redesign branch
-copy C:\path\to\frogpaper-fix\site.js               site.js
-copy C:\path\to\frogpaper-fix\lighthouserc.json     lighthouserc.json
-copy C:\path\to\frogpaper-fix\submit-wallpaper.html submit-wallpaper.html
+# from your repo root on main
+copy C:\path\to\frogpaper-cache-fix\site.js           site.js
+copy C:\path\to\frogpaper-cache-fix\downloads.html    downloads.html
 
-git add site.js lighthouserc.json submit-wallpaper.html
-git commit -m "Fix Lighthouse CI: skip API calls under Lighthouse, defer forminit, relax noisy assertions"
+git add site.js downloads.html
+git commit -m "Add localStorage cache (1h TTL) for GitHub API calls"
 git push
 ```
 
-## How to verify before pushing
+CI should stay green — the Lighthouse detection from the previous patch is
+preserved, so Lighthouse still skips these calls entirely.
 
-If you have Node installed locally:
+## How to verify
 
-```powershell
-node --check site.js                       # should print nothing (success)
-python -c "import json; json.load(open('lighthouserc.json'))"   # should print nothing
-```
+After pushing and the Pages deploy finishes, visit
+https://sunnyskyess420.github.io/frogpaper-:
 
-To run Lighthouse locally the same way CI does:
+1. Open DevTools (F12) → Application tab → Local Storage → click the site URL
+2. You should see keys starting with `fp:api:` after the page loads
+3. Reload the page → the download counters should appear instantly (no flash of "Loading downloads…")
+4. On the downloads page (`/frogpaper-website/downloads.html`), the
+   timestamp should say "showing cached data — refresh for live counts"
+   on the second visit
+5. Click "Refresh now" → timestamp goes back to "updated {time}"
 
-```powershell
-npm install -g @lhci/cli@0.15.x
-lhci autorun
-```
+## Backward compatibility
 
-This serves `staticDistDir: "."` and runs Lighthouse against the three
-URLs. With these patches applied, all three pages should produce real
-numeric scores (no NaN), and the only `error`-level assertion left is CLS.
-
-## If you want to be more aggressive
-
-Two optional follow-ups, not included here because they're judgment calls:
-
-1. **Cache the GitHub API responses in `localStorage`** with a 1-hour TTL.
-   Even real visitors will hit the rate limit if they reload the page a few
-   times in quick succession. A simple `localStorage.setItem('fp:releases',
-   JSON.stringify({ ts: Date.now(), data: release }))` pattern would fix
-   that and also speed up repeat visits.
-
-2. **Use the GitHub Actions `GITHUB_TOKEN` for authenticated API calls**
-   in CI (5000/hour instead of 60). This is more invasive — it requires
-   injecting the token into the page at build time, which doesn't fit a
-   no-build-step static site. Not recommended unless you're already
-   considering a build step for other reasons.
-
-Both are bigger changes than the CI fix needs. The patches in this folder
-are the minimum to get the job green without breaking the design.
+- The cache uses a `fp:api:` prefix — it doesn't touch any other localStorage keys.
+- If a user has an old version of the page cached in their browser, the new `site.js` just loads and works — no migration needed.
+- If `localStorage` is disabled (private mode in some browsers) or full, `writeCache` silently fails and `cachedFetch` degrades to plain `fetch()` — the page still works, just without caching.

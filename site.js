@@ -23,6 +23,81 @@
   var isLighthouse = navigator.userAgent.indexOf('Chrome-Lighthouse') !== -1;
 
   /* -----------------------------------------------------------
+     Cached GitHub API fetch
+     GitHub's unauthenticated API limit is 60 requests/hour per IP.
+     A single page load can fire 13 of those, so a user who reloads
+     a few times gets rate-limited and sees stuck "Loading downloads…"
+     for the next hour.
+
+     cachedFetch() wraps fetch() with a localStorage cache:
+       - Cache hit younger than TTL → return cached JSON immediately,
+         no network call.
+       - Cache hit older than TTL → fetch fresh; on success update the
+         cache; on failure (rate limit, offline, etc.) fall back to
+         the stale cache so the user still sees a number.
+       - Cache miss → fetch fresh; on failure reject.
+
+     Each cache key is namespaced under "fp:api:" so clearing FrogPaper
+     data doesn't wipe unrelated localStorage.
+     ----------------------------------------------------------- */
+  var API_CACHE_PREFIX = 'fp:api:';
+  var API_CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
+
+  function readCache(key) {
+    try {
+      var raw = localStorage.getItem(API_CACHE_PREFIX + key);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object') return null;
+      return parsed; // { ts: number, data: any }
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function writeCache(key, data) {
+    try {
+      localStorage.setItem(API_CACHE_PREFIX + key, JSON.stringify({ ts: Date.now(), data: data }));
+    } catch (error) {
+      // localStorage might be full or disabled (private mode) — silently
+      // degrade to no caching. The fetches still work; they're just not
+      // cached.
+    }
+  }
+
+  // Returns a Promise that resolves to { data, fromCache }.
+  // `force` skips the cache TTL check (used by the periodic poller and
+  // any future manual-refresh button) but still reads stale cache on
+  // failure.
+  function cachedFetch(url, options, force) {
+    var cacheKey = url;
+    var cached = readCache(cacheKey);
+
+    if (cached && !force && (Date.now() - cached.ts) < API_CACHE_TTL) {
+      return Promise.resolve({ data: cached.data, fromCache: true });
+    }
+
+    return fetch(url, options || {})
+      .then(function (response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return response.json();
+      })
+      .then(function (data) {
+        writeCache(cacheKey, data);
+        return { data: data, fromCache: false };
+      })
+      .catch(function (error) {
+        // Network/rate-limit failure. If we have any cached version —
+        // even a stale one past TTL — use it rather than showing
+        // "Loading downloads…" forever.
+        if (cached) {
+          return { data: cached.data, fromCache: true };
+        }
+        throw error;
+      });
+  }
+
+  /* -----------------------------------------------------------
      Header shadow on scroll
      ----------------------------------------------------------- */
   var header = document.getElementById('siteHeader');
@@ -183,41 +258,42 @@
   var sizeSpots = document.querySelectorAll('[data-android-size]');
   var androidDownloadSpots = document.querySelectorAll('[data-android-downloads]');
   if (!isLighthouse && (versionSpots.length || sizeSpots.length || androidDownloadSpots.length)) {
-    function fetchAndroidInfo() {
-      fetch('https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases/latest', {
-        headers: { Accept: 'application/vnd.github+json' }
-      })
-        .then(function (response) {
-          if (!response.ok) throw new Error('HTTP ' + response.status);
-          return response.json();
-        })
-        .then(function (release) {
-          var tag = release && release.tag_name ? String(release.tag_name) : '';
-          if (tag) {
-            var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
-            versionSpots.forEach(function (el) { el.textContent = version; });
-          }
-          var apk = (release && release.assets ? release.assets : []).filter(function (asset) {
-            return /\.apk$/i.test(asset.name || '');
-          })[0];
-          if (apk && apk.size) {
-            var mb = Math.round(apk.size / 1048576);
-            sizeSpots.forEach(function (el) { el.textContent = mb + ' MB'; });
-          }
-          if (apk && apk.download_count) {
-            androidDownloadSpots.forEach(function (el) {
-              el.textContent = formatNumber(apk.download_count);
-            });
-          }
-        })
+    function applyAndroidInfo(release) {
+      var tag = release && release.tag_name ? String(release.tag_name) : '';
+      if (tag) {
+        var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
+        versionSpots.forEach(function (el) { el.textContent = version; });
+      }
+      var apk = (release && release.assets ? release.assets : []).filter(function (asset) {
+        return /\.apk$/i.test(asset.name || '');
+      })[0];
+      if (apk && apk.size) {
+        var mb = Math.round(apk.size / 1048576);
+        sizeSpots.forEach(function (el) { el.textContent = mb + ' MB'; });
+      }
+      if (apk && apk.download_count) {
+        androidDownloadSpots.forEach(function (el) {
+          el.textContent = formatNumber(apk.download_count);
+        });
+      }
+    }
+
+    function fetchAndroidInfo(force) {
+      cachedFetch(
+        'https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases/latest',
+        { headers: { Accept: 'application/vnd.github+json' } },
+        force
+      )
+        .then(function (result) { applyAndroidInfo(result.data); })
         .catch(function () { /* keep the static fallback */ });
     }
 
-    // Initial fetch
-    fetchAndroidInfo();
+    // Initial fetch (will hit cache if user visited in the last hour)
+    fetchAndroidInfo(false);
 
-    // Poll every 60 seconds to keep Android info updated
-    setInterval(fetchAndroidInfo, 60000);
+    // Poll every 60 seconds. force=true so the poller always tries to
+    // refresh, but cachedFetch still falls back to stale data on failure.
+    setInterval(function () { fetchAndroidInfo(true); }, 60000);
   }
 
   /* -----------------------------------------------------------
@@ -239,21 +315,20 @@
   var releaseLinks = document.querySelectorAll('[data-release-tag]');
   var windowsDownloadSpots = document.querySelectorAll('[data-windows-downloads]');
   if (!isLighthouse && (releaseLinks.length || windowsDownloadSpots.length)) {
-    function fetchDownloadCounts() {
+    function fetchDownloadCounts(force) {
       // Fetch version history download counts
       releaseLinks.forEach(function (link) {
         var tag = link.getAttribute('data-release-tag');
         var downloadsEl = link.querySelector('[data-release-downloads]');
         if (!tag || !downloadsEl) return;
 
-        fetch('https://api.github.com/repos/sunnyskyess420/frogpaper/releases/tags/' + tag, {
-          headers: { Accept: 'application/vnd.github+json' }
-        })
-          .then(function (response) {
-            if (!response.ok) throw new Error('HTTP ' + response.status);
-            return response.json();
-          })
-          .then(function (release) {
+        cachedFetch(
+          'https://api.github.com/repos/sunnyskyess420/frogpaper/releases/tags/' + tag,
+          { headers: { Accept: 'application/vnd.github+json' } },
+          force
+        )
+          .then(function (result) {
+            var release = result.data;
             var assets = release && release.assets ? release.assets : [];
             var total = assets.reduce(function (sum, asset) {
               return sum + (asset.download_count || 0);
@@ -265,15 +340,13 @@
 
       // Fetch latest Windows release download count for the Windows section
       if (windowsDownloadSpots.length) {
-        fetch('https://api.github.com/repos/sunnyskyess420/frogpaper/releases/latest', {
-          headers: { Accept: 'application/vnd.github+json' }
-        })
-          .then(function (response) {
-            if (!response.ok) throw new Error('HTTP ' + response.status);
-            return response.json();
-          })
-          .then(function (release) {
-            var tag = release && release.tag_name ? String(release.tag_name) : '';
+        cachedFetch(
+          'https://api.github.com/repos/sunnyskyess420/frogpaper/releases/latest',
+          { headers: { Accept: 'application/vnd.github+json' } },
+          force
+        )
+          .then(function (result) {
+            var release = result.data;
             var assets = release && release.assets ? release.assets : [];
             var total = assets.reduce(function (sum, asset) {
               return sum + (asset.download_count || 0);
@@ -286,11 +359,12 @@
       }
     }
 
-    // Initial fetch
-    fetchDownloadCounts();
+    // Initial fetch (will hit cache if user visited in the last hour)
+    fetchDownloadCounts(false);
 
-    // Poll every 60 seconds to keep counts updated
-    setInterval(fetchDownloadCounts, 60000);
+    // Poll every 60 seconds. force=true so the poller always tries to
+    // refresh, but cachedFetch still falls back to stale data on failure.
+    setInterval(function () { fetchDownloadCounts(true); }, 60000);
   }
 
 })();

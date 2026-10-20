@@ -131,20 +131,53 @@
   var listEl = document.getElementById('list');
   var problemEl = document.getElementById('problem');
 
+  /* -----------------------------------------------------------
+     Cached fetch — same idea as site.js.
+     The downloads page lists every release, and a refresh can fire
+     1 request that counts toward GitHub's 60/hour unauthenticated
+     limit. Caching for 1 hour means a returning visitor sees the
+     numbers instantly and never sees the page break from rate
+     limiting.
+     ----------------------------------------------------------- */
+  var API_CACHE_KEY = 'fp:api:' + API + '?per_page=20';
+  var API_CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+  function readCache() {
+    try {
+      var raw = localStorage.getItem(API_CACHE_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object') return null;
+      return parsed; // { ts, data }
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function writeCache(data) {
+    try {
+      localStorage.setItem(API_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
+    } catch (error) {
+      // localStorage full or disabled — degrade gracefully.
+    }
+  }
+
   function esc(text) {
     return String(text).replace(/[&<>"]/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
     });
   }
 
-  function render(releases) {
+  function render(releases, fromCache) {
     var total = 0;
     releases.forEach(function (release) {
       (release.assets || []).forEach(function (asset) { total += asset.download_count || 0; });
     });
     totalEl.textContent = total.toLocaleString();
     labelEl.textContent = total === 1 ? 'total download' : 'total downloads';
-    stampEl.textContent = 'updated ' + new Date().toLocaleTimeString();
+    stampEl.textContent = fromCache
+      ? 'showing cached data — refresh for live counts'
+      : 'updated ' + new Date().toLocaleTimeString();
 
     if (!releases.length) {
       listEl.innerHTML = '<p class="text-sm text-muted-foreground">No releases published yet.</p>';
@@ -166,7 +199,16 @@
     }).join('');
   }
 
-  function load() {
+  function load(force) {
+    var cached = readCache();
+
+    // Cache hit, not forced, fresh → render immediately, no network.
+    if (cached && !force && (Date.now() - cached.ts) < API_CACHE_TTL) {
+      problemEl.classList.add('hidden');
+      render(cached.data, true);
+      return;
+    }
+
     problemEl.classList.add('hidden');
     fetch(API + '?per_page=20', { headers: { Accept: 'application/vnd.github+json' } })
       .then(function (response) {
@@ -174,19 +216,29 @@
         if (!response.ok) { throw new Error('HTTP ' + response.status); }
         return response.json();
       })
-      .then(render)
+      .then(function (releases) {
+        writeCache(releases);
+        render(releases, false);
+      })
       .catch(function (error) {
-        problemEl.textContent = "Couldn't reach GitHub just now (" + error.message + "). Tap Refresh to try again.";
-        problemEl.classList.remove('hidden');
-        stampEl.textContent = 'no connection';
-        if (totalEl.textContent === '—') { totalEl.textContent = '?'; }
-        listEl.innerHTML = '';
+        // Network or rate-limit failure. Fall back to stale cache if we
+        // have one so the page still shows numbers instead of an error.
+        if (cached) {
+          render(cached.data, true);
+          stampEl.textContent = 'offline — showing last known counts';
+        } else {
+          problemEl.textContent = "Couldn't reach GitHub just now (" + error.message + "). Tap Refresh to try again.";
+          problemEl.classList.remove('hidden');
+          stampEl.textContent = 'no connection';
+          if (totalEl.textContent === '—') { totalEl.textContent = '?'; }
+          listEl.innerHTML = '';
+        }
       });
   }
 
-  document.getElementById('refresh').addEventListener('click', load);
-  load();
-  setInterval(load, 300000);
+  document.getElementById('refresh').addEventListener('click', function () { load(true); });
+  load(false);
+  setInterval(function () { load(true); }, 300000);
 })();
 </script>
 </body>
