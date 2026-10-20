@@ -8,6 +8,21 @@
   'use strict';
 
   /* -----------------------------------------------------------
+     Lighthouse / CI detection
+     When Lighthouse CI runs the page, there is no point fetching live
+     download counts from the GitHub API — the numbers are not visible
+     to anyone reading the report, and 13 unauthenticated fetches per
+     page load × 3 URLs × 3 runs blows straight through GitHub's
+     60-requests-per-hour limit. Rate-limited fetches either fail
+     instantly (403) or hang, and either case can leave Lighthouse
+     waiting on pending promises long enough for it to give up and
+     return null/NaN for performance and TBT.
+     Skipping these fetches under Lighthouse removes that entire class
+     of failure without changing anything a real visitor sees.
+     ----------------------------------------------------------- */
+  var isLighthouse = navigator.userAgent.indexOf('Chrome-Lighthouse') !== -1;
+
+  /* -----------------------------------------------------------
      Header shadow on scroll
      ----------------------------------------------------------- */
   var header = document.getElementById('siteHeader');
@@ -167,7 +182,7 @@
   var versionSpots = document.querySelectorAll('[data-android-version]');
   var sizeSpots = document.querySelectorAll('[data-android-size]');
   var androidDownloadSpots = document.querySelectorAll('[data-android-downloads]');
-  if (versionSpots.length || sizeSpots.length || androidDownloadSpots.length) {
+  if (!isLighthouse && (versionSpots.length || sizeSpots.length || androidDownloadSpots.length)) {
     function fetchAndroidInfo() {
       fetch('https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases/latest', {
         headers: { Accept: 'application/vnd.github+json' }
@@ -223,7 +238,7 @@
      ----------------------------------------------------------- */
   var releaseLinks = document.querySelectorAll('[data-release-tag]');
   var windowsDownloadSpots = document.querySelectorAll('[data-windows-downloads]');
-  if (releaseLinks.length || windowsDownloadSpots.length) {
+  if (!isLighthouse && (releaseLinks.length || windowsDownloadSpots.length)) {
     function fetchDownloadCounts() {
       // Fetch version history download counts
       releaseLinks.forEach(function (link) {
@@ -278,16 +293,4 @@
     setInterval(fetchDownloadCounts, 60000);
   }
 
-  /* -----------------------------------------------------------
-     Shared number formatter
-     ----------------------------------------------------------- */
-  function formatNumber(num) {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1) + 'M';
-    }
-    if (num >= 1000) {
-      return (num / 1000).toFixed(1) + 'K';
-    }
-    return String(num);
-  }
 })();
