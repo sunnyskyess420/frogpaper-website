@@ -3,1404 +3,610 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#0B1220" />
-<title>FrogPaper — AI Wallpapers, Seamlessly Synced</title>
-<meta name="description" content="A cozy AI wallpaper studio for desktop and Android. Generate, curate, and rotate AI-powered wallpapers — no browser, no server, and on your phone nothing is uploaded anywhere. Free & open source." />
+<meta name="theme-color" content="#0b1220" />
+<title>FrogPaper — Your imagination. Every screen.</title>
+<meta name="description" content="A cozy, free and open-source AI wallpaper studio for Windows and Android. Generate, curate and rotate wallpapers — no browser, no server, no account." />
 <link rel="icon" type="image/png" href="assets/img/favicon.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
 <link rel="manifest" href="manifest.json" />
 
-<!-- Open Graph / Twitter (absolute URLs to the live site) -->
+<!-- Open Graph / Twitter -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://sunnyskyess420.github.io/frogpaper-website/" />
-<meta property="og:title" content="FrogPaper — AI Wallpapers, Seamlessly Synced - Desktop & Android" />
-<meta property="og:description" content="A cozy AI wallpaper studio - now for desktop AND Android. Generate wallpapers from a few words, set them in one tap, and keep them on your own device. Free, no account, no server needed." />
+<meta property="og:title" content="FrogPaper — Your imagination. Every screen." />
+<meta property="og:description" content="A cozy, free and open-source AI wallpaper studio for Windows and Android. Generate, curate and rotate wallpapers — no browser, no server, no account." />
 <meta property="og:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:site_name" content="FrogPaper" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="FrogPaper — AI Wallpapers, Seamlessly Synced - Desktop & Android" />
-<meta name="twitter:description" content="A cozy AI wallpaper studio - now for desktop AND Android. Generate wallpapers from a few words, set them in one tap, and keep them on your own device. Free, no account, no server needed." />
+<meta name="twitter:title" content="FrogPaper — Your imagination. Every screen." />
+<meta name="twitter:description" content="A cozy, free and open-source AI wallpaper studio for Windows and Android. Generate, curate and rotate wallpapers — no browser, no server, no account." />
 <meta name="twitter:image" content="https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg" />
 
-<!-- Fonts -->
-
-<!-- Tailwind CSS (locally generated) -->
-<link rel="stylesheet" href="output.css" />
-<link rel="stylesheet" href="styles.css" />
-<!-- Preload hero LCP image (responsive) -->
-  <link rel="preload" as="image" href="assets/img/hero-frog-mobile.webp" media="(max-width: 768px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/img/hero-frog-tablet.webp" media="(min-width: 769px) and (max-width: 1279px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/img/hero-frog.webp" media="(min-width: 1280px)" fetchpriority="high" />
+<!-- Self-hosted Nunito -->
+<link rel="preload" href="assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="site.css" />
+<script>document.documentElement.classList.add('js');</script>
 </head>
-<body class="font-body bg-background text-foreground antialiased min-h-[100svh]">
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<!-- ============================================================= -->
-<!-- TOP NAV -->
-<!-- ============================================================= -->
-<header class="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
-  <div class="mx-auto flex max-w-content items-center justify-between px-6 py-4">
-    <!-- Menu toggle (mobile) -->
-    <button id="menuToggle" aria-label="Toggle menu" class="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-muted-foreground hover:text-foreground transition">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      Menu
-    </button>
-
-    <a href="#top" class="font-heading text-sm tracking-[0.3em] text-foreground uppercase">
-      FrogPaper · V1.7.5
+<header class="site-header" id="siteHeader">
+  <div class="container nav">
+    <a class="brand" href="#home" aria-label="FrogPaper home">
+      <img src="assets/img/logo-mark.png" alt="" width="40" height="40" />
+      <span>FrogPaper</span>
     </a>
 
-    <a href="#downloads" class="hidden md:inline-flex items-center rounded-full border border-copper/40 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-copper transition hover:bg-copper/10">Desktop &amp; Android · download</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#home">Home</a>
+      <a href="#windows">Windows</a>
+      <a href="#android">Android</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a href="#download">Download</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 
-  <!-- Mobile drawer -->
-  <nav id="mobileNav" class="hidden border-t border-border/60 bg-background/95 backdrop-blur-md">
-    <div class="mx-auto flex max-w-content flex-col gap-1 px-6 py-4 text-sm">
-      <a href="#mobile" class="py-2 text-muted-foreground hover:text-foreground">Mobile App</a>
-      <a href="#features" class="py-2 text-muted-foreground hover:text-foreground">Features</a>
-      <a href="#sync" class="py-2 text-muted-foreground hover:text-foreground">Cloud Sync</a>
-      <a href="#how" class="py-2 text-muted-foreground hover:text-foreground">How It Works</a>
-      <a href="#sorter" class="py-2 text-muted-foreground hover:text-foreground">Bonus App</a>
-      <a href="#compare" class="py-2 text-muted-foreground hover:text-foreground">Comparison</a>
-      <a href="#release" class="py-2 text-muted-foreground hover:text-foreground">Release Notes</a>
-      <a href="#changelog" class="py-2 text-muted-foreground hover:text-foreground">Changelog</a>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+    <div class="container">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#windows">Windows</a></li>
+        <li><a href="#android">Android</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
     </div>
   </nav>
 </header>
 
-<main id="top">
+<main id="main">
 
-<!-- ============================================================= -->
-<!-- HERO -->
-<!-- ============================================================= -->
-<section class="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pt-20 text-center">
-  <!-- Background image + vignette -->
-  <div class="pointer-events-none absolute inset-0 -z-10">
-    <img src="assets/img/hero-frog.webp" alt="" class="h-full w-full object-cover opacity-50" fetchpriority="high" width="2560" height="1501" srcset="assets/img/hero-frog-mobile.webp 768w, assets/img/hero-frog-tablet.webp 1280w, assets/img/hero-frog.webp 2560w" sizes="100vw" />
-    <div class="absolute inset-0" style="background: radial-gradient(120% 80% at 50% -10%, rgba(11,18,32,0.92), rgba(0,0,0,0) 60%), radial-gradient(80% 60% at 90% 10%, rgba(52,211,153,0.07), rgba(0,0,0,0) 55%);"></div>
-    <div class="absolute inset-0 bg-background/30"></div>
-  </div>
+  <!-- ============================ HERO ============================ -->
+  <section class="hero" id="home">
+    <div class="container">
+      <img class="hero-mascot" src="assets/img/mascot-frog.png" alt="FrogPaper's friendly frog mascot, wearing a beret and holding a rainbow paintbrush" width="583" height="910" fetchpriority="high" />
+      <p class="eyebrow">A little frog. Endless possibilities.</p>
+      <h1>Your imagination. <br />Every screen.</h1>
+      <p class="hero-lede">Meet FrogPaper, your cozy, frog-themed AI wallpaper studio for Windows and Android. Turn a few words into a world of your own — then make it your wallpaper.</p>
 
-  <!-- Pirate Halloween frog mascot — centered, bobbing with the same `float-slow`
-       animation as the original beret mascot used. Placed directly ABOVE the
-       orange Halloween Edition release badge and BELOW the fixed top nav bar.
-       Uses inline style + .hero-mascot class (in styles.css) instead of
-       Tailwind arbitrary h-[Npx] classes, because the prebuilt output.css
-       doesn't include those classes. -->
-  <div class="pointer-events-none mb-8 flex justify-center">
-    <div class="float-slow">
-      <img src="assets/img/mascot-frog-pirate-small.png"
-           alt="FrogPaper Halloween mascot — a friendly pirate frog waving from above the Halloween Edition release banner"
-           class="hero-mascot drop-shadow-2xl"
-           style="height: 140px; width: auto;"
-           width="359" height="520"
-           fetchpriority="high" />
-    </div>
-  </div>
-
-  <span class="mb-8 inline-flex items-center gap-2 rounded-full border border-pumpkin/50 bg-pumpkin/10 px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-pumpkin-soft">
-    <span aria-hidden="true">🎃</span> Halloween Edition — Version 1.7.5 Now Available
-  </span>
-
-  <h1 class="font-heading text-[clamp(48px,8vw,102px)] font-semibold leading-[0.95] tracking-[-0.03em] text-paper">
-    AI Wallpapers,<br/>
-    <em class="font-light italic">Seamlessly Synced.</em>
-  </h1>
-
-  <p class="mt-8 max-w-xl text-pretty text-lg leading-[1.6] text-muted-foreground md:text-xl">
-    Generate stunning AI wallpapers from 6 providers — Pollinations, Cloudflare, HuggingFace, Prodia, Replicate, and Fal.ai. A faster gallery, full keyboard control, and one-click cloud sync. No browser. No server. Just your desktop and your imagination. Now on your phone, too.
-  </p>
-
-  <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-    <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download class="group inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.51 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
-      Download v1.7.5
-    </a>
-    <a href="#downloads" class="inline-flex items-center gap-2 rounded-full border border-copper/40 px-7 py-3.5 text-sm font-medium text-copper transition hover:bg-copper/10">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.4.4 0 0 0-.69-.4l-1.87 3.23a11.3 11.3 0 0 0-9.76 0L5.25 5.9a.4.4 0 0 0-.69.4L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
-      Get the Android app
-    </a>
-    <a href="#gallery" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-7 py-3.5 text-sm font-medium text-paper backdrop-blur transition hover:border-copper/40 hover:text-copper">
-      Explore the gallery
-      <span aria-hidden>→</span>
-    </a>
-    <a href="https://buymeacoffee.com/alively142" class="inline-flex items-center gap-2 rounded-full border border-copper/40 px-7 py-3.5 text-sm font-medium text-copper transition hover:bg-copper/10">
-      Buy me a coffee
-    </a>
-  </div>
-
-  <!-- Hero footer ("Est. 2026 / Scroll to unfold") — hidden on viewports shorter than
-       900px to prevent overlap with the button row above. The hero content stack
-       (frog + badge + headline + paragraph + buttons) is tall enough on short viewports
-       that the absolutely-positioned bottom-8 footer would collide with the buttons.
-       `pointer-events-none` is a belt-and-suspenders guard so even if a future change
-       re-introduces a visual overlap, the footer cannot block button clicks.
-       The actual show/hide logic lives in styles.css under `.hero-footer` because
-       Tailwind's arbitrary `min-[900px]:flex` variant isn't in the prebuilt output.css. -->
-  <div class="hero-footer pointer-events-none absolute bottom-8 left-0 right-0 flex-col items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
-    <span>Est. 2026 · Windows</span>
-    <span class="flex items-center gap-2 text-copper/70">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      Scroll to unfold
-    </span>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- HALLOWEEN EDITION ANNOUNCEMENT -->
-<!-- ============================================================= -->
-<section id="halloween" class="border-y border-pumpkin/25 bg-pumpkin-deep">
-  <div class="mx-auto flex max-w-content flex-wrap items-center justify-center gap-x-5 gap-y-2 px-6 py-5 text-center">
-    <span class="pumpkin-bob text-xl" aria-hidden="true">🎃</span>
-    <p class="text-sm leading-relaxed">
-      <span class="font-semibold text-pumpkin-soft">The Halloween Edition is here — desktop v1.7.5 and Android <span data-android-version>v1.12.0</span>.</span>
-      <span class="text-muted-foreground"> A pumpkin-lit theme with a ghostly popup sound on desktop — and the same costume on your phone.</span>
-    </p>
-    <a href="#release" class="inline-flex items-center gap-1 rounded-full border border-pumpkin/50 px-4 py-1.5 text-xs font-medium text-pumpkin-soft transition hover:bg-pumpkin/10">See what's new <span aria-hidden="true">→</span></a>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- STATS STRIP -->
-<!-- ============================================================= -->
-<section class="border-y border-border bg-card/30">
-  <div class="mx-auto grid max-w-content grid-cols-2 gap-px overflow-hidden md:grid-cols-4">
-    <div class="border-r border-border px-6 py-8 text-center last:border-r-0 md:border-r">
-      <div class="font-heading text-4xl font-semibold text-paper">25+</div>
-      <div class="mt-1 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Style Filters</div>
-    </div>
-    <div class="border-r border-border px-6 py-8 text-center md:border-r-0">
-      <div class="font-heading text-4xl font-semibold text-paper">6</div>
-      <div class="mt-1 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">AI Providers</div>
-    </div>
-    <div class="border-r border-border px-6 py-8 text-center md:border-r">
-      <div class="font-heading text-4xl font-semibold text-paper">v1.7.5</div>
-      <div class="mt-1 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Latest Release</div>
-    </div>
-    <div class="px-6 py-8 text-center">
-      <div class="font-heading text-4xl font-semibold text-paper">Win</div>
-      <div class="mt-1 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Platform</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- TWO APPS                                                     -->
-<!-- ============================================================= -->
-<section id="apps" class="scroll-mt-24 border-t border-border px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-14 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Two apps, one idea</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        FrogPaper is really<br/>
-        <em class="font-light italic">two different apps.</em>
-      </h2>
-      <p class="mt-6 max-w-xl leading-[1.6] text-muted-foreground">
-        A full desktop studio for Windows, and a phone-first studio for Android. They share the
-        same idea &mdash; words in, wallpapers out &mdash; but each one stands on its own. Here is
-        what each app actually does.
-      </p>
-    </div>
-
-    <div class="grid gap-6 lg:grid-cols-2">
-      <article class="flex flex-col rounded-3xl border border-border bg-card/40 p-8">
-        <span class="inline-flex w-fit items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Windows &middot; desktop</span>
-        <h3 class="mt-5 font-heading text-3xl font-medium text-paper">FrogPaper for Windows</h3>
-        <p class="mt-3 leading-[1.6] text-muted-foreground">The full studio for your PC &mdash; generate, style, sort and sync a whole wallpaper library.</p>
-        <ul class="mt-6 space-y-3 text-sm leading-[1.6] text-muted-foreground">
-          <li>&bull; Generate from <span class="text-paper">6 AI providers</span> &mdash; Pollinations, Cloudflare, HuggingFace, Prodia, Replicate, Fal.ai</li>
-          <li>&bull; 25+ style filters, with control over size and seed</li>
-          <li>&bull; Sets and rotates your Windows wallpaper; browse it as a gallery</li>
-          <li>&bull; Cloud sync (Google Drive / OneDrive / Dropbox) and the Photo Sorter companion</li>
-          <li>&bull; Full keyboard control</li>
-        </ul>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">Download for Windows</a>
-          <a href="#downloads" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">Windows details</a>
-        </div>
-      </article>
-
-      <article class="flex flex-col rounded-3xl border border-copper/30 bg-copper/5 p-8">
-        <span class="inline-flex w-fit items-center rounded-full border border-copper/40 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-copper">Android &middot; mobile</span>
-        <h3 class="mt-5 font-heading text-3xl font-medium text-paper">FrogPaper Mobile</h3>
-        <p class="mt-3 leading-[1.6] text-muted-foreground">A phone-first studio &mdash; generate from a few words and keep every wallpaper on your own device.</p>
-        <ul class="mt-6 space-y-3 text-sm leading-[1.6] text-muted-foreground">
-          <li>&bull; Describe a wallpaper in a few words, or roll the dice for a surprise</li>
-          <li>&bull; <span class="text-paper">Build screen</span>: subject, style, lighting, colour, mood, atmosphere</li>
-          <li>&bull; Four bottom tabs &mdash; Home, Generate, Gallery, Settings &mdash; so the daily screens are one tap apart</li>
-          <li>&bull; Gallery on your phone &mdash; star favourites, search by prompt, sort &amp; filter</li>
-          <li>&bull; Long-press an image for set / save / share / delete, with a 5-second undo</li>
-          <li>&bull; Every image says which engine made it</li>
-          <li>&bull; Rotate automatically (every open or once a day) through the engine you picked &mdash; a failed run tells you when it will retry, and Settings remembers the last change</li>
-          <li>&bull; Works offline from your copies; free engine by default, or bring your own key &mdash; tap a greyed-out engine to see how</li>
-          <li>&bull; No account, nothing uploaded anywhere</li>
-        </ul>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">Download for Android</a>
-          <a href="#android-releases" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">Release numbers</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<!-- ============================================================= -->
-<section id="gallery" class="px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-12 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Community Gallery</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        Wallpapers as artifacts,<br/>
-        <em class="font-light italic">not just files.</em>
-      </h2>
-      <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-        A selection from the FrogPaper community. Each one generated, styled, and synced from the desktop app — then submitted for everyone to see.
-      </p>
-      <div class="mt-6 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-        <span class="inline-block h-px w-8 bg-copper/60"></span>
-        Fiber Gallery · Unfold
-      </div>
-    </div>
-
-    <!-- Carousel -->
-    <div class="relative">
-      <div id="galleryTrack" class="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-6 pr-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <!-- 12 wallpaper cards -->
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/angel_of_war_realistic_20260705_1.png" alt="Angel of War — Realistic wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Realistic</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Angel of War</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/moody-treefrog-in-a-synthwave.png" alt="Moody Treefrog — Synthwave wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Synthwave</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Moody Treefrog</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/dragon_realistic_20260731_1.png" alt="Dragon — Realistic wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Realistic</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Dragon</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/chill-frog-depicted-in-a.png" alt="Chill Frog — Stylized wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Stylized</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Chill Frog</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/elder_treant_darkfantasy_20260818_2.png" alt="Elder Treant — Dark Fantasy wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Dark Fantasy</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Elder Treant</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/ice_queen_realistic_20260705_1.png" alt="Ice Queen — Realistic wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Realistic</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Ice Queen</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/playful-frog-in-a-retro.png" alt="Playful Frog — Retro wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Retro</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Playful Frog</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/mechanical_clockwork_heart_realistic_20260705_1.png" alt="Clockwork Heart — Realistic wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Realistic</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Clockwork Heart</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/shadow_panther_darkfantasy_20260622_1.png" alt="Shadow Panther — Dark Fantasy wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Dark Fantasy</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Shadow Panther</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/unicorn_realistic_20260705_2.png" alt="Unicorn — Realistic wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Realistic</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Unicorn</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/steampunk_laboratory_watercolor_storybook_20260510_1.png" alt="Steampunk Lab — Watercolor wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Watercolor</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Steampunk Lab</h3>
-        </article>
-
-        <article class="group relative aspect-[16/10] w-[320px] flex-none snap-start overflow-hidden rounded-2xl ring-1 ring-border md:w-[420px]">
-          <img src="assets/gallery/storm_caller_realistic_20260705_1.png" alt="Storm Caller — Realistic wallpaper by the FrogPaper community" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-          <div class="absolute left-0 top-0 m-4"><span class="rounded-full bg-background/70 px-2.5 py-1 text-[9px] uppercase tracking-[0.25em] text-copper backdrop-blur">Realistic</span></div>
-          <div class="sheen"></div>
-          <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Storm Caller</h3>
-        </article>
-      </div>
-
-      <!-- Arrows -->
-      <button id="galPrev" aria-label="Previous wallpaper" class="absolute -left-4 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/80 p-3 backdrop-blur transition hover:border-copper/40 hover:text-copper md:flex">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button id="galNext" aria-label="Next wallpaper" class="absolute -right-4 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/80 p-3 backdrop-blur transition hover:border-copper/40 hover:text-copper md:flex">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-
-      <p class="mt-4 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground">Drag or use arrows to unfold →</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- DOWNLOADS -->
-<!-- ============================================================= -->
-<section id="downloads" class="scroll-mt-24 border-t border-border bg-card/20 px-6 py-20">
-  <div class="mx-auto max-w-content">
-    <div class="mb-10 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Downloads</span>
-      <h2 class="mt-4 font-heading text-[clamp(30px,4vw,46px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        Pick your screen.
-      </h2>
-    </div>
-
-    <div class="grid gap-6 md:grid-cols-2">
-      <article class="rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="font-heading text-2xl font-medium text-paper">Windows</h3>
-        <p class="mt-3 leading-[1.6] text-muted-foreground">
-          The full studio: six AI providers, 25+ style filters, cloud sync and the gallery on your desktop.
-        </p>
-        <p class="mt-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Version 1.7.5 · 64-bit installer</p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download class="mt-6 inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
+      <div class="hero-actions">
+        <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg>
           Download for Windows
         </a>
-      </article>
-
-      <article class="rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="font-heading text-2xl font-medium text-paper">Android</h3>
-        <p class="mt-3 leading-[1.6] text-muted-foreground">
-          FrogPaper in your pocket: words in, wallpapers out. Free, no account, and every wallpaper
-          stays on your phone.
-        </p>
-        <p class="mt-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Android 7.0+ · Halloween Edition <span data-android-version>v1.12.0</span> · free APK</p>
-        <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download class="mt-6 inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
-          Download for Android
-        </a>
-        <p class="mt-4 text-xs leading-[1.6] text-muted-foreground">
-          If the download sticks near 100% and never finishes, you are probably in an app's built-in
-          browser. Tap the menu and choose <strong class="text-paper">Open in browser</strong>, or open
-          this page in Chrome, then try again.
-        </p>
-      </article>
-    </div>
-
-    <p class="mt-8 text-sm text-muted-foreground">
-      New here? <a href="#mobile" class="text-copper hover:text-paper">See what the Android app does →</a>
-      &nbsp;·&nbsp; <a href="downloads.html" class="text-copper hover:text-paper">Live download counter →</a>
-    </p>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- MOBILE -->
-<!-- ============================================================= -->
-<section id="mobile" class="border-t border-border bg-card/20 px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-16 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Android App</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        FrogPaper,<br/>
-        <em class="font-light italic">in your pocket.</em>
-      </h2>
-      <p class="mt-6 max-w-xl leading-[1.6] text-muted-foreground">
-        The same idea, rebuilt for a phone: describe a wallpaper in a few words and it appears.
-        No account, nothing to configure, and every wallpaper stays on your device.
-      </p>
-      <p class="mt-5 inline-flex w-fit items-center gap-2 rounded-full border border-pumpkin/50 bg-pumpkin/10 px-4 py-1.5 text-xs font-medium text-pumpkin-soft">
-        🎃 Halloween Edition — bottom tabs put the daily screens one tap apart, Home tells you when a new release is out, and automatic wallpapers now use the engine you picked (<span data-android-version>v1.12.0</span>).
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
-          Download for Android — free
-        </a>
-        <a href="#made-with-frogpaper" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">
-          See the gallery
-          <span aria-hidden>→</span>
+        <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg>
+          Get it on Android
         </a>
       </div>
-      <p class="mt-5 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-        Android 7.0+ · <span data-android-size>75 MB</span> · Halloween Edition <span data-android-version>v1.12.0</span>
+
+      <p class="hero-meta">
+        <span>Free &amp; open source</span>
+        <span>Windows v1.7.5</span>
+        <span>Android <span data-android-version>v1.12.0</span></span>
       </p>
     </div>
+  </section>
 
-    <div class="grid gap-6 md:grid-cols-3">
-      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="font-heading text-2xl font-medium text-paper">Words in, wallpapers out</h3>
-        <p class="mt-4 leading-[1.6] text-muted-foreground">
-          Two words is enough, or tap the dice for a surprise. The Build screen offers subject,
-          style, lighting, colour, mood and atmosphere to shape it.
-        </p>
-      </article>
-      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="font-heading text-2xl font-medium text-paper">Everything stays on your phone</h3>
-        <p class="mt-4 leading-[1.6] text-muted-foreground">
-          Wallpapers are saved on the device, never on a server. There is no account to make and
-          nothing is uploaded anywhere.
-        </p>
-      </article>
-      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="font-heading text-2xl font-medium text-paper">Free, and quietly useful</h3>
-        <p class="mt-4 leading-[1.6] text-muted-foreground">
-          It can change your wallpaper once a day on its own &mdash; through the engine you chose &mdash;
-          works offline from the copies on your phone, and needs no key at all to start.
-        </p>
-      </article>
-    </div>
-
-    <div id="made-with-frogpaper" class="mt-14 scroll-mt-24">
-      <p class="mb-6 text-[10px] uppercase tracking-[0.4em] text-copper">Made with FrogPaper</p>
-      <div class="relative">
-        <button id="madePrev" aria-label="Previous wallpaper" class="absolute -left-4 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/80 p-3 backdrop-blur transition hover:border-copper/40 hover:text-copper md:flex">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button id="madeNext" aria-label="Next wallpaper" class="absolute -right-4 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/80 p-3 backdrop-blur transition hover:border-copper/40 hover:text-copper md:flex">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-        <div id="madeTrack" class="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-6 pr-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/img/mobile-example-dragon.jpg" alt="A small red dragon hovering over glowing lava" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Red dragon over lava</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/img/mobile-example-moonlit.jpg" alt="A gothic figure on a vine swing beneath a red moon" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Moonlit gothic scene</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/img/mobile-example-eagle.jpg" alt="A bald eagle flying over a mountain lake" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Eagle over the lake</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/img/mobile-example-sunflowers.jpg" alt="A silhouetted figure in a field of sunflowers before a glowing sun" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Sunflowers at sundown</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260913-161537.jpg" alt="Vivid red-eyed tree frog resting - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Vivid red-eyed tree frog resting</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260913-164459.jpg" alt="Magical frog in witch hat - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Magical frog in witch hat</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260913-192333.jpg" alt="Majestic peacock in misty forest - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Majestic peacock in misty forest</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260913-200152.jpg" alt="Red frog on leaf with sunflower - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Red frog on leaf with sunflower</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260913-201350.jpg" alt="Frog resting by sunset pond - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Frog resting by sunset pond</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260914-105947.jpg" alt="Mystic blue light in forest - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Mystic blue light in forest</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260914-192745.jpg" alt="Teal dragon in misty forest - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Teal dragon in misty forest</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260915-171645.jpg" alt="Green spiky frog on moss - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Green spiky frog on moss</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260927-112732.jpg" alt="Misty mountain robot sentinel - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Misty mountain robot sentinel</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/frogpaper-20260927-113528.jpg" alt="Silhouette walking misty forest path - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Silhouette walking misty forest path</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/huggingface_20260927-040235.jpg" alt="Green frog with red eyes - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Green frog with red eyes</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/huggingface_20260927-205911.jpg" alt="Yellow frog on green leaf - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Yellow frog on green leaf</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/huggingface_20260928-012548.jpg" alt="Colorful horned frog in forest - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Colorful horned frog in forest</figcaption>
-        </figure>
-        <figure class="w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-background/60">
-          <img src="assets/gallery/android/huggingface_20260928-015507.jpg" alt="Astronaut gazing into misty green forest - a wallpaper made with FrogPaper on Android" class="aspect-[9/16] w-full object-cover" loading="lazy" width="220" height="391" />
-          <figcaption class="border-t border-border px-4 py-2 text-[11px] text-muted-foreground">Astronaut gazing into misty green forest</figcaption>
-        </figure>
-        </div>
-      </div>
-      <p class="mt-4 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground">Drag or use arrows to scroll</p>
-      <p class="mt-6 max-w-xl text-sm leading-[1.6] text-muted-foreground">
-        Straight off the phone, starred in the app. The only thing that changes between them is the
-        words used to ask.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- FEATURES                                                     -->
-<!-- ============================================================= -->
-<section id="features" class="border-t border-border bg-card/20 px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-16 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Features</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        Six AI providers, one app.
-      </h2>
-      <p class="mt-6 text-lg leading-relaxed text-muted-foreground">
-        Pick the backend that fits your budget and speed — free options, pay-per-image, or premium quality. Switch anytime with dynamic setup guides.
-      </p>
-    </div>
-
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <article class="group relative overflow-hidden rounded-2xl border border-border bg-background/60 p-8 transition hover:border-copper/40">
-        <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </div>
-        <h3 class="font-heading text-2xl font-medium text-paper">6 AI Providers</h3>
-        <p class="mt-3 leading-relaxed text-muted-foreground">
-          Pollinations (free), Cloudflare Workers AI (free), HuggingFace, Prodia, Replicate, and Fal.ai. Switch in Settings and the UI adapts instantly.
-        </p>
-      </article>
-
-      <article class="group relative overflow-hidden rounded-2xl border border-border bg-background/60 p-8 transition hover:border-copper/40">
-        <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
-        </div>
-        <h3 class="font-heading text-2xl font-medium text-paper">Dynamic Provider Setup</h3>
-        <p class="mt-3 leading-relaxed text-muted-foreground">
-          Switch providers and the panel shows only that provider's API key field plus a step-by-step setup guide with clickable links. No guesswork.
-        </p>
-      </article>
-
-      <article class="group relative overflow-hidden rounded-2xl border border-border bg-background/60 p-8 transition hover:border-copper/40">
-        <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
-        </div>
-        <h3 class="font-heading text-2xl font-medium text-paper">Resolution Freedom</h3>
-        <p class="mt-3 leading-relaxed text-muted-foreground">
-          Choose 16:9, portrait, or square. If a provider only outputs 1024×1024, FrogPaper resizes to your target with lossless LANCZOS scaling.
-        </p>
-      </article>
-
-      <article class="group relative overflow-hidden rounded-2xl border border-border bg-background/60 p-8 transition hover:border-copper/40">
-        <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <h3 class="font-heading text-2xl font-medium text-paper">Blazing Fast Polling</h3>
-        <p class="mt-3 leading-relaxed text-muted-foreground">
-          Replicate generations dropped from ~65s to ~8s thanks to optimized 1-second polling instead of slow long-poll connections.
-        </p>
-      </article>
-
-      <article class="group relative overflow-hidden rounded-2xl border border-border bg-background/60 p-8 transition hover:border-copper/40">
-        <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <h3 class="font-heading text-2xl font-medium text-paper">Star-Pinned Favorites</h3>
-        <p class="mt-3 leading-relaxed text-muted-foreground">
-          Every dropdown option carries its own star button. Pin your go-to subjects, moods, and lighting — they rise to the top, always one click away.
-        </p>
-      </article>
-
-      <article class="group relative overflow-hidden rounded-2xl border border-border bg-background/60 p-8 transition hover:border-copper/40">
-        <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h3 class="font-heading text-2xl font-medium text-paper">Safer by Design</h3>
-        <p class="mt-3 leading-relaxed text-muted-foreground">
-          API keys are never packed into the EXE. Fresh installs start from a clean template, and every build passes an automated secret scan before packaging.
-        </p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- CLOUD SYNC -->
-<!-- ============================================================= -->
-<section id="sync" class="border-t border-border px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-16 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Cloud Providers</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        Sync anywhere.
-      </h2>
-      <p class="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-        Connect your preferred cloud storage and keep your wallpaper collection in perfect sync across all your devices.
-      </p>
-    </div>
-
-    <div class="grid gap-6 md:grid-cols-3">
-      <div class="group relative overflow-hidden rounded-2xl border border-border bg-card/40 p-8 transition hover:border-copper/40">
-        <div class="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M7.71 3.5C10.34 3.5 12.47 5.16 13.07 7.5C13.65 5.16 15.79 3.5 18.43 3.5C21.86 3.5 24 6.06 24 9.5C24 14.91 18.36 19.39 12 23C5.64 19.39 0 14.91 0 9.5C0 6.06 2.14 3.5 5.57 3.5C5.71 3.5 7.71 3.5 7.71 3.5Z"/></svg>
-        </div>
-        <h3 class="font-heading text-3xl font-medium text-paper">Google Drive</h3>
-        <p class="mt-3 text-muted-foreground">Full folder sync</p>
+  <!-- ======================== CHOOSE PLATFORM ===================== -->
+  <section class="section" id="platform">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow">One FrogPaper. Two ways to create.</p>
+        <h2>Choose your platform.</h2>
+        <p class="lede">The same cozy idea, built twice for the screen you are on. Both versions are free — pick the one that fits your day.</p>
       </div>
 
-      <div class="group relative overflow-hidden rounded-2xl border border-border bg-card/40 p-8 transition hover:border-copper/40">
-        <div class="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5L10 4.5V11.5H3V5.5zM3 12.5H10V19.5L3 18.5V12.5zM11 4.4L21 3V11.5H11V4.4zM11 12.5H21V21L11 19.6V12.5z"/></svg>
-        </div>
-        <h3 class="font-heading text-3xl font-medium text-paper">OneDrive</h3>
-        <p class="mt-3 text-muted-foreground">Seamless integration</p>
-      </div>
-
-      <div class="group relative overflow-hidden rounded-2xl border border-border bg-card/40 p-8 transition hover:border-copper/40">
-        <div class="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-copper/10 text-copper">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L6 6L0 12L6 18L12 24L18 18L24 12L18 6L12 0Z" opacity="0.9"/><path d="M12 6L9 9L6 12L9 15L12 18L15 15L18 12L15 9L12 6Z" fill="hsl(220 49% 8%)" opacity="0.5"/></svg>
-        </div>
-        <h3 class="font-heading text-3xl font-medium text-paper">Dropbox</h3>
-        <p class="mt-3 text-muted-foreground">Auto-backup</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- HOW IT WORKS -->
-<!-- ============================================================= -->
-<section id="how" class="border-t border-border bg-card/20 px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-16 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">How It Works</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        From idea to wallpaper<br/>
-        <em class="font-light italic">in minutes.</em>
-      </h2>
-      <p class="mt-6 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Macro · The Watcher</p>
-    </div>
-
-    <div class="grid gap-6 md:grid-cols-3">
-      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
-        <div class="font-heading text-6xl font-light text-copper/40">01</div>
-        <h3 class="mt-4 font-heading text-2xl font-medium text-paper">Build your prompt</h3>
-        <p class="mt-4 max-w-md leading-[1.6] text-muted-foreground">
-          Use the structured prompt builder to describe your perfect wallpaper. Add style, mood, and composition details — then pin your favorites so they're always one click away.
-        </p>
-      </article>
-
-      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
-        <div class="font-heading text-6xl font-light text-copper/40">02</div>
-        <h3 class="mt-4 font-heading text-2xl font-medium text-paper">Generate &amp; style</h3>
-        <p class="mt-4 max-w-md leading-[1.6] text-muted-foreground">
-          Let AI create your image across any of 6 providers, then apply 25+ style filters like Vintage, Cyberpunk, or Watercolor to transform it in a single click.
-        </p>
-      </article>
-
-      <article class="relative rounded-2xl border border-border bg-background/60 p-8">
-        <div class="font-heading text-6xl font-light text-copper/40">03</div>
-        <h3 class="mt-4 font-heading text-2xl font-medium text-paper">Set &amp; sync</h3>
-        <p class="mt-4 max-w-md leading-[1.6] text-muted-foreground">
-          Set it as your wallpaper with one click. Enable cloud sync to automatically back up and share your collection across every device.
-        </p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- ANDROID RELEASES                                             -->
-<!-- ============================================================= -->
-<section id="android-releases" class="scroll-mt-24 border-t border-border bg-card/20 px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-14 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Android app</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        Every Android release,<br/>
-        <em class="font-light italic">and its numbers.</em>
-      </h2>
-      <p class="mt-6 max-w-xl leading-[1.6] text-muted-foreground">
-        How many times each FrogPaper Mobile release has been downloaded &mdash; taken straight from
-        the public release page. Nothing tracked, nothing counted but the file itself. GitHub can
-        lag a few minutes behind.
-      </p>
-    </div>
-    <div id="androidReleases" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <p class="text-sm text-muted-foreground">Loading releases&hellip;</p>
-    </div>
-    <p id="androidReleasesProblem" class="mt-6 hidden text-sm leading-[1.6] text-muted-foreground"></p>
-  </div>
-</section>
-
-<!-- ============================================================= -->
-<!-- BONUS APP — PHOTO SORTER                                     -->
-<!-- ============================================================= -->
-<section id="sorter" class="border-t border-border px-6 py-24 md:py-32">
-  <div class="mx-auto grid max-w-content items-center gap-12 lg:grid-cols-2 lg:gap-16">
-
-    <!-- Copy -->
-    <div class="max-w-xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Bonus App</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        Hundreds of wallpapers,<br/>
-        <em class="font-light italic">sorted in minutes.</em>
-      </h2>
-      <p class="mt-6 text-lg leading-relaxed text-muted-foreground">
-        Generating is the easy part — keeping only the best is the fun part. <a href="https://photo-sorter-navy.vercel.app/" target="_blank" rel="noopener" class="text-paper underline decoration-copper/50 underline-offset-4 transition hover:text-copper">Photo Sorter</a>, a free companion web app from the same developer, lets you blaze through your gallery one swipe at a time: right to keep, left to delete, down for maybe.
-      </p>
-
-      <ul class="mt-8 space-y-5">
-        <li class="flex gap-4">
-          <span class="mt-0.5 inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-copper/10 text-copper">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+      <div class="platform-grid">
+        <article class="platform-card">
+          <span class="platform-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><line x1="8" y1="20.5" x2="16" y2="20.5"/><line x1="12" y1="16.5" x2="12" y2="20.5"/></svg>
           </span>
-          <span class="text-sm leading-relaxed text-muted-foreground"><strong class="font-medium text-paper">Swipe-first triage</strong> — build Keep, Delete, and Maybe piles without touching File Explorer. One gesture per decision, no dialogs.</span>
-        </li>
-        <li class="flex gap-4">
-          <span class="mt-0.5 inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-copper/10 text-copper">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-          </span>
-          <span class="text-sm leading-relaxed text-muted-foreground"><strong class="font-medium text-paper">Built for big folders</strong> — drop in hundreds of images from your FrogPaper gallery (or anywhere) and clear the backlog in a single sitting.</span>
-        </li>
-        <li class="flex gap-4">
-          <span class="mt-0.5 inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-copper/10 text-copper">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          </span>
-          <span class="text-sm leading-relaxed text-muted-foreground"><strong class="font-medium text-paper">Zero setup</strong> — runs right in your browser on any device. No install, no account. Works with JPG, PNG, and WebP.</span>
-        </li>
-      </ul>
+          <h3>FrogPaper for Windows</h3>
+          <p>Your full desktop studio: six AI providers, 25+ style filters, a fast gallery and optional cloud sync.</p>
 
-      <div class="mt-10 flex flex-wrap items-center gap-5">
-        <a href="https://photo-sorter-navy.vercel.app/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
-          Open Photo Sorter
-          <span aria-hidden>→</span>
-        </a>
-        <span class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Free · Web · From the maker of FrogPaper</span>
-      </div>
-    </div>
-
-    <!-- Visual: swipe stack -->
-    <div class="relative mx-auto w-full max-w-md">
-      <!-- Ghost cards behind -->
-      <div aria-hidden="true" class="absolute inset-x-8 top-8 hidden aspect-[16/10] rotate-[5deg] rounded-2xl border border-border bg-card/30 md:block"></div>
-      <div aria-hidden="true" class="absolute inset-x-4 top-4 hidden aspect-[16/10] -rotate-[4deg] rounded-2xl border border-border bg-card/50 md:block"></div>
-
-      <!-- Top card -->
-      <article class="group relative aspect-[16/10] overflow-hidden rounded-2xl shadow-2xl shadow-black/40 ring-1 ring-copper/30 md:rotate-[1.5deg]">
-        <img src="assets/gallery/chill-frog-depicted-in-a.png" alt="Chill Frog wallpaper sitting on the Photo Sorter swipe stack" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" width="420" height="263" />
-        <div class="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent"></div>
-        <span class="absolute right-4 top-4 rotate-[6deg] rounded-full border-2 border-primary bg-background/70 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-primary backdrop-blur">Keep</span>
-        <h3 class="absolute bottom-0 left-0 m-4 font-heading text-xl font-medium text-paper">Chill Frog</h3>
-      </article>
-
-      <!-- Swipe legend -->
-      <div class="mt-6 grid grid-cols-3 gap-3">
-        <div class="rounded-xl border border-border bg-card/40 px-2 py-3 text-center">
-          <div class="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Swipe right</div>
-          <div class="mt-1 flex items-center justify-center gap-1.5 text-sm font-medium text-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            Keep
+          <div class="platform-visual desktop">
+            <img src="assets/img/windows-screenshot.webp" alt="FrogPaper for Windows showing the prompt builder, live wallpaper preview and My Collection gallery" width="1440" height="763" loading="lazy" />
           </div>
-        </div>
-        <div class="rounded-xl border border-border bg-card/40 px-2 py-3 text-center">
-          <div class="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Swipe left</div>
-          <div class="mt-1 flex items-center justify-center gap-1.5 text-sm font-medium text-destructive">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-            Delete
+
+          <div class="platform-foot">
+            <p class="platform-meta">Windows · v1.7.5 · 64-bit installer</p>
+            <a class="btn btn-mint btn-block" href="#windows">Explore Windows</a>
           </div>
+        </article>
+
+        <article class="platform-card">
+          <span class="platform-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><line x1="10.5" y1="5.5" x2="13.5" y2="5.5"/><circle cx="12" cy="18.2" r="0.9"/></svg>
+          </span>
+          <h3>FrogPaper for Android</h3>
+          <p>A phone-first studio: words in, wallpapers out. Generate, collect and rotate, with every wallpaper kept on your phone.</p>
+
+          <div class="platform-visual">
+            <div class="phone-stage">
+              <div class="phone phone-back">
+                <img src="assets/img/mobile-example-dragon.jpg" alt="A small red dragon hovering over glowing lava, made with FrogPaper on Android" width="220" height="470" loading="lazy" />
+              </div>
+              <div class="phone phone-front">
+                <img src="assets/img/mobile-example-moonlit.jpg" alt="A gothic figure on a vine swing beneath a red moon, made with FrogPaper on Android" width="220" height="470" loading="lazy" />
+              </div>
+            </div>
+          </div>
+
+          <div class="platform-foot">
+            <p class="platform-meta">Android 7.0+ · <span data-android-version>v1.12.0</span> · <span data-android-size>75 MB</span> · free APK</p>
+            <a class="btn btn-mint btn-block" href="#android">Explore Android</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== WINDOWS ========================== -->
+  <section class="section" id="windows">
+    <div class="container">
+      <div class="split">
+        <div class="split-copy">
+          <p class="eyebrow">Windows · The desktop studio</p>
+          <h2>Big ideas deserve a bigger canvas.</h2>
+          <p class="lede">Generate, style, sort and sync a whole wallpaper library. The full studio for your PC — no browser, no server, just your desktop and your imagination.</p>
+          <div class="split-actions">
+            <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>Download for Windows</a>
+            <a class="btn btn-outline" href="#release">What's new in v1.7.5</a>
+          </div>
+          <p class="split-meta">Windows · v1.7.5 · 64-bit installer</p>
         </div>
-        <div class="rounded-xl border border-border bg-card/40 px-2 py-3 text-center">
-          <div class="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Swipe down</div>
-          <div class="mt-1 flex items-center justify-center gap-1.5 text-sm font-medium text-copper">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-            Maybe
+
+        <div class="shot-frame">
+          <img src="assets/img/windows-screenshot.webp" alt="FrogPaper for Windows: prompt controls on the left, a large frog wallpaper preview in the middle and the My Collection gallery on the right" width="1440" height="763" />
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Six providers. Your choice.</h3>
+          <p>Pollinations (free), Cloudflare Workers AI (free), HuggingFace, Prodia, Replicate and Fal.ai. Switch in Settings and only the relevant key field and setup guide appear.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Make every image yours.</h3>
+          <p>25+ filters including Vintage, Cyberpunk, Watercolor, Comic Book and Oil Painting. Control size and seed, add text overlays, and star-pin your favourite subjects, moods and lighting.</p>
+        </article>
+        <article class="feature-card">
+          <h3>A gallery that keeps up.</h3>
+          <p>Set and rotate your Windows wallpaper. Browse Gallery, Favorites, Manual and Styled views, use Ctrl+click for multi-select tagging, and navigate with the full keyboard.</p>
+        </article>
+        <article class="feature-card" id="sync">
+          <h3>Your library, backed up.</h3>
+          <p>Optional Google Drive full-folder sync, OneDrive integration and Dropbox auto-backup. Check backup downloads a sample to verify readability; restores compare file contents and skip duplicates.</p>
+        </article>
+        <article class="feature-card">
+          <h3>The right resolution.</h3>
+          <p>Choose 16:9, portrait or square. When an engine only outputs 1024 × 1024, FrogPaper resizes to your target with lossless LANCZOS scaling.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Safer from the start.</h3>
+          <p>API keys are never packed into the installer. Fresh installs use a clean template, and each build passes an automated secret scan before packaging.</p>
+        </article>
+      </div>
+
+      <div class="note">
+        <span class="note-icon" aria-hidden="true">🎃</span>
+        <p><strong>Halloween Edition</strong> — A pumpkin-lit desktop theme and ghostly popup sound, with a matching seasonal costume on Android. Windows v1.7.5 also restores style filters and text overlays. <a href="#release">See what's new →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== ANDROID ========================== -->
+  <section class="section" id="android">
+    <div id="mobile" aria-hidden="true"></div>
+    <div class="container">
+      <div class="split">
+        <div class="split-copy">
+          <p class="eyebrow">Android · Your pocket studio</p>
+          <h2>A little inspiration. Wherever you hop.</h2>
+          <p class="lede">The same idea, rebuilt for your phone. Describe a wallpaper in a few words, or roll the dice for a surprise. No account, nothing to configure — every wallpaper stays on your device.</p>
+          <div class="split-actions">
+            <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download>Get it on Android</a>
+            <a class="btn btn-outline" href="#gallery">See the gallery</a>
+          </div>
+          <p class="split-meta">Android 7.0+ · <span data-android-version>v1.12.0</span> · <span data-android-size>75 MB</span> · free APK</p>
+        </div>
+
+        <div class="phone-panel">
+          <div class="phone-stage">
+            <div class="phone phone-back">
+              <img src="assets/img/mobile-example-sunflowers.jpg" alt="A silhouetted figure in a field of sunflowers before a glowing sun, made with FrogPaper on Android" width="220" height="470" />
+            </div>
+            <div class="phone phone-front">
+              <img src="assets/gallery/android/frogpaper-20260913-164459.jpg" alt="A magical frog in a witch hat, made with FrogPaper on Android" width="220" height="470" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============================================================= -->
-<!-- COMPARISON -->
-<!-- ============================================================= -->
-<section id="compare" class="border-t border-border px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-16 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Comparison</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        Why FrogPaper?
-      </h2>
-      <p class="mt-4 leading-relaxed text-muted-foreground">
-        How it stacks up against browser-based AI tools and traditional wallpaper apps.
-      </p>
-    </div>
-
-    <div class="overflow-hidden rounded-2xl border border-border">
-      <!-- Header row -->
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 border-b border-border bg-card/40 px-6 py-5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground md:px-8">
-        <div>Feature</div>
-        <div class="text-center font-heading text-base font-medium normal-case tracking-normal text-paper">FrogPaper</div>
-        <div class="text-center font-heading text-base font-medium normal-case tracking-normal text-muted-foreground">Browser AI</div>
-        <div class="text-center font-heading text-base font-medium normal-case tracking-normal text-muted-foreground">Wallpaper Apps</div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Words in, wallpapers out.</h3>
+          <p>Two words can be enough. Shape your idea with the Build screen: subject, style, lighting, colour, mood and atmosphere — or tap the dice for a surprise.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Everything, one tap away.</h3>
+          <p>Four bottom tabs — Home, Generate, Gallery and Settings — keep the daily screens close. Home tells you when a new release is available, and every image says which engine made it.</p>
+        </article>
+        <article class="feature-card">
+          <h3>A gallery in your pocket.</h3>
+          <p>Star favourites, search by prompt, sort and filter. Long-press an image to set, save, share or delete it, with a five-second undo if you change your mind.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Fresh wallpaper, automatically.</h3>
+          <p>Rotate on every open or once a day using the engine you picked. If a run fails, the app tells you when it will retry; Settings remembers the last change.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Your phone. Your images.</h3>
+          <p>Wallpapers are saved on your device, never on a server. There is no account to make, nothing is uploaded anywhere, and your saved copies work offline.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Free, and quietly useful.</h3>
+          <p>A free engine is selected by default, with no key needed to begin. Bring your own key if you prefer another engine; tap a greyed-out engine to see how to set it up.</p>
+        </article>
       </div>
 
-      <!-- Rows: feature, frog, browser, wallpaper_app -->
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 border-b border-border px-6 py-5 md:px-8">
-        <div class="text-sm text-paper">Desktop App</div>
-        <div class="text-center text-copper">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg>
+      <p class="lede" style="font-size:15px;">Download stuck near 100%? Open this page in Chrome or choose <strong>Open in browser</strong> from the in-app browser menu, then try again.</p>
+    </div>
+  </section>
+
+  <!-- =========================== GALLERY =========================== -->
+  <section class="section" id="gallery">
+    <div class="container">
+      <div class="gallery-head">
+        <div class="section-head">
+          <p class="eyebrow">Made with FrogPaper</p>
+          <h2>Straight off the desktop and the phone.</h2>
+          <p class="lede">A selection from the FrogPaper community. Every image was generated, styled and saved with the app — then shared for everyone to see.</p>
         </div>
-        <div class="text-center text-muted-foreground/40">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <div class="gallery-controls">
+          <button class="gallery-btn" id="galleryPrev" type="button" aria-label="Previous wallpapers">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="gallery-btn" id="galleryNext" type="button" aria-label="Next wallpapers">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
-        <div class="text-center text-copper">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
       </div>
 
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 border-b border-border px-6 py-5 md:px-8">
-        <div class="text-sm text-paper">AI Image Generation</div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-      </div>
-
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 border-b border-border px-6 py-5 md:px-8">
-        <div class="text-sm text-paper">Style Filters (25+)</div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-      </div>
-
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 border-b border-border px-6 py-5 md:px-8">
-        <div class="text-sm text-paper">Auto Wallpaper Rotation</div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 border-b border-border px-6 py-5 md:px-8">
-        <div class="text-sm text-paper">Cloud Sync</div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-      </div>
-
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 border-b border-border px-6 py-5 md:px-8">
-        <div class="text-sm text-paper">Offline Mode</div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 border-b border-border px-6 py-5 md:px-8">
-        <div class="text-sm text-paper">Gallery Management</div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-
-      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center gap-2 px-6 py-5 md:px-8">
-        <div class="text-sm text-paper">Free &amp; Open Source</div>
-        <div class="text-center text-copper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        <div class="text-center text-muted-foreground/40"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="inline-block"><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      <div class="gallery-track" id="galleryTrack">
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/angel_of_war_realistic_20260705_1.webp" alt="Angel of War — a realistic winged warrior wallpaper" width="900" height="502" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Angel of War</strong><span>Realistic</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/moody-treefrog-in-a-synthwave.webp" alt="Moody Treefrog — a synthwave tree frog wallpaper" width="900" height="506" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Moody Treefrog</strong><span>Synthwave</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/dragon_realistic_20260731_1.webp" alt="Dragon — a realistic red dragon wallpaper" width="900" height="506" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Dragon</strong><span>Realistic</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/chill-frog-depicted-in-a.webp" alt="Chill Frog — a stylized resting frog wallpaper" width="900" height="502" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Chill Frog</strong><span>Stylized</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/elder_treant_darkfantasy_20260818_2.webp" alt="Elder Treant — a dark fantasy tree creature wallpaper" width="900" height="506" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Elder Treant</strong><span>Dark Fantasy</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/ice_queen_realistic_20260705_1.webp" alt="Ice Queen — a realistic winter queen wallpaper" width="900" height="502" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Ice Queen</strong><span>Realistic</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/playful-frog-in-a-retro.webp" alt="Playful Frog — a retro frog wallpaper" width="900" height="506" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Playful Frog</strong><span>Retro</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/mechanical_clockwork_heart_realistic_20260705_1.webp" alt="Clockwork Heart — a realistic mechanical heart wallpaper" width="900" height="502" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Clockwork Heart</strong><span>Realistic</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/shadow_panther_darkfantasy_20260622_1.webp" alt="Shadow Panther — a dark fantasy panther wallpaper" width="900" height="502" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Shadow Panther</strong><span>Dark Fantasy</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/unicorn_realistic_20260705_2.webp" alt="Unicorn — a realistic unicorn wallpaper" width="900" height="502" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Unicorn</strong><span>Realistic</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/steampunk_laboratory_watercolor_storybook_20260510_1.webp" alt="Steampunk Lab — a watercolor storybook laboratory wallpaper" width="900" height="502" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Steampunk Lab</strong><span>Watercolor</span></figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="assets/gallery/thumbs/storm_caller_realistic_20260705_1.webp" alt="Storm Caller — a realistic storm mage wallpaper" width="900" height="506" loading="lazy" />
+          <figcaption class="gallery-caption"><strong>Storm Caller</strong><span>Realistic</span></figcaption>
+        </figure>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================= -->
-<!-- RELEASE NOTES -->
-<!-- ============================================================= -->
-<section id="release" class="border-t border-border bg-card/20 px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-16 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-pumpkin-soft">Release Notes</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        What's new in v1.7.5
-      </h2>
-      <p class="mt-6 leading-relaxed text-muted-foreground">
-        Styles and text overlay are back. Both features were failing with a misleading "image may be corrupted" dialog when the real problem was a library mismatch inside the build.
-      </p>
+  <!-- ======================== SHARED FEATURES ===================== -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Different screens. Same creative spirit.</p>
+        <h2>Small prompts. Big possibilities.</h2>
+        <p class="lede">One FrogPaper, built thoughtfully for two platforms. Windows adds a full desktop toolkit and optional cloud sync; Android keeps your collection local to your phone.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Create with a few words.</h3>
+          <p>Turn an idea into a wallpaper with AI. Choose your engine and shape the result with a structured prompt builder.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Keep your favourites close.</h3>
+          <p>Build a personal wallpaper collection, browse your gallery and return to the images you love.</p>
+        </article>
+        <article class="feature-card">
+          <h3>A fresh view, automatically.</h3>
+          <p>Set a new wallpaper and let rotation keep your screen feeling fresh — on your desktop or your phone.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Made to be yours.</h3>
+          <p>Free and open source, with free generation options and optional provider keys. Each platform stands on its own.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Offline when you need it.</h3>
+          <p>Saved copies stay on your device, so your gallery keeps working without a connection.</p>
+        </article>
+        <article class="feature-card">
+          <h3>No account. No server.</h3>
+          <p>Nothing to sign up for, and no FrogPaper server in the middle. Your wallpapers stay where you put them.</p>
+        </article>
+      </div>
+
+      <div class="steps" id="how">
+        <article class="step">
+          <span class="step-number">01 · Build your prompt</span>
+          <h3>Describe the world you want.</h3>
+          <p>Add subject, style, mood and composition details. Pin the favourites you return to so they are always one click away.</p>
+        </article>
+        <article class="step">
+          <span class="step-number">02 · Generate &amp; style</span>
+          <h3>Choose an engine and make it.</h3>
+          <p>Generate your image, then on Windows apply one of 25+ style filters — from Watercolor to Cyberpunk — in a single click.</p>
+        </article>
+        <article class="step">
+          <span class="step-number">03 · Set &amp; enjoy</span>
+          <h3>Make it your wallpaper.</h3>
+          <p>Set it with one click. Rotate your collection automatically, and on Windows enable optional cloud backup.</p>
+        </article>
+      </div>
+
+      <div class="why-card" id="compare">
+        <h3>Why FrogPaper?</h3>
+        <p>Browser-based AI tools generate images, while traditional wallpaper apps typically offer rotation, offline viewing and gallery management. FrogPaper brings those worlds together: AI generation, a personal gallery, automatic wallpapers and free, open-source software. The Windows studio adds 25+ style filters and cloud sync.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="grid gap-6 md:grid-cols-2">
-      <article class="rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="mb-4 font-heading text-xl font-medium text-paper">Styles are back</h3>
-        <ul class="space-y-3 text-sm leading-relaxed text-muted-foreground">
-          <li>Comic Book, Watercolor, Oil Painting and every other filter apply again.</li>
-          <li>The bundled OpenCV was compiled for NumPy 1.x while the app shipped NumPy 2.5, so importing it failed silently.</li>
-          <li>OpenCV 4.14 is built for NumPy 2 and ships with the app.</li>
+  <!-- ========================= PHOTO SORTER ======================= -->
+  <section class="section-tight" id="sorter">
+    <div class="container">
+      <div class="sorter-card">
+        <div>
+          <p class="eyebrow">A helping hand</p>
+          <h2>Hundreds of wallpapers, sorted in minutes.</h2>
+          <p>Photo Sorter is a free companion web app from the same developer. Swipe right to keep, left to delete, or down for maybe. Drop in hundreds of images from your FrogPaper gallery or anywhere else and clear the backlog without File Explorer or dialogs. No install or account; works in your browser on any device with JPG, PNG and WebP.</p>
+          <div class="btn-row">
+            <a class="btn btn-mint" href="https://photo-sorter-navy.vercel.app/" target="_blank" rel="noopener">Open Photo Sorter <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="sorter-note">Free · Web · From the maker of FrogPaper</p>
+        </div>
+        <div class="sorter-visual">
+          <img src="assets/gallery/thumbs/chill-frog-depicted-in-a.webp" alt="Chill Frog wallpaper sitting on the Photo Sorter swipe stack" width="900" height="502" />
+          <span class="sorter-badge">Keep</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= RELEASE NOTES ====================== -->
+  <section class="section" id="release">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Release notes</p>
+        <h2>What's new in v1.7.5</h2>
+        <p class="lede">Styles and text overlay are back. A library mismatch caused a misleading “image may be corrupted” dialog — your images were never damaged.</p>
+      </div>
+
+      <div class="release-grid">
+        <article class="release-card">
+          <h3>Styles are back</h3>
+          <p>Comic Book, Watercolor, Oil Painting and every other filter apply again. The bundled OpenCV was compiled for NumPy 1.x while the app shipped NumPy 2.5, so importing it failed silently. OpenCV 4.14 is built for NumPy 2 and ships with the app.</p>
+        </article>
+        <article class="release-card">
+          <h3>Text overlay is back</h3>
+          <p>Adding text no longer fails with “the image file may be corrupted”. OpenCV and PIL are now checked separately, so an OpenCV problem cannot disable text overlay. Your existing images were never damaged — the dialog was blaming the wrong thing.</p>
+        </article>
+        <article class="release-card">
+          <h3>Verified before shipping</h3>
+          <p>A test image went through the Comic Book filter and a text overlay before the installer was built. Both produced valid output files at the expected dimensions.</p>
+        </article>
+        <article class="release-card">
+          <h3>Under the hood</h3>
+          <p><code>style_transfer.py</code> now exposes separate <code>CV2_AVAILABLE</code> and <code>PIL_AVAILABLE</code> flags; filters require both, text overlay only needs PIL. Build environment: opencv-python 4.8.1.78 to 4.14.0.94. 472 tests passing, ruff clean.</p>
+        </article>
+      </div>
+
+      <div class="version-block" id="changelog">
+        <h3>Version history</h3>
+        <ul class="version-list">
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.5" target="_blank" rel="noopener"><span class="version-tag">v1.7.5</span><span class="version-title">Styles and Text Overlay Restored</span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.4" target="_blank" rel="noopener"><span class="version-tag">v1.7.4</span><span class="version-title">About Window Refresh</span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.3" target="_blank" rel="noopener"><span class="version-tag">v1.7.3</span><span class="version-title">No More Duplicate Restores</span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.2" target="_blank" rel="noopener"><span class="version-tag">v1.7.2</span><span class="version-title">Backups you can actually restore</span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.1" target="_blank" rel="noopener"><span class="version-tag">v1.7.1</span><span class="version-title">New Circular Sidebar Logo</span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.0" target="_blank" rel="noopener"><span class="version-tag">v1.7.0</span><span class="version-title">Halloween Edition</span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.6.1" target="_blank" rel="noopener"><span class="version-tag">v1.6.1</span><span class="version-title">Multi-select tagging fixes</span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.6.0" target="_blank" rel="noopener"><span class="version-tag">v1.6.0</span><span class="version-title">The visual refresh</span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.5.0" target="_blank" rel="noopener"><span class="version-tag">v1.5.0</span><span class="version-title">The quality release</span><span class="version-date">September 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.4.1" target="_blank" rel="noopener"><span class="version-tag">v1.4.1</span><span class="version-title">Gallery scroll fix</span><span class="version-date">August 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.3.2" target="_blank" rel="noopener"><span class="version-tag">v1.3.2</span><span class="version-title">Scrolling and HuggingFace fixes</span><span class="version-date">August 2026</span></a></li>
         </ul>
-      </article>
-      <article class="rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="mb-4 font-heading text-xl font-medium text-paper">Text overlay is back</h3>
-        <ul class="space-y-3 text-sm leading-relaxed text-muted-foreground">
-          <li>Adding text no longer fails with "the image file may be corrupted".</li>
-          <li>OpenCV and PIL are now checked separately, so an OpenCV problem cannot disable text overlay.</li>
-          <li>Your existing images were never damaged - the dialog was blaming the wrong thing.</li>
-        </ul>
-      </article>
-      <article class="rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="mb-4 font-heading text-xl font-medium text-paper">Verified before shipping</h3>
-        <ul class="space-y-3 text-sm leading-relaxed text-muted-foreground">
-          <li>A test image went through the Comic Book filter and a text overlay before the installer was built.</li>
-          <li>Both produced valid output files at the expected dimensions.</li>
-        </ul>
-      </article>
-      <article class="rounded-2xl border border-border bg-background/60 p-8">
-        <h3 class="mb-4 font-heading text-xl font-medium text-paper">Under the Hood</h3>
-        <ul class="space-y-3 text-sm leading-relaxed text-muted-foreground">
-          <li>style_transfer.py now exposes separate CV2_AVAILABLE and PIL_AVAILABLE flags; filters require both, text overlay only needs PIL.</li>
-          <li>Build environment: opencv-python 4.8.1.78 to 4.14.0.94.</li>
-          <li>472 tests passing, ruff clean.</li>
-        </ul>
-      </article>
+      </div>
     </div>
+  </section>
 
-    <!-- Upgrading to 1.7.5 + FAQ accordion -->
-    <div class="mt-12 rounded-2xl border border-border bg-background/60 p-8">
-      <h3 class="font-heading text-2xl font-medium text-paper">Upgrading to 1.7.5</h3>
-      <p class="mt-3 text-muted-foreground">Short version: run the new installer over the old one — your stuff stays.</p>
+  <!-- ============================= FAQ =========================== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">A helping hand</p>
+        <h2>Good questions. Clear answers.</h2>
+      </div>
 
-      <div class="mt-8 divide-y divide-border">
-        <details class="group py-4">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
-            Will I lose my wallpapers, favorites, or settings?
-            <span class="text-copper transition group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">No. Upgrading never touches your data: wallpapers, the gallery with its tags, pinned favorites, presets, your config, and cloud connections all carry over untouched.</p>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Will I lose my wallpapers, favorites, or settings?</summary>
+          <div class="faq-answer"><p>No. Upgrading never touches your data: wallpapers, the gallery with its tags, pinned favorites, presets, your config and cloud connections all carry over untouched.</p></div>
         </details>
-
-        <details class="group py-4">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
-            How do I upgrade?
-            <span class="text-copper transition group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">Download the 1.7.5 installer and run it over your existing install. That's it. From source, extract the update zip over your project folder and allow replacing all files.</p>
+        <details class="faq-item">
+          <summary>How do I upgrade?</summary>
+          <div class="faq-answer"><p>Download the 1.7.5 installer and run it over your existing install. That's it. From source, extract the update zip over your project folder and allow replacing all files.</p></div>
         </details>
-
-        <details class="group py-4">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
-            Do I need to set up my AI provider again?
-            <span class="text-copper transition group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">No. Your provider choice, API keys, and settings load exactly as they were.</p>
+        <details class="faq-item">
+          <summary>Do I need to set up my AI provider again?</summary>
+          <div class="faq-answer"><p>No. Your provider choice, API keys and settings load exactly as they were.</p></div>
         </details>
-
-        <details class="group py-4">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
-            What should I check after updating?
-            <span class="text-copper transition group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">Open Cloud &amp; Backup and run "Check backup..." - it downloads a sample and confirms every image is readable. Then run a sync twice: the second pass should report 0 added and upload nothing.</p>
+        <details class="faq-item">
+          <summary>What should I check after updating?</summary>
+          <div class="faq-answer"><p>Open Cloud &amp; Backup and run “Check backup…” — it downloads a sample and confirms every image is readable. Then run a sync twice: the second pass should report 0 added and upload nothing.</p></div>
         </details>
-
-        <details class="group py-4">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
-            Will restoring duplicate my images?
-            <span class="text-copper transition group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">No. Restore now checks the content of every file against the images already in your library and skips anything it already has, so the same picture will not appear twice.</p>
+        <details class="faq-item">
+          <summary>Will restoring duplicate my images?</summary>
+          <div class="faq-answer"><p>No. Restore checks the content of every file against the images already in your library and skips anything it already has, so the same picture will not appear twice.</p></div>
         </details>
-
-        <details class="group py-4">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
-            What if a file still can't be read?
-            <span class="text-copper transition group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">The backup check names the files it cannot read instead of failing generically. Run it again after a sync; anything still unreadable is reported by name so you can deal with that one file.</p>
+        <details class="faq-item">
+          <summary>What if a file still can't be read?</summary>
+          <div class="faq-answer"><p>The backup check names the files it cannot read instead of failing generically. Run it again after a sync; anything still unreadable is reported by name so you can deal with that one file.</p></div>
         </details>
-
-        <details class="group py-4">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
-            Does 1.7.5 change how the app looks?
-            <span class="text-copper transition group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">No. There are no visual changes in this release - every theme, dialog, and layout is exactly as it was. v1.7.5 is about backup integrity.</p>
+        <details class="faq-item">
+          <summary>Does 1.7.5 change how the app looks?</summary>
+          <div class="faq-answer"><p>No. There are no visual changes in this release — every theme, dialog and layout is exactly as it was. v1.7.5 is about backup integrity.</p></div>
         </details>
-        <details class="group py-4">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-medium text-paper">
-            Did older versions add frogs to my images without asking?
-            <span class="text-copper transition group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3 max-w-2xl leading-[1.6] text-muted-foreground">Yes - earlier builds contained a hard-coded "frog bias" that could occasionally add a frog cameo to blank-subject images. It has been fully removed in v1.6.1, and frogs are now controlled by the Frog Sneak setting (Settings &gt; Generation). Set it to off if you would rather they never appear - images you already have are untouched.</p>
+        <details class="faq-item">
+          <summary>Did older versions add frogs to my images without asking?</summary>
+          <div class="faq-answer"><p>Yes — earlier builds contained a hard-coded “frog bias” that could occasionally add a frog cameo to blank-subject images. It was fully removed in v1.6.1, and frogs are now controlled by the Frog Sneak setting (Settings → Generation). Set it to off if you would rather they never appear; images you already have are untouched.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Is FrogPaper free?</summary>
+          <div class="faq-answer"><p>Yes. Both apps are free and open source. The Windows installer and Android APK cost nothing; optional AI providers may have their own free tiers or paid keys.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need an account?</summary>
+          <div class="faq-answer"><p>No. There is no FrogPaper account to create and no FrogPaper server in the middle. Windows keeps your library on your PC; Android keeps every wallpaper on your phone.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Where are my wallpapers stored?</summary>
+          <div class="faq-answer"><p>On Windows, wallpapers live in your library on your PC, with optional backup to Google Drive, OneDrive or Dropbox. On Android, wallpapers are saved on the device and nothing is uploaded anywhere.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Does the Android app work offline?</summary>
+          <div class="faq-answer"><p>Yes. It works offline from the copies on your phone, and automatic wallpapers use the engine you picked. If a run fails, the app tells you when it will retry.</p></div>
         </details>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================= -->
-<!-- CHANGELOG -->
-<!-- ============================================================= -->
-<section id="changelog" class="border-t border-border px-6 py-24 md:py-32">
-  <div class="mx-auto max-w-content">
-    <div class="mb-16 max-w-2xl">
-      <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Changelog</span>
-      <h2 class="mt-4 font-heading text-[clamp(36px,5vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-        Version history
-      </h2>
-      <p class="mt-4 leading-relaxed text-muted-foreground">
-        Track the evolution of FrogPaper through its release history.
-      </p>
+  <!-- ========================= DOWNLOAD CTA ======================== -->
+  <section class="section-tight" id="download">
+    <div class="container">
+      <div class="download-cta">
+        <p class="eyebrow">Free &amp; open source</p>
+        <h2>Take FrogPaper home.</h2>
+        <p class="lede">One cozy studio, two screens. Start with a few words and see where your imagination hops.</p>
+        <div class="hero-actions">
+          <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg>
+            Download for Windows
+          </a>
+          <a class="btn btn-outline" href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg>
+            Get it on Android
+          </a>
+        </div>
+        <p class="hero-meta">
+          <span>Windows v1.7.5</span>
+          <span>Android <span data-android-version>v1.12.0</span></span>
+          <span>No account needed</span>
+        </p>
+      </div>
     </div>
-
-    <div class="space-y-6">
-      <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.7.5 - Styles and Text Overlay Restored</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.7.5"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">October 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          Style filters and text overlay work again. Both were failing with "the image file may be corrupted" when the real cause was an OpenCV build compiled for NumPy 1.x running against NumPy 2.5. OpenCV is now built for NumPy 2, and the text path no longer depends on it at all.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.5" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release </a>
-      </article>
-
-      <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.7.4 - About Window Refresh</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.7.4"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">October 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          The About window (tray right-click -&gt; About FrogPaper) no longer advertises v1.7.0. It now lists the last three releases, with the version you are running underneath. No functional changes - the backup and duplicate-restore fixes from v1.7.3 are unchanged.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.4" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release </a>
-      </article>
-
-      <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.7.3 - No More Duplicate Restores</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.7.3"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">October 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          Restoring a backup no longer fills the gallery with doubles. If the backup stored the same picture under both Generated and Manual, restore used to write a second local copy - so every image appeared twice. FrogPaper now compares the backup against the images already on disk and skips anything it already has.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.3" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release </a>
-      </article>
-
-      <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.7.2 - Backups you can actually restore</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.7.2"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">October 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          Restoring from Google Drive now brings back every wallpaper. A backup used to skip any image whose recorded cloud copy had been replaced - by a rename, a reinstall, or an upload from an older install - so a restore quietly returned only part of the library. The app now checks its records against what is really in the folder, re-uploads anything missing, and "Check backup..." downloads a sample to prove the backup is readable.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.2" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release </a>
-      </article>
-
-      <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.7.1 - New Circular Sidebar Logo</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.7.1"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">October 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          A new circular enamel-pin-style sidebar badge: the frog mascot in a beret with a rainbow paintbrush, the "FrogPaper" wordmark arched around the top, and "AI WALLPAPER STUDIO" on a gold ribbon at the bottom. The logo's transparent background picks up each theme's panel colour, so it needs no per-theme variants, and the sidebar was resized to give the circle breathing room on both sides.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.1" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release </a>
-      </article>
-
-      <article class="rounded-2xl border border-pumpkin/30 bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.7.0 — Halloween Edition</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.7.0"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-pumpkin-soft">October 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          The Halloween Edition: the new Halloween theme — pumpkin orange on a haunted purple night, with glowing rounded buttons, candle focus and ghost fog in dialogs — plus a ghost-attack popup sound that plays only in that theme, a Halloween startup subject for the season, and one-click updates that download and run the installer for you.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.0" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-pumpkin hover:underline">View release →</a>
-      </article>
-
-            <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.6.1</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.6.1"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">October 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          Multi-select tagging fixes: Ctrl+click to pick several images at once in every view (Gallery, Favorites, Manual, Styled), fixed tagging the wrong image after switching views, dynamic "Tag N Images" button label, and fresh selection per view.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.6.1" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release →</a>
-      </article>
-
-            <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.6.0</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.6.0"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">October 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          The visual refresh: harmonized colours, surfaces, spacing, and type across all 18 themes — plus mouse-wheel scrolling in every window (Settings, tutorials, dialogs), a startup that no longer flashes, keyboard-friendly popups, and a Frog Sneak setting for when the frog may visit.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.6.0" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release →</a>
-      </article>
-
-<article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.5.0</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.5.0"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">September 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          The quality release: instant gallery views, full keyboard navigation with visible focus rings, friendly file-error dialogs, starter defaults that survive "remember OFF", and a modular rewrite with 301 tests green on real Windows runners.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.5.0" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release →</a>
-      </article>
-
-      <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.4.1</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.4.1"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">August 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          Gallery scroll fix — scrolling stopped working in the main gallery after visiting a ratio view (16:9, 9:16, 1:1). Includes all v1.4.0 features.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.4.1" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release →</a>
-      </article>
-
-      <article class="rounded-2xl border border-border bg-card/40 p-8">
-        <div class="flex flex-wrap items-baseline gap-4">
-          <h3 class="font-heading text-2xl font-medium text-paper">v1.3.2</h3>
-          <span class="release-downloads hidden items-center rounded-full border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground" data-tag="v1.3.2"></span>
-          <span class="text-[10px] uppercase tracking-[0.3em] text-copper">August 2026</span>
-        </div>
-        <p class="mt-4 max-w-3xl leading-[1.6] text-muted-foreground">
-          Fixes a scrolling issue and a missing library error (HuggingFace image generation) from v1.3.1. Includes all v1.3.0 features: star-pinned dropdown favorites, redesigned settings with sidebar navigation, clickable cloud setup guides, skipped-version updates, and safer secret-free builds.
-        </p>
-        <a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.3.2" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-sm text-copper hover:underline">View release →</a>
-      </article>
-    </div>
-  </div>
-</section>
+  </section>
 
 </main>
 
-<!-- ============================================================= -->
-<!-- FOOTER -->
-<!-- ============================================================= -->
-<footer class="border-t border-border bg-card/20 px-6 py-16">
-  <div class="mx-auto max-w-content">
-    <div class="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
-      <div class="max-w-sm">
-        <h3 class="font-heading text-2xl font-semibold text-paper">FrogPaper</h3>
-        <p class="mt-5 max-w-sm leading-relaxed text-paper-muted">
-          A cozy AI wallpaper studio that lives on your desktop. Generate, curate, and rotate AI-powered wallpapers — no browser, no server.
-        </p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download class="inline-flex items-center gap-2 rounded-full bg-paper px-5 py-2.5 text-xs font-medium text-paper-foreground transition hover:bg-paper/90">Download v1.7.5 — Windows</a>
-          <a href="https://buymeacoffee.com/alively142" class="inline-flex items-center gap-2 rounded-full border border-copper/40 px-5 py-2.5 text-xs font-medium text-copper transition hover:bg-copper/10">Buy me a coffee</a>
+<!-- ============================ FOOTER ========================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#home" aria-label="FrogPaper home">
+          <img src="assets/img/logo-mark.png" alt="" width="40" height="40" />
+          <span>FrogPaper</span>
+        </a>
+        <p>A cozy AI wallpaper studio. Made for your desktop. Reimagined for your pocket.</p>
+        <div class="footer-actions">
+          <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>Download for Windows</a>
+          <a class="btn btn-outline" href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download>Get it on Android</a>
         </div>
       </div>
 
-      <div>
-        <h4 class="mb-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Get the App</h4>
-        <ul class="space-y-3 text-sm">
-          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download class="text-paper/80 hover:text-copper">Download v1.7.5</a></li>
-          <li><a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download class="text-paper/80 hover:text-copper">Android app — free APK</a></li>
-          <li><a href="submit-wallpaper.html" class="text-paper/80 hover:text-copper">Submit a wallpaper</a></li>
-          <li><a href="#sorter" class="text-paper/80 hover:text-copper">Bonus app — Photo Sorter</a></li>
+      <div class="footer-col">
+        <h4>Get FrogPaper</h4>
+        <ul>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>Download for Windows</a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download>Get it on Android</a></li>
+          <li><a href="submit-wallpaper.html">Submit a wallpaper</a></li>
+          <li><a href="https://photo-sorter-navy.vercel.app/" target="_blank" rel="noopener">Photo Sorter</a></li>
         </ul>
       </div>
 
-      <div>
-        <h4 class="mb-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Support</h4>
-        <ul class="space-y-3 text-sm">
-          <li><a href="https://buymeacoffee.com/alively142" class="text-paper/80 hover:text-copper">Buy me a coffee</a></li>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="https://buymeacoffee.com/alively142" target="_blank" rel="noopener">Buy me a coffee</a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/issues" target="_blank" rel="noopener">Report an issue</a></li>
+          <li><a href="downloads.html">Live download counter</a></li>
+          <li><a href="#faq">FAQ</a></li>
         </ul>
       </div>
 
-      <div>
-        <h4 class="mb-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Explore</h4>
-        <ul class="space-y-3 text-sm">
-          <li><a href="#features" class="text-paper/80 hover:text-copper">Features</a></li>
-          <li><a href="#sync" class="text-paper/80 hover:text-copper">Cloud sync</a></li>
-          <li><a href="#how" class="text-paper/80 hover:text-copper">How it works</a></li>
-          <li><a href="#compare" class="text-paper/80 hover:text-copper">Comparison</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="mb-4 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Project</h4>
-        <ul class="space-y-3 text-sm">
-          <li><a href="https://github.com/sunnyskyess420/frogpaper" class="text-paper/80 hover:text-copper">GitHub</a></li>
-          <li><a href="https://github.com/sunnyskyess420/frogpaper/issues" class="text-paper/80 hover:text-copper">Report an issue</a></li>
-          <li><a href="#release" class="text-paper/80 hover:text-copper">Release notes</a></li>
-          <li><a href="#changelog" class="text-paper/80 hover:text-copper">Changelog</a></li>
+      <div class="footer-col">
+        <h4>Open source</h4>
+        <ul>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper" target="_blank" rel="noopener">Windows on GitHub</a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper-mobile" target="_blank" rel="noopener">Android on GitHub</a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases" target="_blank" rel="noopener">Windows release notes</a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases" target="_blank" rel="noopener">Android releases</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-16 border-t border-border pt-8 text-center">
-      <p class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-        Free &amp; Open Source · V1.7.5 · Windows
-      </p>
-      <p class="mt-3 text-xs text-muted-foreground/70">
-        Made with <span class="text-copper">🐸</span> by the colony
-      </p>
+    <div class="footer-bottom">
+      <p>© 2026 FrogPaper. Free &amp; open source.</p>
+      <p>Made with <span class="frog" aria-hidden="true">🐸</span> by the colony.</p>
     </div>
   </div>
 </footer>
 
-<script src="main.js" defer></script>
-<!-- Android releases: per-release download numbers from the public GitHub API -->
-<script>
-(function () {
-  var API = 'https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases?per_page=20';
-  var list = document.getElementById('androidReleases');
-  var problem = document.getElementById('androidReleasesProblem');
-  if (!list) return;
-  function esc(t) {
-    return String(t).replace(/[&<>"]/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
-    });
-  }
-  function load() {
-    if (problem) problem.classList.add('hidden');
-    fetch(API, { headers: { Accept: 'application/vnd.github+json' } })
-      .then(function (r) {
-        if (r.status === 404) return [];
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
-      })
-      .then(function (releases) {
-        if (!releases.length) {
-          list.innerHTML = '<p class="text-sm text-muted-foreground">No Android releases published yet.</p>';
-          return;
-        }
-        list.innerHTML = releases.map(function (rel) {
-          var count = (rel.assets || []).reduce(function (s, a) { return s + (a.download_count || 0); }, 0);
-          var date = rel.published_at ? new Date(rel.published_at).toLocaleDateString() : '';
-          var isLatest = rel === releases[0];
-          return '<div class="rounded-2xl border border-border bg-background/60 p-6">' +
-            '<div class="flex items-baseline justify-between gap-3">' +
-            '<span class="font-heading text-lg text-paper">' + esc(rel.tag_name) +
-            (isLatest ? ' <span class="align-top text-[10px] uppercase tracking-[0.2em] text-copper">latest</span>' : '') +
-            '</span>' +
-            '<span class="text-2xl font-semibold text-accent" style="font-variant-numeric:tabular-nums">' + count.toLocaleString() + '</span>' +
-            '</div>' +
-            '<div class="mt-2 text-xs text-muted-foreground">' + esc(date) + ' &middot; download' + (count === 1 ? '' : 's') + '</div>' +
-            '<a class="mt-3 inline-block text-xs text-copper hover:text-paper" href="' + esc(rel.html_url) + '">View release &rarr;</a>' +
-            '</div>';
-        }).join('');
-      })
-      .catch(function (e) {
-        if (problem) {
-          problem.textContent = "Couldn't reach GitHub just now (" + e.message + '). Reload to try again.';
-          problem.classList.remove('hidden');
-        }
-        list.innerHTML = '';
-      });
-  }
-  load();
-})();
-</script>
-
-<!-- Version history: live download counts from the public GitHub API -->
-<script>
-(function () {
-  var badges = document.querySelectorAll('.release-downloads');
-  if (!badges.length) return;
-  var repos = ['sunnyskyess420/frogpaper', 'sunnyskyess420/frogpaper-mobile'];
-  var counts = {};
-  Promise.all(repos.map(function (r) {
-    return fetch('https://api.github.com/repos/' + r + '/releases?per_page=50', { headers: { Accept: 'application/vnd.github+json' } })
-      .then(function (x) { return x.ok ? x.json() : []; })
-      .catch(function () { return []; });
-  })).then(function (lists) {
-    lists.forEach(function (rel) {
-      (rel || []).forEach(function (release) {
-        var n = (release.assets || []).reduce(function (s, a) { return s + (a.download_count || 0); }, 0);
-        counts[release.tag_name] = (counts[release.tag_name] || 0) + n;
-      });
-    });
-    badges.forEach(function (b) {
-      var n = counts[b.getAttribute('data-tag')];
-      if (typeof n === 'number') {
-        b.textContent = n.toLocaleString() + ' download' + (n === 1 ? '' : 's');
-        b.classList.remove('hidden');
-        b.classList.add('inline-flex');
-      }
-    });
-  });
-})();
-</script>
-
-<!-- Android version + APK size: filled in from the newest published mobile release, so the
-     page can never advertise a version (or a size) it does not actually serve. The numbers
-     written into the markup above are the fallback if the API is unreachable. -->
-<script>
-(function () {
-  var versionSpots = document.querySelectorAll('[data-android-version]');
-  var sizeSpots = document.querySelectorAll('[data-android-size]');
-  if (!versionSpots.length && !sizeSpots.length) return;
-
-  fetch('https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases/latest', {
-    headers: { Accept: 'application/vnd.github+json' }
-  })
-    .then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
-    .then(function (release) {
-      var tag = release && release.tag_name ? String(release.tag_name) : '';
-      if (tag) {
-        var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
-        versionSpots.forEach(function (el) { el.textContent = version; });
-      }
-      var apk = (release && release.assets ? release.assets : []).filter(function (a) {
-        return /\.apk$/i.test(a.name || '');
-      })[0];
-      if (apk && apk.size) {
-        var mb = Math.round(apk.size / 1048576);
-        sizeSpots.forEach(function (el) { el.textContent = mb + ' MB'; });
-      }
-    })
-    .catch(function () { /* keep the static numbers already in the page */ });
-})();
-</script>
-
+<script src="site.js" defer></script>
 </body>
 </html>
