@@ -54,13 +54,14 @@
   /* -----------------------------------------------------------
      Gallery carousel — arrows, drag and keyboard
      ----------------------------------------------------------- */
-  var track = document.getElementById('galleryTrack');
-  var prev = document.getElementById('galleryPrev');
-  var next = document.getElementById('galleryNext');
+  function initGallery(trackId, prevId, nextId, label) {
+    var track = document.getElementById(trackId);
+    if (!track) return;
+    var prev = document.getElementById(prevId);
+    var next = document.getElementById(nextId);
 
-  if (track) {
     track.setAttribute('tabindex', '0');
-    track.setAttribute('aria-label', 'Community wallpaper gallery. Use the arrow keys to scroll.');
+    track.setAttribute('aria-label', label + '. Use the arrow keys to scroll.');
 
     function cardStep() {
       var card = track.querySelector('.gallery-card');
@@ -133,6 +134,9 @@
     track.addEventListener('pointerleave', endDrag);
   }
 
+  initGallery('galleryTrackWindows', 'galleryPrevWindows', 'galleryNextWindows', 'Windows community wallpaper gallery');
+  initGallery('galleryTrackAndroid', 'galleryPrevAndroid', 'galleryNextAndroid', 'Android community wallpaper gallery');
+
   /* -----------------------------------------------------------
      Active navigation link
      ----------------------------------------------------------- */
@@ -157,33 +161,133 @@
   }
 
   /* -----------------------------------------------------------
-     Live Android version + APK size
+     Live Android version + APK size + download count
      Falls back to the static values in the markup.
      ----------------------------------------------------------- */
   var versionSpots = document.querySelectorAll('[data-android-version]');
   var sizeSpots = document.querySelectorAll('[data-android-size]');
-  if (versionSpots.length || sizeSpots.length) {
-    fetch('https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases/latest', {
-      headers: { Accept: 'application/vnd.github+json' }
-    })
-      .then(function (response) {
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        return response.json();
+  var androidDownloadSpots = document.querySelectorAll('[data-android-downloads]');
+  if (versionSpots.length || sizeSpots.length || androidDownloadSpots.length) {
+    function fetchAndroidInfo() {
+      fetch('https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases/latest', {
+        headers: { Accept: 'application/vnd.github+json' }
       })
-      .then(function (release) {
-        var tag = release && release.tag_name ? String(release.tag_name) : '';
-        if (tag) {
-          var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
-          versionSpots.forEach(function (el) { el.textContent = version; });
-        }
-        var apk = (release && release.assets ? release.assets : []).filter(function (asset) {
-          return /\.apk$/i.test(asset.name || '');
-        })[0];
-        if (apk && apk.size) {
-          var mb = Math.round(apk.size / 1048576);
-          sizeSpots.forEach(function (el) { el.textContent = mb + ' MB'; });
-        }
-      })
-      .catch(function () { /* keep the static fallback */ });
+        .then(function (response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json();
+        })
+        .then(function (release) {
+          var tag = release && release.tag_name ? String(release.tag_name) : '';
+          if (tag) {
+            var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
+            versionSpots.forEach(function (el) { el.textContent = version; });
+          }
+          var apk = (release && release.assets ? release.assets : []).filter(function (asset) {
+            return /\.apk$/i.test(asset.name || '');
+          })[0];
+          if (apk && apk.size) {
+            var mb = Math.round(apk.size / 1048576);
+            sizeSpots.forEach(function (el) { el.textContent = mb + ' MB'; });
+          }
+          if (apk && apk.download_count) {
+            androidDownloadSpots.forEach(function (el) {
+              el.textContent = formatNumber(apk.download_count);
+            });
+          }
+        })
+        .catch(function () { /* keep the static fallback */ });
+    }
+
+    // Initial fetch
+    fetchAndroidInfo();
+
+    // Poll every 60 seconds to keep Android info updated
+    setInterval(fetchAndroidInfo, 60000);
+  }
+
+  /* -----------------------------------------------------------
+     Shared number formatter
+     ----------------------------------------------------------- */
+  function formatNumber(num) {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M';
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'K';
+    }
+    return String(num);
+  }
+
+  /* -----------------------------------------------------------
+     Windows release download counts
+     ----------------------------------------------------------- */
+  var releaseLinks = document.querySelectorAll('[data-release-tag]');
+  var windowsDownloadSpots = document.querySelectorAll('[data-windows-downloads]');
+  if (releaseLinks.length || windowsDownloadSpots.length) {
+    function fetchDownloadCounts() {
+      // Fetch version history download counts
+      releaseLinks.forEach(function (link) {
+        var tag = link.getAttribute('data-release-tag');
+        var downloadsEl = link.querySelector('[data-release-downloads]');
+        if (!tag || !downloadsEl) return;
+
+        fetch('https://api.github.com/repos/sunnyskyess420/frogpaper/releases/tags/' + tag, {
+          headers: { Accept: 'application/vnd.github+json' }
+        })
+          .then(function (response) {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+          })
+          .then(function (release) {
+            var assets = release && release.assets ? release.assets : [];
+            var total = assets.reduce(function (sum, asset) {
+              return sum + (asset.download_count || 0);
+            }, 0);
+            downloadsEl.textContent = '— ' + formatNumber(total) + ' downloads';
+          })
+          .catch(function () { /* keep the static fallback */ });
+      });
+
+      // Fetch latest Windows release download count for the Windows section
+      if (windowsDownloadSpots.length) {
+        fetch('https://api.github.com/repos/sunnyskyess420/frogpaper/releases/latest', {
+          headers: { Accept: 'application/vnd.github+json' }
+        })
+          .then(function (response) {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+          })
+          .then(function (release) {
+            var tag = release && release.tag_name ? String(release.tag_name) : '';
+            var assets = release && release.assets ? release.assets : [];
+            var total = assets.reduce(function (sum, asset) {
+              return sum + (asset.download_count || 0);
+            }, 0);
+            windowsDownloadSpots.forEach(function (el) {
+              el.textContent = formatNumber(total);
+            });
+          })
+          .catch(function () { /* keep the static fallback */ });
+      }
+    }
+
+    // Initial fetch
+    fetchDownloadCounts();
+
+    // Poll every 60 seconds to keep counts updated
+    setInterval(fetchDownloadCounts, 60000);
+  }
+
+  /* -----------------------------------------------------------
+     Shared number formatter
+     ----------------------------------------------------------- */
+  function formatNumber(num) {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M';
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'K';
+    }
+    return String(num);
   }
 })();
