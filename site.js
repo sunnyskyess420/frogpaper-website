@@ -40,7 +40,7 @@
      Each cache key is namespaced under "fp:api:" so clearing FrogPaper
      data doesn't wipe unrelated localStorage.
      ----------------------------------------------------------- */
-  var API_CACHE_PREFIX = 'fp:api:';
+  var API_CACHE_PREFIX = 'fp:api:v1.7.10:';
   var API_CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
 
   function readCache(key) {
