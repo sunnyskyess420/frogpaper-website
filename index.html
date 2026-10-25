@@ -26,7 +26,7 @@
 
 <!-- Self-hosted Nunito -->
 <link rel="preload" href="assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="site.css" />
+<link rel="stylesheet" href="site.css?v=1.7.9" />
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -78,7 +78,7 @@
       <p class="hero-lede">Meet FrogPaper, your cozy, frog-themed AI wallpaper studio for Windows and Android. Turn a few words into a world of your own — then make it your wallpaper.</p>
 
       <div class="hero-actions">
-        <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>
+        <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/latest" data-windows-download download>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg>
           Download for Windows
         </a>
@@ -90,7 +90,7 @@
 
       <p class="hero-meta">
         <span>Free &amp; open source</span>
-        <span>Windows v1.7.5</span>
+        <span>Windows <span data-windows-version>v1.7.9</span></span>
         <span>Android <span data-android-version>v1.12.0</span></span>
       </p>
     </div>
@@ -118,7 +118,7 @@
           </div>
 
           <div class="platform-foot">
-            <p class="platform-meta">Windows · v1.7.5 · 64-bit installer · <span data-windows-downloads>Loading downloads…</span> downloads</p>
+            <p class="platform-meta">Windows · <span data-windows-version>v1.7.9</span> · 64-bit installer · <span data-windows-downloads>Loading downloads…</span> downloads</p>
             <a class="btn btn-mint btn-block" href="#windows">Explore Windows</a>
           </div>
         </article>
@@ -159,10 +159,10 @@
           <h2>Big ideas deserve a bigger canvas.</h2>
           <p class="lede">Generate, style, sort and sync a whole wallpaper library. The full studio for your PC — no browser, no server, just your desktop and your imagination.</p>
           <div class="split-actions">
-            <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>Download for Windows</a>
-            <a class="btn btn-outline" href="#release">What's new in v1.7.5</a>
+            <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/latest" data-windows-download download>Download for Windows</a>
+            <a class="btn btn-outline" href="#release">What's new in <span data-windows-version>v1.7.9</span></a>
           </div>
-          <p class="split-meta">Windows · v1.7.5 · 64-bit installer · <span data-windows-downloads>Loading downloads…</span> downloads</p>
+          <p class="split-meta">Windows · <span data-windows-version>v1.7.9</span> · 64-bit installer · <span data-windows-downloads>Loading downloads…</span> downloads</p>
         </div>
 
         <div class="shot-frame">
@@ -199,7 +199,7 @@
 
       <div class="note">
         <span class="note-icon" aria-hidden="true">🎃</span>
-        <p><strong>Halloween Edition</strong> — A pumpkin-lit desktop theme and ghostly popup sound, with a matching seasonal costume on Android. Windows v1.7.5 also restores style filters and text overlays. <a href="#release">See what's new →</a></p>
+        <p><strong>Halloween Edition</strong> — A pumpkin-lit desktop theme and ghostly popup sound, with a matching seasonal costume on Android. Recent Windows releases also restore style filters and text overlays. <a href="#release">See what's new →</a></p>
       </div>
     </div>
   </section>
@@ -503,32 +503,38 @@
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Release notes</p>
-        <h2>What's new in v1.7.5</h2>
-        <p class="lede">Styles and text overlay are back. A library mismatch caused a misleading “image may be corrupted” dialog — your images were never damaged.</p>
+        <h2>What's new in <span data-windows-version>v1.7.9</span></h2>
+        <p class="lede">Four releases since v1.7.5: a safer data location, a new update flow, a fixed slideshow timer, and a countdown that finally shows seconds.</p>
       </div>
 
       <div class="release-grid">
         <article class="release-card">
-          <h3>Styles are back</h3>
-          <p>Comic Book, Watercolor, Oil Painting and every other filter apply again. The bundled OpenCV was compiled for NumPy 1.x while the app shipped NumPy 2.5, so importing it failed silently. OpenCV 4.14 is built for NumPy 2 and ships with the app.</p>
+          <h3>A safer, sturdier base</h3>
+          <p>v1.7.6 moved your data to <code>%LOCALAPPDATA%\FrogPaper</code>, so rebuilds and uninstalls no longer touch your wallpapers, tags or favourites. It also pins Pillow 13.0.0 and NLTK 3.10.4, and repairs the OpenCV style filters.</p>
         </article>
         <article class="release-card">
-          <h3>Text overlay is back</h3>
-          <p>Adding text no longer fails with “the image file may be corrupted”. OpenCV and PIL are now checked separately, so an OpenCV problem cannot disable text overlay. Your existing images were never damaged — the dialog was blaming the wrong thing.</p>
+          <h3>Updates you control</h3>
+          <p>v1.7.7 removed the in-app auto-installer. Install Update now opens the release page in your browser, and the installer force-closes a running FrogPaper so the file is replaced cleanly. v1.7.8 adds a Check for Updates button in Settings &rarr; Help.</p>
         </article>
         <article class="release-card">
-          <h3>Verified before shipping</h3>
-          <p>A test image went through the Comic Book filter and a text overlay before the installer was built. Both produced valid output files at the expected dimensions.</p>
+          <h3>The slideshow timer actually waits</h3>
+          <p>v1.7.8 stops the slideshow from changing your wallpaper one second after launch, and applies a new interval immediately instead of leaving the old timer running. Fresh installs now default to slideshow off at 60 minutes.</p>
         </article>
         <article class="release-card">
-          <h3>Under the hood</h3>
-          <p><code>style_transfer.py</code> now exposes separate <code>CV2_AVAILABLE</code> and <code>PIL_AVAILABLE</code> flags; filters require both, text overlay only needs PIL. Build environment: opencv-python 4.8.1.78 to 4.14.0.94. 472 tests passing, ruff clean.</p>
+          <h3>A countdown you can see</h3>
+          <p>v1.7.9 shows seconds in the slideshow countdown &mdash; <code>11h 59m 42s</code> instead of a static-looking <code>11h 59m</code>. The progress bar still fills continuously.</p>
         </article>
       </div>
+
+      <p class="release-checksum">Installer SHA256: <code data-windows-sha256>See the release page</code></p>
 
       <div class="version-block" id="changelog">
         <h3>Version history</h3>
         <ul class="version-list">
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.9" target="_blank" rel="noopener" data-release-tag="v1.7.9"><span class="version-tag">v1.7.9</span><span class="version-title">Countdown shows seconds <span class="version-downloads" data-release-downloads>&middot; Loading downloads&hellip;</span></span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.8" target="_blank" rel="noopener" data-release-tag="v1.7.8"><span class="version-tag">v1.7.8</span><span class="version-title">Manual update check + slideshow fixes <span class="version-badge">Pre-release</span> <span class="version-downloads" data-release-downloads>&middot; Loading downloads&hellip;</span></span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.7" target="_blank" rel="noopener" data-release-tag="v1.7.7"><span class="version-tag">v1.7.7</span><span class="version-title">New update flow + installer fix <span class="version-badge">Pre-release</span> <span class="version-downloads" data-release-downloads>&middot; Loading downloads&hellip;</span></span><span class="version-date">October 2026</span></a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.6" target="_blank" rel="noopener" data-release-tag="v1.7.6"><span class="version-tag">v1.7.6</span><span class="version-title">Security, style filters and safer data <span class="version-downloads" data-release-downloads>&middot; Loading downloads&hellip;</span></span><span class="version-date">October 2026</span></a></li>
           <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.5" target="_blank" rel="noopener" data-release-tag="v1.7.5"><span class="version-tag">v1.7.5</span><span class="version-title">Styles and Text Overlay Restored <span class="version-downloads" data-release-downloads>— Loading downloads…</span></span><span class="version-date">October 2026</span></a></li>
           <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.4" target="_blank" rel="noopener" data-release-tag="v1.7.4"><span class="version-tag">v1.7.4</span><span class="version-title">About Window Refresh <span class="version-downloads" data-release-downloads>— Loading downloads…</span></span><span class="version-date">October 2026</span></a></li>
           <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.3" target="_blank" rel="noopener" data-release-tag="v1.7.3"><span class="version-tag">v1.7.3</span><span class="version-title">No More Duplicate Restores <span class="version-downloads" data-release-downloads>— Loading downloads…</span></span><span class="version-date">October 2026</span></a></li>
@@ -560,7 +566,7 @@
         </details>
         <details class="faq-item">
           <summary>How do I upgrade?</summary>
-          <div class="faq-answer"><p>Download the 1.7.5 installer and run it over your existing install. That's it. From source, extract the update zip over your project folder and allow replacing all files.</p></div>
+          <div class="faq-answer"><p>Download the latest installer and run it over your existing install. That's it. From source, extract the update zip over your project folder and allow replacing all files.</p></div>
         </details>
         <details class="faq-item">
           <summary>Do I need to set up my AI provider again?</summary>
@@ -579,8 +585,8 @@
           <div class="faq-answer"><p>The backup check names the files it cannot read instead of failing generically. Run it again after a sync; anything still unreadable is reported by name so you can deal with that one file.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Does 1.7.5 change how the app looks?</summary>
-          <div class="faq-answer"><p>No. There are no visual changes in this release — every theme, dialog and layout is exactly as it was. v1.7.5 is about backup integrity.</p></div>
+          <summary>Does the latest update change how the app looks?</summary>
+          <div class="faq-answer"><p>No visual overhaul. v1.7.6&ndash;v1.7.9 focus on security, where your data lives, the update flow and the slideshow timer; the themes and layout are unchanged.</p></div>
         </details>
         <details class="faq-item">
           <summary>Did older versions add frogs to my images without asking?</summary>
@@ -614,7 +620,7 @@
         <h2>Take FrogPaper home.</h2>
         <p class="lede">One cozy studio, two screens. Start with a few words and see where your imagination hops.</p>
         <div class="hero-actions">
-          <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>
+          <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/latest" data-windows-download download>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg>
             Download for Windows
           </a>
@@ -624,7 +630,7 @@
           </a>
         </div>
         <p class="hero-meta">
-          <span>Windows v1.7.5</span>
+          <span>Windows <span data-windows-version>v1.7.9</span></span>
           <span>Android <span data-android-version>v1.12.0</span></span>
           <span>No account needed</span>
         </p>
@@ -645,7 +651,7 @@
         </a>
         <p>A cozy AI wallpaper studio. Made for your desktop. Reimagined for your pocket.</p>
         <div class="footer-actions">
-          <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>Download for Windows</a>
+          <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/latest" data-windows-download download>Download for Windows</a>
           <a class="btn btn-outline" href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download>Get it on Android</a>
         </div>
       </div>
@@ -653,7 +659,7 @@
       <div class="footer-col">
         <h4>Get FrogPaper</h4>
         <ul>
-          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.5/FrogPaper-Setup-1.7.5.exe" download>Download for Windows</a></li>
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/latest" data-windows-download download>Download for Windows</a></li>
           <li><a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk" download>Get it on Android</a></li>
           <li><a href="submit-wallpaper.html">Submit a wallpaper</a></li>
           <li><a href="https://photo-sorter-navy.vercel.app/" target="_blank" rel="noopener">Photo Sorter</a></li>
@@ -688,6 +694,6 @@
   </div>
 </footer>
 
-<script src="site.js" defer></script>
+<script src="site.js?v=1.7.9" defer></script>
 </body>
 </html>

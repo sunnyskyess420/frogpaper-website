@@ -314,57 +314,98 @@
      ----------------------------------------------------------- */
   var releaseLinks = document.querySelectorAll('[data-release-tag]');
   var windowsDownloadSpots = document.querySelectorAll('[data-windows-downloads]');
-  if (!isLighthouse && (releaseLinks.length || windowsDownloadSpots.length)) {
-    function fetchDownloadCounts(force) {
-      // Fetch version history download counts
-      releaseLinks.forEach(function (link) {
-        var tag = link.getAttribute('data-release-tag');
-        var downloadsEl = link.querySelector('[data-release-downloads]');
-        if (!tag || !downloadsEl) return;
+  var windowsVersionSpots = document.querySelectorAll('[data-windows-version]');
+  var windowsDownloadLinks = document.querySelectorAll('[data-windows-download]');
+  var windowsShaSpots = document.querySelectorAll('[data-windows-sha256]');
 
-        cachedFetch(
-          'https://api.github.com/repos/sunnyskyess420/frogpaper/releases/tags/' + tag,
-          { headers: { Accept: 'application/vnd.github+json' } },
-          force
-        )
-          .then(function (result) {
-            var release = result.data;
-            var assets = release && release.assets ? release.assets : [];
-            var total = assets.reduce(function (sum, asset) {
-              return sum + (asset.download_count || 0);
-            }, 0);
-            downloadsEl.textContent = '— ' + formatNumber(total) + ' downloads';
-          })
-          .catch(function () { /* keep the static fallback */ });
-      });
+  function applyWindowsRelease(release) {
+    if (!release) return;
 
-      // Fetch latest Windows release download count for the Windows section
-      if (windowsDownloadSpots.length) {
-        cachedFetch(
-          'https://api.github.com/repos/sunnyskyess420/frogpaper/releases/latest',
-          { headers: { Accept: 'application/vnd.github+json' } },
-          force
-        )
-          .then(function (result) {
-            var release = result.data;
-            var assets = release && release.assets ? release.assets : [];
-            var total = assets.reduce(function (sum, asset) {
-              return sum + (asset.download_count || 0);
-            }, 0);
-            windowsDownloadSpots.forEach(function (el) {
-              el.textContent = formatNumber(total);
-            });
-          })
-          .catch(function () { /* keep the static fallback */ });
-      }
+    var tag = release.tag_name ? String(release.tag_name) : '';
+    if (tag) {
+      var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
+      windowsVersionSpots.forEach(function (el) { el.textContent = version; });
     }
 
-    // Initial fetch (will hit cache if user visited in the last hour)
-    fetchDownloadCounts(false);
+    var assets = release.assets || [];
+    var exes = assets.filter(function (asset) {
+      return /\.exe$/i.test(asset.name || '');
+    });
+    var installer = exes.filter(function (asset) {
+      return /setup/i.test(asset.name || '');
+    })[0] || exes[0];
 
-    // Poll every 60 seconds. force=true so the poller always tries to
-    // refresh, but cachedFetch still falls back to stale data on failure.
-    setInterval(function () { fetchDownloadCounts(true); }, 60000);
+    if (installer) {
+      windowsDownloadLinks.forEach(function (link) {
+        link.setAttribute('href', installer.browser_download_url || release.html_url || '#download');
+      });
+      var digest = String(installer.digest || '').replace(/^sha256:/i, '');
+      windowsShaSpots.forEach(function (el) {
+        el.textContent = digest || 'See the release page';
+      });
+    } else if (release.html_url) {
+      windowsDownloadLinks.forEach(function (link) {
+        link.setAttribute('href', release.html_url);
+      });
+    }
+
+    if (windowsDownloadSpots.length) {
+      var total = assets.reduce(function (sum, asset) {
+        return sum + (asset.download_count || 0);
+      }, 0);
+      windowsDownloadSpots.forEach(function (el) {
+        el.textContent = formatNumber(total);
+      });
+    }
+  }
+
+  function fetchLatestWindowsRelease(force) {
+    cachedFetch(
+      'https://api.github.com/repos/sunnyskyess420/frogpaper/releases/latest',
+      { headers: { Accept: 'application/vnd.github+json' } },
+      force
+    )
+      .then(function (result) { applyWindowsRelease(result.data); })
+      .catch(function () { /* keep the static fallback */ });
+  }
+
+  if (!isLighthouse) {
+    if (releaseLinks.length) {
+      function fetchDownloadCounts(force) {
+        releaseLinks.forEach(function (link) {
+          var tag = link.getAttribute('data-release-tag');
+          var downloadsEl = link.querySelector('[data-release-downloads]');
+          if (!tag || !downloadsEl) return;
+
+          cachedFetch(
+            'https://api.github.com/repos/sunnyskyess420/frogpaper/releases/tags/' + tag,
+            { headers: { Accept: 'application/vnd.github+json' } },
+            force
+          )
+            .then(function (result) {
+              var release = result.data;
+              var assets = release && release.assets ? release.assets : [];
+              var total = assets.reduce(function (sum, asset) {
+                return sum + (asset.download_count || 0);
+              }, 0);
+              downloadsEl.textContent = '\u00b7 ' + formatNumber(total) + ' downloads';
+            })
+            .catch(function () { /* keep the static fallback */ });
+        });
+      }
+
+      fetchDownloadCounts(false);
+      // Historical counts change slowly; the 1-hour cache keeps this under
+      // GitHub's 60-requests/hour limit.
+      setInterval(function () { fetchDownloadCounts(false); }, 600000);
+    }
+
+    if (windowsDownloadSpots.length || windowsVersionSpots.length || windowsDownloadLinks.length || windowsShaSpots.length) {
+      // Force the first lookup so a freshly published release appears
+      // immediately; later polls reuse the cache unless it is over an hour old.
+      fetchLatestWindowsRelease(true);
+      setInterval(function () { fetchLatestWindowsRelease(false); }, 600000);
+    }
   }
 
 })();
