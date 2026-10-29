@@ -291,9 +291,11 @@
     // Initial fetch (will hit cache if user visited in the last hour)
     fetchAndroidInfo(false);
 
-    // Poll every 60 seconds. force=true so the poller always tries to
+    // Poll every 10 minutes. force=true so the poller always tries to
     // refresh, but cachedFetch still falls back to stale data on failure.
-    setInterval(function () { fetchAndroidInfo(true); }, 60000);
+    // 60s polling burned 60 of GitHub's 60/hour unauthenticated requests
+    // on its own, which rate-limited every other label on the page.
+    setInterval(function () { fetchAndroidInfo(true); }, 600000);
   }
 
   /* -----------------------------------------------------------

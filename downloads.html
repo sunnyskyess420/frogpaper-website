@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>FrogPaper — Downloads</title>
-<meta name="description" content="How many times FrogPaper Mobile has been downloaded." />
+<meta name="description" content="Download FrogPaper for Windows and Android, and see live download counts for every release. Nothing tracked, nothing counted but the files themselves." />
 <meta name="theme-color" content="#0B1220" />
 <link rel="icon" type="image/png" href="assets/img/favicon.png" />
 <link rel="manifest" href="manifest.json" />
@@ -23,7 +23,10 @@
 <header class="border-b border-border/60 bg-background/80 backdrop-blur-md">
   <div class="mx-auto flex max-w-content items-center justify-between px-6 py-4">
     <a href="index.html" class="font-heading text-sm uppercase tracking-[0.3em] text-foreground">FrogPaper</a>
-    <a href="index.html#mobile" class="text-[10px] uppercase tracking-[0.2em] text-copper hover:text-paper">Get the app</a>
+    <div class="flex items-center gap-6">
+      <a href="index.html" class="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-copper">Back to the site</a>
+      <a href="index.html#download" class="text-[10px] uppercase tracking-[0.2em] text-copper hover:text-paper">Get the app</a>
+    </div>
   </div>
 </header>
 
@@ -32,13 +35,70 @@
   <div class="max-w-2xl">
     <span class="text-[10px] uppercase tracking-[0.4em] text-copper">Downloads</span>
     <h1 class="mt-4 font-heading text-[clamp(34px,7vw,56px)] font-semibold leading-[1.05] tracking-[-0.02em]">
-      How many hands<br/>
-      <em class="font-light italic">it has reached.</em>
+      Take it home.<br/>
+      <em class="font-light italic">Windows or Android.</em>
     </h1>
     <p class="mt-6 leading-[1.6] text-muted-foreground">
-      Straight from the public release page — nothing tracked, nothing counted but the file itself.
-      GitHub can lag a few minutes behind.
+      Both builds, straight from the public release pages — nothing tracked, nothing counted but the files
+      themselves. GitHub can lag a few minutes behind.
     </p>
+  </div>
+
+  <div class="mt-12 grid gap-4 md:grid-cols-2">
+
+    <article class="flex flex-col rounded-2xl border border-border bg-card/60 p-8">
+      <div class="flex items-center justify-between gap-3">
+        <span class="text-[10px] uppercase tracking-[0.3em] text-copper">Windows</span>
+        <span class="text-xs text-muted-foreground" data-windows-version>v1.7.10</span>
+      </div>
+      <h2 class="mt-4 font-heading text-2xl font-semibold leading-tight">FrogPaper for Windows</h2>
+      <p class="mt-2 text-sm leading-[1.6] text-muted-foreground">
+        64-bit installer. Closes a running copy, upgrades in place, and keeps your library and keys in
+        <code class="break-all text-[11px] text-paper-muted">%LOCALAPPDATA%\FrogPaper</code>.
+      </p>
+      <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.10/FrogPaper-1.7.10.exe"
+         data-windows-download download
+         class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
+        Download for Windows
+      </a>
+      <dl class="mt-5 space-y-2 text-[11px] leading-[1.5] text-muted-foreground">
+        <div class="flex items-baseline justify-between gap-3">
+          <dt>Installer size</dt>
+          <dd class="big text-paper" data-windows-size>103 MB</dd>
+        </div>
+        <div>
+          <dt>SHA-256</dt>
+          <dd class="mt-1 break-all font-mono text-[10px] text-paper-muted" data-windows-sha256>b649dd5245ebdd417f9bbdecbe4c20b43983f325388f8f03555c55dd699dc6e5</dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="flex flex-col rounded-2xl border border-border bg-card/60 p-8">
+      <div class="flex items-center justify-between gap-3">
+        <span class="text-[10px] uppercase tracking-[0.3em] text-copper">Android</span>
+        <span class="text-xs text-muted-foreground" data-android-version>v1.12.0</span>
+      </div>
+      <h2 class="mt-4 font-heading text-2xl font-semibold leading-tight">FrogPaper for Android</h2>
+      <p class="mt-2 text-sm leading-[1.6] text-muted-foreground">
+        Signed APK, sideloaded. The same studio and gallery, sized for a phone.
+      </p>
+      <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk"
+         data-android-download download
+         class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-background/60 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">
+        Download the APK
+      </a>
+      <dl class="mt-5 space-y-2 text-[11px] leading-[1.5] text-muted-foreground">
+        <div class="flex items-baseline justify-between gap-3">
+          <dt>APK size</dt>
+          <dd class="big text-paper" data-android-size>75 MB</dd>
+        </div>
+        <div class="flex items-baseline justify-between gap-3">
+          <dt>Build</dt>
+          <dd>Signed release</dd>
+        </div>
+      </dl>
+    </article>
+
   </div>
 
   <div class="mt-12 rounded-2xl border border-border bg-card/60 p-8">
@@ -48,29 +108,26 @@
       <button id="refresh" class="inline-flex items-center gap-2 rounded-full border border-copper/40 px-5 py-2.5 text-xs font-medium text-copper transition hover:bg-copper/10">Refresh now</button>
       <span class="text-xs text-muted-foreground" id="stamp">loading…</span>
     </div>
+
+    <div class="mt-8 grid gap-3 sm:grid-cols-2">
+      <div class="rounded-xl border border-border bg-background/60 p-5">
+        <div class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Windows</div>
+        <div class="big mt-2 text-3xl font-semibold text-paper" id="winTotal">—</div>
+        <div class="mt-1 text-[11px] text-muted-foreground" id="winMeta">installer downloads</div>
+      </div>
+      <div class="rounded-xl border border-border bg-background/60 p-5">
+        <div class="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Android</div>
+        <div class="big mt-2 text-3xl font-semibold text-paper" id="droidTotal">—</div>
+        <div class="mt-1 text-[11px] text-muted-foreground" id="droidMeta">APK downloads</div>
+      </div>
+    </div>
   </div>
 
   <div class="mt-10">
     <h2 class="mb-4 text-[10px] uppercase tracking-[0.4em] text-copper">By release</h2>
     <div id="list" class="grid gap-4 sm:grid-cols-2">
-      <!-- Placeholders match the height of the six release cards so the
+      <!-- Placeholders match the height of the release cards so the
            buttons below do not jump when the fetch resolves (CLS). -->
-      <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
-        <div class="flex items-center justify-between gap-3">
-          <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
-          <span style="display:block;height:32px;width:40px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
-        </div>
-        <div style="margin-top:8px;height:16px;width:96px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
-        <div style="margin-top:12px;height:16px;width:80px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
-      </div>
-      <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
-        <div class="flex items-center justify-between gap-3">
-          <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
-          <span style="display:block;height:32px;width:40px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
-        </div>
-        <div style="margin-top:8px;height:16px;width:96px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
-        <div style="margin-top:12px;height:16px;width:80px;border-radius:4px;background:hsl(var(--border));opacity:.4"></div>
-      </div>
       <div class="rounded-2xl border border-border bg-background/60 p-6" aria-hidden="true">
         <div class="flex items-center justify-between gap-3">
           <span style="display:block;height:28px;width:64px;border-radius:4px;background:hsl(var(--border));opacity:.55"></span>
@@ -109,7 +166,8 @@
   <p id="problem" class="mt-8 hidden rounded-2xl border border-border bg-background/60 p-5 text-sm leading-[1.6] text-muted-foreground"></p>
 
   <div class="mt-14 flex flex-wrap gap-3">
-    <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest" class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">Open the latest release</a>
+    <a href="https://github.com/sunnyskyess420/frogpaper/releases" class="inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">Every Windows release</a>
+    <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">Every Android release</a>
     <a href="index.html#mobile" class="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-paper transition hover:border-copper/40 hover:text-copper">About the Android app</a>
   </div>
 
@@ -124,30 +182,47 @@
 
 <script>
 (function () {
-  var API = 'https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases';
+  'use strict';
+
+  var REPOS = [
+    { key: 'windows', label: 'Windows', api: 'https://api.github.com/repos/sunnyskyess420/frogpaper/releases' },
+    { key: 'android', label: 'Android', api: 'https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases' }
+  ];
+
+  var CACHE_KEY = 'fp:downloads:v2';
+  var CACHE_TTL = 60 * 60 * 1000; // 1 hour
+  var POLL_MS = 10 * 60 * 1000;   // 2 requests per poll, keeps us well under 60/hour
+  var MAX_CARDS = 12;
+
   var totalEl = document.getElementById('total');
   var labelEl = document.getElementById('totalLabel');
   var stampEl = document.getElementById('stamp');
   var listEl = document.getElementById('list');
   var problemEl = document.getElementById('problem');
+  var winTotalEl = document.getElementById('winTotal');
+  var droidTotalEl = document.getElementById('droidTotal');
+  var winMetaEl = document.getElementById('winMeta');
+  var droidMetaEl = document.getElementById('droidMeta');
+
+  var winLink = document.querySelector('[data-windows-download]');
+  var winVersionEls = document.querySelectorAll('[data-windows-version]');
+  var winSizeEls = document.querySelectorAll('[data-windows-size]');
+  var winShaEls = document.querySelectorAll('[data-windows-sha256]');
+
+  var droidLink = document.querySelector('[data-android-download]');
+  var droidVersionEls = document.querySelectorAll('[data-android-version]');
+  var droidSizeEls = document.querySelectorAll('[data-android-size]');
 
   /* -----------------------------------------------------------
-     Cached fetch — same idea as site.js.
-     The downloads page lists every release, and a refresh can fire
-     1 request that counts toward GitHub's 60/hour unauthenticated
-     limit. Caching for 1 hour means a returning visitor sees the
-     numbers instantly and never sees the page break from rate
-     limiting.
+     Cached fetch — one request per repo, cached for an hour, so a
+     returning visitor never burns the 60/hour unauthenticated limit.
      ----------------------------------------------------------- */
-  var API_CACHE_KEY = 'fp:api:' + API + '?per_page=20';
-  var API_CACHE_TTL = 60 * 60 * 1000; // 1 hour
-
   function readCache() {
     try {
-      var raw = localStorage.getItem(API_CACHE_KEY);
+      var raw = localStorage.getItem(CACHE_KEY);
       if (!raw) return null;
       var parsed = JSON.parse(raw);
-      if (!parsed || typeof parsed !== 'object') return null;
+      if (!parsed || typeof parsed !== 'object' || !parsed.data) return null;
       return parsed; // { ts, data }
     } catch (error) {
       return null;
@@ -156,7 +231,7 @@
 
   function writeCache(data) {
     try {
-      localStorage.setItem(API_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
     } catch (error) {
       // localStorage full or disabled — degrade gracefully.
     }
@@ -168,77 +243,235 @@
     });
   }
 
-  function render(releases, fromCache) {
-    var total = 0;
-    releases.forEach(function (release) {
-      (release.assets || []).forEach(function (asset) { total += asset.download_count || 0; });
-    });
-    totalEl.textContent = total.toLocaleString();
-    labelEl.textContent = total === 1 ? 'total download' : 'total downloads';
-    stampEl.textContent = fromCache
-      ? 'showing cached data — refresh for live counts'
-      : 'updated ' + new Date().toLocaleTimeString();
+  function fmt(number) {
+    return Number(number || 0).toLocaleString();
+  }
 
-    if (!releases.length) {
+  function sizeLabel(bytes) {
+    return Math.round(Number(bytes || 0) / 1048576) + ' MB';
+  }
+
+  function sumDownloads(releases) {
+    return (releases || []).reduce(function (sum, release) {
+      return sum + (release.assets || []).reduce(function (inner, asset) {
+        return inner + (asset.download_count || 0);
+      }, 0);
+    }, 0);
+  }
+
+  function newestRelease(releases) {
+    var list = releases || [];
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i].draft && !list[i].prerelease) return list[i];
+    }
+    return list[0] || null;
+  }
+
+  function releaseCountLabel(releases) {
+    var count = (releases || []).length;
+    if (!count) return 'unavailable';
+    return count + (count === 1 ? ' release' : ' releases');
+  }
+
+  /* -----------------------------------------------------------
+     Windows installer: rewrite the button to the exact asset URL
+     of the newest published release, and refresh version/size/SHA.
+     ----------------------------------------------------------- */
+  function applyWindows(releases) {
+    var release = newestRelease(releases);
+    if (!release) return;
+
+    var tag = release.tag_name ? String(release.tag_name) : '';
+    if (tag) {
+      var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
+      winVersionEls.forEach(function (el) { el.textContent = version; });
+    }
+
+    var exes = (release.assets || []).filter(function (asset) {
+      return /\.exe$/i.test(asset.name || '');
+    });
+    var installer = exes.filter(function (asset) {
+      return /setup/i.test(asset.name || '');
+    })[0] || exes[0];
+
+    if (!installer) {
+      if (winLink && release.html_url) winLink.setAttribute('href', release.html_url);
+      return;
+    }
+
+    if (winLink) {
+      winLink.setAttribute('href', installer.browser_download_url || release.html_url);
+    }
+    winSizeEls.forEach(function (el) { el.textContent = sizeLabel(installer.size); });
+
+    var digest = String(installer.digest || '').replace(/^sha256:/i, '');
+    winShaEls.forEach(function (el) {
+      el.textContent = digest || 'See the release page';
+    });
+  }
+
+  function applyAndroid(releases) {
+    var release = newestRelease(releases);
+    if (!release) return;
+
+    var tag = release.tag_name ? String(release.tag_name) : '';
+    if (tag) {
+      var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
+      droidVersionEls.forEach(function (el) { el.textContent = version; });
+    }
+
+    var apk = (release.assets || []).filter(function (asset) {
+      return /\.apk$/i.test(asset.name || '');
+    })[0];
+    if (!apk) return;
+
+    if (droidLink) {
+      droidLink.setAttribute('href', apk.browser_download_url || release.html_url);
+    }
+    droidSizeEls.forEach(function (el) { el.textContent = sizeLabel(apk.size); });
+  }
+
+  function renderCards(data) {
+    var latestWindows = newestRelease(data.windows);
+    var latestAndroid = newestRelease(data.android);
+    var items = [];
+
+    REPOS.forEach(function (repo) {
+      var latest = repo.key === 'windows' ? latestWindows : latestAndroid;
+      (data[repo.key] || []).forEach(function (release) {
+        items.push({
+          label: repo.label,
+          release: release,
+          isLatest: !!latest && latest.id === release.id
+        });
+      });
+    });
+
+    items.sort(function (a, b) {
+      return new Date(b.release.published_at || 0) - new Date(a.release.published_at || 0);
+    });
+
+    if (!items.length) {
       listEl.innerHTML = '<p class="text-sm text-muted-foreground">No releases published yet.</p>';
       return;
     }
 
-    listEl.innerHTML = releases.map(function (release) {
-      var count = (release.assets || []).reduce(function (sum, asset) { return sum + (asset.download_count || 0); }, 0);
-      var date = release.published_at ? new Date(release.published_at).toLocaleDateString() : '';
-      var isLatest = release === releases[0];
+    listEl.innerHTML = items.slice(0, MAX_CARDS).map(function (item) {
+      var release = item.release;
+      var count = (release.assets || []).reduce(function (sum, asset) {
+        return sum + (asset.download_count || 0);
+      }, 0);
+      var date = release.published_at
+        ? new Date(release.published_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+        : '';
+      var note = item.isLatest ? '&middot; latest' : (release.prerelease ? '&middot; pre-release' : '');
+
       return '<div class="rounded-2xl border border-border bg-background/60 p-6">' +
         '<div class="flex items-baseline justify-between gap-3">' +
-        '<span class="font-heading text-lg text-paper">' + esc(release.tag_name) + '</span>' +
-        '<span class="big text-2xl font-semibold text-accent">' + count.toLocaleString() + '</span>' +
+          '<span class="font-heading text-lg text-paper">' + esc(release.tag_name || 'untagged') + '</span>' +
+          '<span class="big text-2xl font-semibold text-accent">' + fmt(count) + '</span>' +
         '</div>' +
-        '<div class="mt-2 text-xs text-muted-foreground">' + esc(date) + (isLatest ? ' · latest' : '') + '</div>' +
-        '<a class="mt-3 inline-block text-xs text-copper hover:text-paper" href="' + esc(release.html_url) + '">View release →</a>' +
-        '</div>';
+        '<div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">' +
+          '<span class="rounded-full border border-border px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-copper">' + esc(item.label) + '</span>' +
+          '<span>' + esc(date) + '</span>' +
+          (note ? '<span>' + note + '</span>' : '') +
+        '</div>' +
+        '<a class="mt-3 inline-block text-xs text-copper hover:text-paper" href="' + esc(release.html_url || '#') + '">View release &rarr;</a>' +
+      '</div>';
     }).join('');
+  }
+
+  function render(data, fromCache, failed) {
+    var windows = data.windows || [];
+    var android = data.android || [];
+    var windowsTotal = sumDownloads(windows);
+    var androidTotal = sumDownloads(android);
+    var total = windowsTotal + androidTotal;
+
+    totalEl.textContent = fmt(total);
+    labelEl.textContent = total === 1 ? 'total download' : 'total downloads';
+    winTotalEl.textContent = fmt(windowsTotal);
+    droidTotalEl.textContent = fmt(androidTotal);
+    winMetaEl.textContent = releaseCountLabel(windows);
+    droidMetaEl.textContent = releaseCountLabel(android);
+
+    applyWindows(windows);
+    applyAndroid(android);
+    renderCards(data);
+
+    stampEl.textContent = fromCache
+      ? 'showing cached data — refresh for live counts'
+      : 'updated ' + new Date().toLocaleTimeString();
+
+    if (failed && failed.length) {
+      problemEl.textContent = 'Live counts for ' + failed.join(' and ') +
+        ' could not be reached just now, so those numbers may be incomplete. Tap Refresh to try again.';
+      problemEl.classList.remove('hidden');
+    } else {
+      problemEl.classList.add('hidden');
+      problemEl.textContent = '';
+    }
+  }
+
+  function fetchRepo(repo) {
+    return fetch(repo.api + '?per_page=20', { headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (response) {
+        if (response.status === 404) return [];
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return response.json();
+      })
+      .then(function (data) {
+        return Array.isArray(data) ? data : [];
+      });
   }
 
   function load(force) {
     var cached = readCache();
 
-    // Cache hit, not forced, fresh → render immediately, no network.
-    if (cached && !force && (Date.now() - cached.ts) < API_CACHE_TTL) {
-      problemEl.classList.add('hidden');
-      render(cached.data, true);
+    if (cached && !force && (Date.now() - cached.ts) < CACHE_TTL) {
+      render(cached.data, true, null);
       return;
     }
 
-    problemEl.classList.add('hidden');
-    fetch(API + '?per_page=20', { headers: { Accept: 'application/vnd.github+json' } })
-      .then(function (response) {
-        if (response.status === 404) { return []; }
-        if (!response.ok) { throw new Error('HTTP ' + response.status); }
-        return response.json();
-      })
-      .then(function (releases) {
-        writeCache(releases);
-        render(releases, false);
-      })
-      .catch(function (error) {
-        // Network or rate-limit failure. Fall back to stale cache if we
-        // have one so the page still shows numbers instead of an error.
-        if (cached) {
-          render(cached.data, true);
-          stampEl.textContent = 'offline — showing last known counts';
+    Promise.all(REPOS.map(function (repo) {
+      return fetchRepo(repo)
+        .then(function (releases) { return { key: repo.key, label: repo.label, releases: releases, ok: true }; })
+        .catch(function () { return { key: repo.key, label: repo.label, releases: null, ok: false }; });
+    })).then(function (results) {
+      var data = {};
+      var failed = [];
+      var anySuccess = false;
+
+      results.forEach(function (result) {
+        if (result.ok) {
+          anySuccess = true;
+          data[result.key] = result.releases;
+        } else if (cached && cached.data && cached.data[result.key]) {
+          data[result.key] = cached.data[result.key];
+          failed.push(result.label);
         } else {
-          problemEl.textContent = "Couldn't reach GitHub just now (" + error.message + "). Tap Refresh to try again.";
-          problemEl.classList.remove('hidden');
-          stampEl.textContent = 'no connection';
-          if (totalEl.textContent === '—') { totalEl.textContent = '?'; }
-          listEl.innerHTML = '';
+          data[result.key] = [];
+          failed.push(result.label);
         }
       });
+
+      if (!anySuccess && !cached) {
+        problemEl.textContent = 'Couldn\u2019t reach GitHub just now. Tap Refresh to try again.';
+        problemEl.classList.remove('hidden');
+        stampEl.textContent = 'no connection';
+        if (totalEl.textContent.trim() === '\u2014') totalEl.textContent = '?';
+        listEl.innerHTML = '';
+        return;
+      }
+
+      if (anySuccess && !failed.length) writeCache(data);
+      render(data, false, failed);
+    });
   }
 
   document.getElementById('refresh').addEventListener('click', function () { load(true); });
   load(false);
-  setInterval(function () { load(true); }, 300000);
+  setInterval(function () { load(true); }, POLL_MS);
 })();
 </script>
 </body>
