@@ -26,7 +26,7 @@
 
 <!-- Self-hosted Nunito -->
 <link rel="preload" href="assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="site.css?v=1.7.11" />
+<link rel="stylesheet" href="site.css?v=1.7.12" />
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -90,7 +90,7 @@
 
       <p class="hero-meta">
         <span>Free &amp; open source</span>
-        <span>Windows <span data-windows-version>v1.7.11</span></span>
+        <span>Windows <span data-windows-version>v1.7.12</span></span>
         <span>Android <span data-android-version>v1.12.0</span></span>
       </p>
     </div>
@@ -118,7 +118,7 @@
           </div>
 
           <div class="platform-foot">
-            <p class="platform-meta">Windows · <span data-windows-version>v1.7.11</span> · 64-bit installer · <span data-windows-downloads>Loading downloads…</span> downloads</p>
+            <p class="platform-meta">Windows · <span data-windows-version>v1.7.12</span> · 64-bit installer · <span data-windows-downloads>Loading downloads…</span> downloads</p>
             <a class="btn btn-mint btn-block" href="#windows">Explore Windows</a>
           </div>
         </article>
@@ -160,9 +160,9 @@
           <p class="lede">Generate, style, sort and sync a whole wallpaper library. The full studio for your PC — no browser, no server, just your desktop and your imagination.</p>
           <div class="split-actions">
             <a class="btn btn-mint" href="https://github.com/sunnyskyess420/frogpaper/releases/latest" data-windows-download download>Download for Windows</a>
-            <a class="btn btn-outline" href="#release">What's new in <span data-windows-version>v1.7.11</span></a>
+            <a class="btn btn-outline" href="#release">What's new in <span data-windows-version>v1.7.12</span></a>
           </div>
-          <p class="split-meta">Windows · <span data-windows-version>v1.7.11</span> · 64-bit installer · <span data-windows-downloads>Loading downloads…</span> downloads</p>
+          <p class="split-meta">Windows · <span data-windows-version>v1.7.12</span> · 64-bit installer · <span data-windows-downloads>Loading downloads…</span> downloads</p>
         </div>
 
         <div class="shot-frame">
@@ -503,11 +503,15 @@
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Release notes</p>
-        <h2>What's new in <span data-windows-version>v1.7.11</span></h2>
-        <p class="lede">Six releases since v1.7.5: a safer data location, a new update flow, a fixed slideshow timer, a countdown that shows seconds, clearer update errors, and a splash screen that covers the startup unpack.</p>
+        <h2>What's new in <span data-windows-version>v1.7.12</span></h2>
+        <p class="lede">Seven releases since v1.7.5: a safer data location, a new update flow, a fixed slideshow timer, a countdown that shows seconds, clearer update errors, a splash screen, and a repaired update checker.</p>
       </div>
 
       <div class="release-grid">
+        <article class="release-card">
+          <h3>The update checker actually works</h3>
+          <p>v1.7.12 fixes the in-app update check in 1.7.11, which could fail before it ever reached GitHub. Install Update opens the release page again, older <code>FrogPaper-&lt;version&gt;.exe</code> asset names are found correctly, and the splash screen and onedir startup from 1.7.11 are unchanged.</p>
+        </article>
         <article class="release-card">
           <h3>A splash screen and a cleaner start</h3>
           <p>v1.7.11 shows a splash screen while FrogPaper loads, so a cold launch no longer looks like nothing happened. The Windows build now runs from an app folder instead of unpacking a 100&nbsp;MB single file on every start, and the slideshow timer fires exactly once per interval &mdash; including 10-minute intervals.</p>
@@ -539,6 +543,7 @@
       <div class="version-block" id="changelog">
         <h3>Version history</h3>
         <ul class="version-list">
+          <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.12" target="_blank" rel="noopener" data-release-tag="v1.7.12"><span class="version-tag">v1.7.12</span><span class="version-title">Update checker fixed <span class="version-downloads" data-release-downloads>&middot; Loading downloads&hellip;</span></span><span class="version-date">October 2026</span></a></li>
           <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.11" target="_blank" rel="noopener" data-release-tag="v1.7.11"><span class="version-tag">v1.7.11</span><span class="version-title">Splash screen + cleaner startup <span class="version-downloads" data-release-downloads>&middot; Loading downloads&hellip;</span></span><span class="version-date">October 2026</span></a></li>
           <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.10" target="_blank" rel="noopener" data-release-tag="v1.7.10"><span class="version-tag">v1.7.10</span><span class="version-title">Clearer update errors <span class="version-downloads" data-release-downloads>&middot; Loading downloads&hellip;</span></span><span class="version-date">October 2026</span></a></li>
           <li><a href="https://github.com/sunnyskyess420/frogpaper/releases/tag/v1.7.9" target="_blank" rel="noopener" data-release-tag="v1.7.9"><span class="version-tag">v1.7.9</span><span class="version-title">Countdown shows seconds <span class="version-downloads" data-release-downloads>&middot; Loading downloads&hellip;</span></span><span class="version-date">October 2026</span></a></li>
@@ -596,7 +601,7 @@
         </details>
         <details class="faq-item">
           <summary>Does the latest update change how the app looks?</summary>
-          <div class="faq-answer"><p>No visual overhaul. v1.7.6&ndash;v1.7.11 focus on security, where your data lives, the update flow, the slideshow timer and clearer update errors; the themes and layout are unchanged.</p></div>
+          <div class="faq-answer"><p>No visual overhaul. v1.7.6&ndash;v1.7.12 focus on security, where your data lives, the update flow, the slideshow timer, clearer update errors and a repaired update check; the themes and layout are unchanged.</p></div>
         </details>
         <details class="faq-item">
           <summary>Did older versions add frogs to my images without asking?</summary>
@@ -640,7 +645,7 @@
           </a>
         </div>
         <p class="hero-meta">
-          <span>Windows <span data-windows-version>v1.7.11</span></span>
+          <span>Windows <span data-windows-version>v1.7.12</span></span>
           <span>Android <span data-android-version>v1.12.0</span></span>
           <span>No account needed</span>
         </p>
@@ -705,6 +710,6 @@
   </div>
 </footer>
 
-<script src="site.js?v=1.7.11a" defer></script>
+<script src="site.js?v=1.7.12" defer></script>
 </body>
 </html>
