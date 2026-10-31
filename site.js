@@ -313,7 +313,20 @@
 
   /* -----------------------------------------------------------
      Windows release download counts
+
+     FALLBACK_WIN_INSTALLER is the direct download URL for the most recent
+     Windows release. When the GitHub API is rate-limited, blocked, or the
+     visitor is offline, applyWindowsRelease() never runs and the static
+     href in the HTML is what users get — so that href AND this constant
+     MUST point at a real installer file, not at /releases/latest (which
+     lands people on a release-notes page instead of a download).
+
+     *** BUMP THIS CONSTANT AND EVERY data-windows-download HREF IN THE
+         HTML ON EVERY WINDOWS RELEASE. ***
      ----------------------------------------------------------- */
+  var FALLBACK_WIN_INSTALLER =
+    'https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.12/FrogPaper-Setup-1.7.12.exe';
+
   var releaseLinks = document.querySelectorAll('[data-release-tag]');
   var windowsDownloadSpots = document.querySelectorAll('[data-windows-downloads]');
   var windowsVersionSpots = document.querySelectorAll('[data-windows-version]');
@@ -368,7 +381,14 @@
       force
     )
       .then(function (result) { applyWindowsRelease(result.data); })
-      .catch(function () { /* keep the static fallback */ });
+      .catch(function () {
+        // API failed (rate-limited, offline, ad-blocker, etc.).
+        // Rewrite every Windows download button to the last-known-good
+        // installer so users still get a file, not a release-notes page.
+        windowsDownloadLinks.forEach(function (link) {
+          link.setAttribute('href', FALLBACK_WIN_INSTALLER);
+        });
+      });
   }
 
   if (!isLighthouse) {

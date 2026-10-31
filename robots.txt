@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://sunnyskyess420.github.io/frogpaper-website/sitemap.xml
