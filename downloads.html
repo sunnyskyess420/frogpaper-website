@@ -17,6 +17,76 @@
   .font-heading { font-family: ui-sans-serif, system-ui, 'Segoe UI', Roboto, sans-serif; }
   .big { font-variant-numeric: tabular-nums; }
 </style>
+
+<!-- SEO: canonical + structured data -->
+<link rel="canonical" href="https://sunnyskyess420.github.io/frogpaper-website/downloads.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "FrogPaper Desktop",
+  "applicationCategory": "DesktopApplication",
+  "operatingSystem": "Windows 10, Windows 11",
+  "softwareVersion": "1.7.12",
+  "datePublished": "2026-10-30",
+  "description": "A cozy, free and open-source AI wallpaper studio for Windows. Generate, curate and rotate wallpapers with 6 AI image generation providers, structured prompt building with negative prompt presets, a visual gallery with tagging and style filters, slideshow automation, text overlays, and native Windows wallpaper integration. No browser, no server, no account.",
+  "url": "https://sunnyskyess420.github.io/frogpaper-website/",
+  "downloadUrl": "https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.12/FrogPaper-Setup-1.7.12.exe",
+  "screenshot": "https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg",
+  "featureList": [
+    "Connects to 6 AI image providers (Pollinations, Cloudflare Workers AI, Hugging Face, Prodia, Replicate, Fal.ai)",
+    "Structured prompt building with negative prompt presets",
+    "Visual gallery with tagging and style filters",
+    "Slideshow automation",
+    "Text overlays",
+    "Native Windows wallpaper integration"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "SunnySkyesS420",
+    "url": "https://github.com/sunnyskyess420"
+  },
+  "license": "https://github.com/sunnyskyess420/frogpaper/blob/main/LICENSE",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "FrogPaper Mobile",
+  "applicationCategory": "MobileApplication",
+  "operatingSystem": "Android 7.0+",
+  "softwareVersion": "1.13.0",
+  "datePublished": "2026-10-30",
+  "description": "AI wallpaper studio for Android. Generate phone wallpapers from a text prompt or build them from dropdowns, keep them on the phone where they cannot be lost, and rotate them as your wallpaper. Supports Hugging Face, Gemini, Replicate and Pollinations engines.",
+  "url": "https://sunnyskyess420.github.io/frogpaper-website/",
+  "downloadUrl": "https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest/download/FrogPaper-release-signed.apk",
+  "screenshot": "https://sunnyskyess420.github.io/frogpaper-website/frogpaper-preview.jpg",
+  "featureList": [
+    "AI wallpaper generation from text prompts",
+    "Build screen with structured dropdowns",
+    "Local-only wallpaper storage",
+    "Automatic wallpaper rotation with saved engine",
+    "Multiple AI engines (Hugging Face, Gemini, Replicate, Pollinations)"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "SunnySkyesS420",
+    "url": "https://github.com/sunnyskyess420"
+  },
+  "license": "https://github.com/sunnyskyess420/frogpaper-mobile/blob/main/LICENSE",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body class="min-h-screen">
 
@@ -56,7 +126,7 @@
         64-bit installer. Closes a running copy, upgrades in place, and keeps your library and keys in
         <code class="break-all text-[11px] text-paper-muted">%LOCALAPPDATA%\FrogPaper</code>.
       </p>
-      <a href="https://github.com/sunnyskyess420/frogpaper/releases/latest"
+      <a href="https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.12/FrogPaper-Setup-1.7.12.exe"
          data-windows-download download
          class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
         Download for Windows
@@ -194,6 +264,13 @@
   var POLL_MS = 10 * 60 * 1000;   // 2 requests per poll, keeps us well under 60/hour
   var MAX_CARDS = 12;
 
+  // Last-known-good Windows installer URL. Used when the API fails OR when the
+  // latest release has no .exe asset for some reason. Keeps the button pointing
+  // at a real file instead of a release-notes page.
+  // *** BUMP ON EVERY WINDOWS RELEASE (also bump the static href in the HTML). ***
+  var FALLBACK_WIN_INSTALLER =
+    'https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.12/FrogPaper-Setup-1.7.12.exe';
+
   var totalEl = document.getElementById('total');
   var labelEl = document.getElementById('totalLabel');
   var stampEl = document.getElementById('stamp');
@@ -295,12 +372,12 @@
     })[0] || exes[0];
 
     if (!installer) {
-      if (winLink && release.html_url) winLink.setAttribute('href', release.html_url);
+      if (winLink) winLink.setAttribute('href', FALLBACK_WIN_INSTALLER);
       return;
     }
 
     if (winLink) {
-      winLink.setAttribute('href', installer.browser_download_url || release.html_url);
+      winLink.setAttribute('href', installer.browser_download_url || FALLBACK_WIN_INSTALLER);
     }
     winSizeEls.forEach(function (el) { el.textContent = sizeLabel(installer.size); });
 
