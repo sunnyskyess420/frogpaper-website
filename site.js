@@ -273,7 +273,7 @@
       }
       if (apk && apk.download_count) {
         androidDownloadSpots.forEach(function (el) {
-          el.textContent = formatNumber(apk.download_count);
+          el.textContent = ' \u00b7 ' + formatNumber(apk.download_count) + ' downloads';
         });
       }
     }
@@ -369,7 +369,7 @@
         return sum + (asset.download_count || 0);
       }, 0);
       windowsDownloadSpots.forEach(function (el) {
-        el.textContent = formatNumber(total);
+        el.textContent = ' \u00b7 ' + formatNumber(total) + ' downloads';
       });
     }
   }
