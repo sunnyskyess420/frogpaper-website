@@ -430,4 +430,23 @@
     }
   }
 
+  /* -----------------------------------------------------------
+     Platform-aware CTA reordering
+     On Android devices, show the Android download button first.
+     On Windows devices, keep Windows first. Both buttons remain
+     available on all platforms.
+     ----------------------------------------------------------- */
+  var heroActions = document.querySelector('.hero-actions');
+  if (heroActions) {
+    var isAndroid = /android/i.test(navigator.userAgent);
+    var buttons = heroActions.querySelectorAll('a');
+    if (isAndroid && buttons.length >= 2) {
+      var windowsBtn = heroActions.querySelector('[data-windows-download]');
+      var androidBtn = heroActions.querySelector('[data-android-download]');
+      if (windowsBtn && androidBtn) {
+        heroActions.insertBefore(androidBtn, windowsBtn);
+      }
+    }
+  }
+
 })();
