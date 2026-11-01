@@ -9,26 +9,28 @@
 
 ## What's Been Done ✅
 
-### 1. Quick Wins PR (#4) - READY TO MERGE
-**Status:** PR created, NOT merged yet
-**URL:** https://github.com/sunnyskyess420/frogpaper-website/pull/4
+### 1. Quick Wins + Telemetry PR (#4) - MERGED
+**Status:** ✅ Merged to main
+**Commit:** 22b523b
 
 **Changes:**
 - Homepage shows "500+ downloads" instead of per-release count (social proof fix)
 - Platform-aware CTAs: Android button appears first on Android devices
 - Fixed duplicate "Windows" in submit-wallpaper.html button text
 - Added site.js to downloads.html and submit-wallpaper.html
-- Bumped site.js cache-buster to v=1.7.14
+- Added click tracking beacon to site.js (lines 453-492)
+- Bumped site.js cache-buster to v=1.7.15
+- Added analytics/ folder with Worker scripts and deployment guide
 
-**User action needed:** Merge this PR
+**User action:** None - already deployed to live site
 
 ### 2. Download Click Tracking - CODE INTEGRATED, WORKER NOT DEPLOYED
-**Status:** Beacon code added to site.js, Worker script ready in analytics/
+**Status:** Beacon code live on site, Worker script ready in analytics/
 **Files:**
-- `site.js` - Now includes click tracking beacon (lines 453-492)
-- `analytics/download-click-worker.js` - Cloudflare Worker script
-- `analytics/wrangler.toml` - Worker configuration
-- `analytics/DEPLOYMENT.md` - Full deployment instructions
+- `site.js` - Now includes click tracking beacon (lines 453-492) - LIVE
+- `analytics/download-click-worker.js` - Cloudflare Worker script - READY
+- `analytics/wrangler.toml` - Worker configuration - READY
+- `analytics/DEPLOYMENT.md` - Full deployment instructions - READY
 
 **What's tracked:**
 - Platform (windows/android)
@@ -57,19 +59,14 @@
 
 ### 🔴 IMMEDIATE (Do First)
 
-#### 1. Merge PR #4
-- User: https://github.com/sunnyskyess420/frogpaper-website/pull/4
-- Click "Merge pull request"
-- Wait 90s for GitHub Pages rebuild
-
-#### 2. Deploy Telemetry Worker
+#### 1. Deploy Telemetry Worker
 - Follow `analytics/DEPLOYMENT.md`
 - Create Analytics Engine dataset in Cloudflare
 - Deploy Worker: `cd analytics && npx wrangler deploy`
 - Update WORKER_URL in site.js line 454
 - Commit and push
 
-#### 3. Submit Sitemap to Search Engines
+#### 2. Submit Sitemap to Search Engines
 - Google Search Console: add property, verify, submit sitemap
 - Bing Webmaster Tools: same process
 - Sitemap URL: https://sunnyskyess420.github.io/frogpaper-website/sitemap.xml
@@ -115,20 +112,18 @@ The Windows installer is unsigned. Add this to downloads.html next to the downlo
 
 ## Current Git State
 
-**Branch:** fix/download-conversion
-**Status:** Beacon code integrated, ready to commit
+**Branch:** main
+**Status:** All changes merged to main (commit 22b523b)
+**Branch fix/download-conversion:** Deleted after merge
 
-**Uncommitted changes:**
-- site.js: Added click tracking beacon (lines 453-492)
-- index.html: Bumped cache-buster to v=1.7.15
-- downloads.html: Bumped cache-buster to v=1.7.15
-- submit-wallpaper.html: Bumped cache-buster to v=1.7.15
-
-**What the next agent should do:**
-1. Commit these changes with message: "Integrate download click tracking beacon into site.js"
-2. Push to fix/download-conversion branch
-3. User should update WORKER_URL in site.js line 454 after deploying Worker
-4. Then merge PR #4 (the quick wins) and create a new PR for telemetry
+**What's on main now:**
+- site.js: Includes click tracking beacon (lines 453-492)
+- index.html: Social proof fix, platform-aware CTAs, cache-buster v=1.7.15
+- downloads.html: site.js added, cache-buster v=1.7.15
+- submit-wallpaper.html: site.js added, cache-buster v=1.7.15
+- analytics/ folder: Worker scripts and deployment guide
+- HANDOFF_NEXT_AGENT.md: This file
+- ACTION_REQUIRED.md: User's action checklist
 
 ---
 
@@ -200,15 +195,12 @@ The Windows installer is unsigned. Add this to downloads.html next to the downlo
 
 ```bash
 cd C:\Users\alive\.openclaw-autoclaw\workspace\projects\frogpaper-website
-git status
-git add site.js index.html downloads.html submit-wallpaper.html
-git commit -m "Integrate download click tracking beacon into site.js"
-git push origin fix/download-conversion
+git checkout main
+git pull
 ```
 
 Then tell user:
-1. Merge PR #4 (quick wins)
-2. Read analytics/DEPLOYMENT.md
-3. Deploy Worker when ready
-4. Update WORKER_URL in site.js line 454
-5. Test tracking
+1. Read analytics/DEPLOYMENT.md
+2. Deploy Worker when ready
+3. Update WORKER_URL in site.js line 454
+4. Test tracking

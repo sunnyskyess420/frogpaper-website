@@ -1,18 +1,46 @@
 # ACTION REQUIRED - Clear Instructions for You
 
 ## What I've Done ✅
-1. **Quick wins PR** - Created PR #4 with social proof fix, platform-aware CTAs, and copy fixes
-2. **Telemetry code** - Prepared Cloudflare Worker + beacon code in `analytics/` folder
+1. **Quick wins + telemetry PR** - Created and merged PR #4 with social proof fix, platform-aware CTAs, copy fixes, and telemetry code
+2. **Telemetry code** - Integrated into site.js and prepared Cloudflare Worker in `analytics/` folder
 
 ## What YOU Need to Do (In Priority Order)
 
 ### 🔴 HIGH PRIORITY - Do These First
 
-#### 1. Merge PR #4 (5 minutes)
-- Go to: https://github.com/sunnyskyess420/frogpaper-website/pull/4
-- Review the changes
-- Click "Merge pull request"
-- Wait ~90 seconds for GitHub Pages to rebuild
+#### 1. Deploy Telemetry Worker (15 minutes)
+**Files are ready in `analytics/` folder. Follow these steps:**
+
+1. **Create Analytics Engine dataset:**
+   - Log in to Cloudflare dashboard
+   - Workers & Pages → Analytics Engine → Create database
+   - Name it: `frogpaper-download-clicks`
+
+2. **Deploy the Worker:**
+   ```bash
+   cd C:\Users\alive\.openclaw-autoclaw\workspace\projects\frogpaper-website\analytics
+   npx wrangler deploy
+   ```
+   - Copy the worker URL it outputs (e.g., `https://frogpaper-download-click.xxx.workers.dev`)
+
+3. **Update the beacon code:**
+   - Open `site.js` (in repo root)
+   - Line 454: Replace the ANALYTICS_WORKER_URL with your actual worker URL
+
+4. **Commit and push:**
+   ```bash
+   cd C:\Users\alive\.openclaw-autoclaw\workspace\projects\frogpaper-website
+   git add site.js
+   git commit -m "Update analytics worker URL"
+   git push
+   ```
+
+5. **Test:**
+   - Click a download button on the live site
+   - Check Cloudflare Analytics Engine dashboard
+   - You should see the event appear
+
+**Full instructions:** See `analytics/DEPLOYMENT.md`
 
 #### 2. Deploy Download Click Tracking (15 minutes)
 **Files are ready in `analytics/` folder. Follow these steps:**
