@@ -430,4 +430,72 @@
     }
   }
 
+  /* -----------------------------------------------------------
+     Platform-aware CTA reordering
+     On Android devices, show the Android download button first.
+     On Windows devices, keep Windows first. Both buttons remain
+     available on all platforms.
+     ----------------------------------------------------------- */
+  var heroActions = document.querySelector('.hero-actions');
+  if (heroActions) {
+    var isAndroid = /android/i.test(navigator.userAgent);
+    var buttons = heroActions.querySelectorAll('a');
+    if (isAndroid && buttons.length >= 2) {
+      var windowsBtn = heroActions.querySelector('[data-windows-download]');
+      var androidBtn = heroActions.querySelector('[data-android-download]');
+      if (windowsBtn && androidBtn) {
+        heroActions.insertBefore(androidBtn, windowsBtn);
+      }
+    }
+  }
+
+  /* -----------------------------------------------------------
+     Download click tracking (beacon to Cloudflare Worker)
+     Privacy-focused: no cookies, no PII, no fingerprints.
+     Tracks: platform, page, direct/fallback, device class, timestamp.
+     ----------------------------------------------------------- */
+  var ANALYTICS_WORKER_URL = 'https://frogpaper-download-click.your-subdomain.workers.dev/download-click';
+
+  function getDeviceClass() {
+    var ua = navigator.userAgent;
+    var width = window.innerWidth;
+    if (/tablet|ipad|playbook|silk/i.test(ua) || (width >= 768 && width < 1024)) {
+      return 'tablet';
+    }
+    if (/mobile|android|iphone|ipod|blackberry|opera mini|iemobile/i.test(ua) || width < 768) {
+      return 'mobile';
+    }
+    return 'desktop';
+  }
+
+  function trackDownloadClick(platform, isDirect) {
+    var payload = {
+      platform: platform,
+      page: window.location.pathname,
+      isDirect: isDirect,
+      deviceClass: getDeviceClass(),
+      timestamp: Date.now(),
+    };
+    var data = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    navigator.sendBeacon(ANALYTICS_WORKER_URL, data);
+  }
+
+  var windowsLinks = document.querySelectorAll('[data-windows-download]');
+  windowsLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
+      var href = link.getAttribute('href') || '';
+      var isDirect = href.includes('/releases/download/');
+      trackDownloadClick('windows', isDirect);
+    });
+  });
+
+  var androidLinks = document.querySelectorAll('[data-android-download]');
+  androidLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
+      var href = link.getAttribute('href') || '';
+      var isDirect = href.includes('/releases/download/');
+      trackDownloadClick('android', isDirect);
+    });
+  });
+
 })();
