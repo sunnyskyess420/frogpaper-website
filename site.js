@@ -40,7 +40,7 @@
      Each cache key is namespaced under "fp:api:" so clearing FrogPaper
      data doesn't wipe unrelated localStorage.
      ----------------------------------------------------------- */
-  var API_CACHE_PREFIX = 'fp:api:v1.7.12:';
+  var API_CACHE_PREFIX = 'fp:api:v1.8.0:';
   var API_CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
 
   function readCache(key) {
@@ -325,7 +325,7 @@
          HTML ON EVERY WINDOWS RELEASE. ***
      ----------------------------------------------------------- */
   var FALLBACK_WIN_INSTALLER =
-    'https://github.com/sunnyskyess420/frogpaper/releases/download/v1.7.12/FrogPaper-Setup-1.7.12.exe';
+    'https://github.com/sunnyskyess420/frogpaper/releases/download/v1.8.0/FrogPaper-Setup-1.8.0.exe';
 
   var releaseLinks = document.querySelectorAll('[data-release-tag]');
   var windowsDownloadSpots = document.querySelectorAll('[data-windows-downloads]');
