@@ -1475,3 +1475,283 @@ p {
     transform: none;
   }
 }
+
+/* -------------------------------------------------------------
+   Download reassurance + APK trust block (new)
+   Cozy palette: mint accent on muted text, monospace checksums.
+   ------------------------------------------------------------- */
+.download-reassure {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.download-reassure a {
+  color: var(--mint);
+  font-weight: 800;
+  text-decoration: none;
+}
+.download-reassure a:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.download-reassure-center {
+  margin: 18px auto 0;
+  max-width: 560px;
+}
+
+.apk-trust {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(18, 31, 44, 0.6);
+}
+.apk-trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.apk-trust-label {
+  flex: none;
+  color: var(--mint);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.apk-trust-row code {
+  word-break: break-all;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+}
+.apk-trust-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 12px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+.apk-trust-links a {
+  color: var(--mint);
+  text-decoration: none;
+}
+.apk-trust-links a:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* "How to verify" collapsible */
+.apk-verify {
+  margin-top: 40px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(18, 31, 44, 0.6);
+}
+.apk-verify > summary {
+  padding: 18px 22px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+.apk-verify > summary::-webkit-details-marker {
+  display: none;
+}
+.apk-verify > summary::after {
+  content: "+";
+  float: right;
+  color: var(--mint);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.apk-verify[open] > summary::after {
+  transform: rotate(45deg);
+}
+.apk-verify[open] > summary {
+  color: var(--mint);
+}
+.apk-verify-body {
+  padding: 0 22px 22px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.apk-verify-body code {
+  padding: 1px 5px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: rgba(112, 225, 177, 0.07);
+  color: var(--mint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.86em;
+  word-break: break-all;
+}
+.apk-verify-body pre {
+  margin: 14px 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-deep);
+}
+.apk-verify-body pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--mint);
+  font-size: 13px;
+  word-break: normal;
+}
+.apk-verify-body a {
+  color: var(--mint);
+  font-weight: 700;
+}
+
+/* Windows vs Android comparison table */
+.compare-table-wrap {
+  margin-top: 44px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(19, 34, 50, 0.7), rgba(16, 29, 42, 0.7));
+}
+.compare-table-title {
+  margin: 0 0 18px;
+  color: var(--text);
+  font-size: 22px;
+}
+.compare-table-scroll {
+  overflow-x: auto;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.compare-table th,
+.compare-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+.compare-table thead th {
+  color: var(--mint);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.compare-table tbody th {
+  width: 32%;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+}
+.compare-table tbody td {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.compare-table tbody tr:hover th,
+.compare-table tbody tr:hover td {
+  background: rgba(112, 225, 177, 0.04);
+}
+
+/* FAQ collapsible group — long tail of questions */
+.faq-group {
+  margin-top: 10px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 14px;
+  background: transparent;
+}
+.faq-group > summary {
+  padding: 16px 22px;
+  color: var(--mint);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+.faq-group > summary::-webkit-details-marker {
+  display: none;
+}
+.faq-group > summary::after {
+  content: "+";
+  float: right;
+  color: var(--mint);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.faq-group[open] > summary::after {
+  transform: rotate(45deg);
+}
+.faq-group-body {
+  padding: 4px 14px 14px;
+}
+.faq-group-body .faq-item {
+  margin-bottom: 8px;
+}
+
+/* Version history as a collapsible <details> */
+details.version-block {
+  margin-top: 48px;
+}
+details.version-block > .version-block-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 0 14px;
+  color: var(--text);
+  font-size: 24px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+details.version-block > .version-block-summary::-webkit-details-marker {
+  display: none;
+}
+details.version-block > .version-block-summary::after {
+  content: "Hide";
+  flex: none;
+  color: var(--mint);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+details.version-block:not([open]) > .version-block-summary::after {
+  content: "Show all";
+}
+
+@media (max-width: 700px) {
+  .compare-table-wrap {
+    padding: 20px;
+  }
+  .compare-table th,
+  .compare-table td {
+    padding: 12px 12px;
+  }
+  .compare-table tbody th {
+    width: 40%;
+  }
+}
