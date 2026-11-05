@@ -40,7 +40,7 @@
      Each cache key is namespaced under "fp:api:" so clearing FrogPaper
      data doesn't wipe unrelated localStorage.
      ----------------------------------------------------------- */
-  var API_CACHE_PREFIX = 'fp:api:v1.8.0:';
+  var API_CACHE_PREFIX = 'fp:api:v1.8.1:';
   var API_CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
 
   function readCache(key) {
@@ -257,7 +257,8 @@
   var versionSpots = document.querySelectorAll('[data-android-version]');
   var sizeSpots = document.querySelectorAll('[data-android-size]');
   var androidDownloadSpots = document.querySelectorAll('[data-android-downloads]');
-  if (!isLighthouse && (versionSpots.length || sizeSpots.length || androidDownloadSpots.length)) {
+  var androidShaSpots = document.querySelectorAll('[data-android-sha256]');
+  if (!isLighthouse && (versionSpots.length || sizeSpots.length || androidDownloadSpots.length || androidShaSpots.length)) {
     function applyAndroidInfo(release) {
       var tag = release && release.tag_name ? String(release.tag_name) : '';
       if (tag) {
@@ -275,6 +276,14 @@
         androidDownloadSpots.forEach(function (el) {
           el.textContent = ' \u00b7 ' + formatNumber(apk.download_count) + ' downloads';
         });
+      }
+      // Prefer the asset digest from the API; otherwise keep the verified
+      // SHA-256 baked into the markup so the field is never empty.
+      if (apk) {
+        var digest = String(apk.digest || '').replace(/^sha256:/i, '');
+        if (digest) {
+          androidShaSpots.forEach(function (el) { el.textContent = digest.toUpperCase(); });
+        }
       }
     }
 
@@ -330,6 +339,7 @@
   var releaseLinks = document.querySelectorAll('[data-release-tag]');
   var windowsDownloadSpots = document.querySelectorAll('[data-windows-downloads]');
   var windowsVersionSpots = document.querySelectorAll('[data-windows-version]');
+  var windowsSizeSpots = document.querySelectorAll('[data-windows-size]');
   var windowsDownloadLinks = document.querySelectorAll('[data-windows-download]');
   var windowsShaSpots = document.querySelectorAll('[data-windows-sha256]');
 
@@ -356,8 +366,12 @@
       });
       var digest = String(installer.digest || '').replace(/^sha256:/i, '');
       windowsShaSpots.forEach(function (el) {
-        el.textContent = digest || 'See the release page';
+        el.textContent = digest || el.textContent || 'See the release page';
       });
+      if (installer.size) {
+        var mb = Math.round(installer.size / 1048576);
+        windowsSizeSpots.forEach(function (el) { el.textContent = mb + ' MB'; });
+      }
     } else if (release.html_url) {
       windowsDownloadLinks.forEach(function (link) {
         link.setAttribute('href', release.html_url);
