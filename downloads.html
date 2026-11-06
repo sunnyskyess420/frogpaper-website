@@ -278,7 +278,7 @@
   var CACHE_KEY = 'fp:downloads:v1.8.0';
   var CACHE_TTL = 60 * 60 * 1000; // 1 hour
   var POLL_MS = 10 * 60 * 1000;   // 2 requests per poll, keeps us well under 60/hour
-  var MAX_CARDS = 12;
+  var MAX_CARDS = 100;
 
   // Last-known-good Windows installer URL. Used when the API fails OR when the
   // latest release has no .exe asset for some reason. Keeps the button pointing
@@ -507,7 +507,7 @@
   }
 
   function fetchRepo(repo) {
-    return fetch(repo.api + '?per_page=20', { headers: { Accept: 'application/vnd.github+json' } })
+    return fetch(repo.api + '?per_page=100', { headers: { Accept: 'application/vnd.github+json' } })
       .then(function (response) {
         if (response.status === 404) return [];
         if (!response.ok) throw new Error('HTTP ' + response.status);
