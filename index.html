@@ -426,7 +426,8 @@
         <summary>How to verify the Android APK</summary>
         <div class="apk-verify-body">
           <p>Every FrogPaper APK is a signed release build. To confirm your copy is the official file, check its SHA-256 checksum against the one listed above (and on the release page). On most phones you can use a checksum app from the Play Store; on a computer, open a terminal and run:</p>
-          <pre><code>sha256sum FrogPaper-release-signed.apk</code></pre>
+          <pre><code># Navigate to the folder where you downloaded the APK, then:
+sha256sum FrogPaper-release-signed.apk</code></pre>
           <p>The output should match <code data-android-sha256>666E94C2B4848A1E0C36C39366D509EAF40D899004AAABF22BD00B04CC8FB5B2</code>. If it does not, do not install the file — download it again from the official <a href="https://github.com/sunnyskyess420/frogpaper-mobile/releases/latest" target="_blank" rel="noopener">FrogPaper Android releases</a> page. Android also shows the package name (<code>com.frogpaper.mobile</code>) and signer before install; the signer should read <em>FrogPaper</em>.</p>
         </div>
       </details>
