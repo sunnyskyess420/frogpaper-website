@@ -165,6 +165,17 @@ textarea.field-input { resize: vertical; min-height: 120px; }
 /* --- Buttons (hover sheen sweep, mirrors gallery cards) --- */
 .btn-submit { position: relative; overflow: hidden; }
 .btn-submit:disabled { opacity: 0.6; cursor: wait; }
+
+/* --- Verification slot --- */
+#turnstileGroup[hidden] { display: none; }
+.turnstile-slot {
+  display: inline-flex;
+  padding: 0.75rem;
+  border: 1px solid hsl(217 40% 21%);
+  border-radius: 0.75rem;
+  background: hsl(218 47% 11% / 0.55);
+}
+#submitError { margin-top: 1rem; }
 </style>
 
 <!-- SEO: canonical + structured data -->
@@ -254,7 +265,7 @@ textarea.field-input { resize: vertical; min-height: 120px; }
     </div>
     <div class="border-t border-border px-6 py-8 text-center sm:border-t-0">
       <div class="font-heading text-4xl font-semibold text-paper">PNG · JPG</div>
-      <div class="mt-1 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">WebP · BMP</div>
+      <div class="mt-1 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">WebP</div>
     </div>
   </div>
 </section>
@@ -278,6 +289,11 @@ textarea.field-input { resize: vertical; min-height: 120px; }
       </div>
 
       <form id="submitForm" action="https://forminit.com/f/qstw0s2prvz" method="POST" enctype="multipart/form-data" novalidate>
+        <!-- Honeypot for Forminit (field name must match Form Settings → Honeypot).
+             Hidden from people, never prefilled, never written by script: a value
+             only ever arrives here from a bot, and Forminit spams it out. -->
+        <input type="hidden" name="_gotcha" tabindex="-1" aria-hidden="true" style="display:none !important" />
+
         <!-- Upload -->
         <div id="fileGroup" class="mb-8">
           <span class="field-label">Wallpaper Image <span class="req">*</span></span>
@@ -286,9 +302,9 @@ textarea.field-input { resize: vertical; min-height: 120px; }
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             </span>
             <span class="text-sm font-medium text-paper">Drag &amp; drop, or <span class="text-copper">browse files</span></span>
-            <span id="fileHint" class="text-xs text-muted-foreground">PNG, JPG, WebP, or BMP · max 5 MB · 1920×1080, 1080×1920, or 1080×1080</span>
+            <span id="fileHint" class="text-xs text-muted-foreground">PNG, JPG, or WebP · max 5 MB · 1920×1080, 1080×1920, or 1080×1080</span>
           </button>
-          <input type="file" id="fileInput" name="fi-file-wallpaper" accept="image/png, image/jpeg, image/webp, image/bmp" class="sr-only" />
+          <input type="file" id="fileInput" name="fi-file-wallpaper" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp" class="sr-only" />
           <div id="fileInfo" aria-live="polite">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="hsl(160 84% 39%)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="flex-none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             <span class="fi-name"></span>
@@ -393,6 +409,15 @@ textarea.field-input { resize: vertical; min-height: 120px; }
           <p id="agreeError" class="field-error">You must agree to submit.</p>
         </div>
 
+        <!-- Verification — stays hidden until a Turnstile site key is set -->
+        <div id="turnstileGroup" class="mb-10" hidden>
+          <span class="field-label">Verification <span class="req">*</span></span>
+          <div class="turnstile-slot">
+            <div class="cf-turnstile" data-theme="dark" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileError"></div>
+          </div>
+          <p id="turnstileError" class="field-error">Please finish the verification above.</p>
+        </div>
+
         <!-- Actions -->
         <div class="flex flex-wrap items-center gap-4">
           <button type="submit" id="submitBtn" class="btn-submit group inline-flex items-center gap-2 rounded-full bg-paper px-7 py-3.5 text-sm font-medium text-paper-foreground transition hover:bg-paper/90">
@@ -403,6 +428,8 @@ textarea.field-input { resize: vertical; min-height: 120px; }
             Clear
           </button>
         </div>
+
+        <p id="submitError" class="field-error" role="alert" aria-live="assertive"></p>
 
         <!-- Success state -->
         <div id="successState" class="py-10 text-center" role="status">
@@ -467,7 +494,7 @@ textarea.field-input { resize: vertical; min-height: 120px; }
           </li>
           <li class="flex gap-3">
             <svg class="mt-0.5 flex-none text-copper" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>File size: maximum 5 MB. Formats: PNG, JPG, WebP, BMP.</span>
+            <span>File size: maximum 5 MB. Formats: PNG, JPG, WebP.</span>
           </li>
           <li class="flex gap-3">
             <svg class="mt-0.5 flex-none text-copper" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -576,6 +603,9 @@ textarea.field-input { resize: vertical; min-height: 120px; }
   var successState = document.getElementById('successState');
   var submitBtn    = document.getElementById('submitBtn');
   var submitLabel  = document.getElementById('submitLabel');
+  var submitError  = document.getElementById('submitError');
+  var turnstileGroup = document.getElementById('turnstileGroup');
+  var turnstileError = document.getElementById('turnstileError');
 
   /* ── Tag system (Enter/comma adds · Backspace removes · max 8) ── */
   var tags = [];
@@ -627,8 +657,44 @@ textarea.field-input { resize: vertical; min-height: 120px; }
     if (btn) removeTag(parseInt(btn.getAttribute('data-index'), 10));
   });
 
-  /* ── File upload: click, drag & drop, size/type guard ─────── */
+  /* ── Cloudflare Turnstile — dormant until a site key is set ── */
+  // Public site key only. The secret key lives in Forminit
+  // (Form Settings → CAPTCHA) and must never appear in this file, in git or in chat.
+  var TURNSTILE_SITE_KEY = '';
+  var turnstileToken = null;
+
+  window.onTurnstileSuccess = function (token) {
+    turnstileToken = token || null;
+    if (token) turnstileError.classList.remove('visible');
+  };
+  window.onTurnstileExpired = function () { turnstileToken = null; };
+  window.onTurnstileError = function () {
+    turnstileToken = null;
+    turnstileError.textContent = 'The verification couldn’t complete. Please refresh the page and try again.';
+    turnstileError.classList.add('visible');
+  };
+
+  if (TURNSTILE_SITE_KEY) {
+    // Widget first, script second: Turnstile picks up .cf-turnstile when it loads.
+    turnstileGroup.hidden = false;
+    turnstileGroup.querySelector('.cf-turnstile').setAttribute('data-sitekey', TURNSTILE_SITE_KEY);
+    var turnstileScript = document.createElement('script');
+    turnstileScript.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    turnstileScript.async = true;
+    turnstileScript.defer = true;
+    document.head.appendChild(turnstileScript);
+  }
+
+  /* ── File upload: click, drag & drop, signature + size guard ─ */
   var MAX_MB = 5;
+
+  // JPG, PNG and WebP only. BMP is deliberately out: FrogPaper can export BMP,
+  // but the form service's accepted-image list has no image/bmp.
+  var ALLOWED_IMAGES = [
+    { mime: 'image/png',  magic: [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A] },
+    { mime: 'image/jpeg', magic: [0xFF, 0xD8, 0xFF] },
+    { mime: 'image/webp', magic: [0x52, 0x49, 0x46, 0x46], at: 8, tail: [0x57, 0x45, 0x42, 0x50] }
+  ];
 
   uploadZone.addEventListener('click', function () { fileInput.click(); });
 
@@ -656,18 +722,78 @@ textarea.field-input { resize: vertical; min-height: 120px; }
     if (fileInput.files.length) handleFile(fileInput.files[0]);
   });
 
+  // Read the first bytes of the file so the type comes from the file itself,
+  // not from its extension or the browser-supplied MIME type.
+  function readHead(file, done) {
+    var reader = new FileReader();
+    reader.onload = function () { done(new Uint8Array(reader.result || new ArrayBuffer(0))); };
+    reader.onerror = function () { done(null); };
+    reader.readAsArrayBuffer(file.slice(0, 16));
+  }
+
+  function sniffImage(bytes) {
+    if (!bytes || bytes.length < 12) return null;
+    for (var i = 0; i < ALLOWED_IMAGES.length; i++) {
+      var spec = ALLOWED_IMAGES[i];
+      var match = true;
+      for (var j = 0; j < spec.magic.length && match; j++) {
+        if (bytes[j] !== spec.magic[j]) match = false;
+      }
+      if (match && spec.tail) {
+        for (var k = 0; k < spec.tail.length && match; k++) {
+          if (bytes[spec.at + k] !== spec.tail[k]) match = false;
+        }
+      }
+      if (match) return spec.mime;
+    }
+    return null;
+  }
+
+  function assignFiles(files) {
+    try {
+      var dt = new DataTransfer();
+      for (var i = 0; i < files.length; i++) dt.items.add(files[i]);
+      fileInput.files = dt.files;
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function rejectFile(message) {
+    fileInput.value = '';
+    fileInfo.classList.remove('visible');
+    showError('fileGroup', 'fileError', message);
+  }
+
+  var fileCheck = 0;
+
   function handleFile(file) {
     var sizeMB = file.size / (1024 * 1024);
     if (sizeMB > MAX_MB) {
-      fileInput.value = '';
-      fileInfo.classList.remove('visible');
-      showError('fileGroup', 'fileError', 'File is larger than 5 MB — please compress it first.');
+      rejectFile('That file is ' + sizeMB.toFixed(1) + ' MB — the limit is 5 MB. Please export a smaller JPG or PNG.');
       return;
     }
-    fileInfo.querySelector('.fi-name').textContent = file.name;
-    fileInfo.querySelector('.fi-size').textContent = '(' + sizeMB.toFixed(2) + ' MB)';
-    fileInfo.classList.add('visible');
-    clearError('fileGroup');
+
+    var check = ++fileCheck;
+    readHead(file, function (bytes) {
+      if (check !== fileCheck) return; // a newer file was picked while this one was read
+
+      var actual = sniffImage(bytes);
+      if (!actual) {
+        rejectFile('That file isn’t a JPG, PNG or WebP image. Please export your wallpaper in one of those formats.');
+        return;
+      }
+
+      // The form service validates the part's content type, so keep it in sync
+      // with what the bytes actually are.
+      if (file.type !== actual) assignFiles([new File([file], file.name, { type: actual })]);
+
+      fileInfo.querySelector('.fi-name').textContent = file.name;
+      fileInfo.querySelector('.fi-size').textContent = '(' + sizeMB.toFixed(2) + ' MB)';
+      fileInfo.classList.add('visible');
+      clearError('fileGroup');
+    });
   }
 
   /* ── Validation helpers ───────────────────────────────────── */
@@ -694,12 +820,43 @@ textarea.field-input { resize: vertical; min-height: 120px; }
     if (agreeCheck.checked) document.getElementById('agreeError').classList.remove('visible');
   });
 
-  /* ── Submit: validate → iframe POST → success state ───────── */
+  /* ── Submit: validate → POST → real success or a real error ── */
+  var SUBMIT_URL = submitForm.getAttribute('action');
+  var busy = false;
+
+  function setBusy(state) {
+    busy = state;
+    submitBtn.disabled = state;
+    submitLabel.textContent = state ? 'Submitting…' : 'Submit Wallpaper';
+  }
+
+  function clearSubmitError() {
+    submitError.textContent = '';
+    submitError.classList.remove('visible');
+  }
+
+  function showSubmitError(message) {
+    submitError.textContent = message;
+    submitError.classList.add('visible');
+  }
+
+  function messageForStatus(status, payload) {
+    var code = payload && payload.error ? payload.error : '';
+    if (status === 429) return 'One submission at a time — please wait a few seconds, then press Submit again.';
+    if (status === 413) return 'That upload is bigger than the form service allows. Please try an image under 5 MB.';
+    if (code === 'FORM_DISABLED' || code === 'LIMIT_EXPIRED') return 'Submissions are paused right now. Please try again later.';
+    if (status === 400) return 'The form service could not accept this submission. Please check your image and details, then try again.';
+    return 'We couldn’t deliver your submission just now. Please try again in a moment.';
+  }
+
   submitForm.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (busy) return;
+    clearSubmitError();
+
     var valid = true;
 
-    if (!fileInput.files.length) { showError('fileGroup', 'fileError'); valid = false; }
+    if (!fileInput.files.length) { showError('fileGroup', 'fileError', 'Please select a wallpaper image to upload.'); valid = false; }
     else { clearError('fileGroup'); }
 
     if (!document.getElementById('nameInput').value.trim()) { showError('nameGroup', 'nameError'); valid = false; }
@@ -719,26 +876,44 @@ textarea.field-input { resize: vertical; min-height: 120px; }
 
     if (!valid) return;
 
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      turnstileError.classList.add('visible');
+      return;
+    }
+
     // Pack chips into the hidden field for the backend
     tagsHidden.value = tags.join(', ');
 
-    submitLabel.textContent = 'Submitting…';
-    submitBtn.disabled = true;
+    setBusy(true);
 
-    // Submit into a hidden iframe so the visitor stays on the page
-    var iframe = document.getElementById('submitFrame');
-    if (!iframe) {
-      iframe = document.createElement('iframe');
-      iframe.id = 'submitFrame';
-      iframe.name = 'submitFrame';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-    }
-    submitForm.target = 'submitFrame';
+    // FormData carries the file, every fi-* field and the honeypot value exactly
+    // as the browser holds it. Nothing here clears or rewrites the honeypot.
+    var formData = new FormData(submitForm);
+    if (TURNSTILE_SITE_KEY && turnstileToken) formData.set('cf-turnstile-response', turnstileToken);
 
-    iframe.onload = function () { swapToSuccess(); };
-    iframe.onerror = function () { swapToSuccess(); };
-    submitForm.submit();
+    fetch(SUBMIT_URL, {
+      method: 'POST',
+      body: formData,
+      headers: { Accept: 'application/json' }
+    })
+      .then(function (res) {
+        return res.json().catch(function () { return null; }).then(function (payload) {
+          if (res.ok && payload && payload.success !== false) {
+            swapToSuccess();
+            return;
+          }
+          showSubmitError(messageForStatus(res.status, payload));
+          setBusy(false);
+        });
+      })
+      .catch(function () {
+        showSubmitError('We couldn’t reach the submission service. Check your connection and try again.');
+        setBusy(false);
+      })
+      .then(function () {
+        if (TURNSTILE_SITE_KEY && window.turnstile) window.turnstile.reset();
+        turnstileToken = null;
+      });
   });
 
   function swapToSuccess() {
@@ -755,6 +930,10 @@ textarea.field-input { resize: vertical; min-height: 120px; }
     fileInfo.classList.remove('visible');
     ['fileGroup', 'nameGroup', 'emailGroup', 'titleGroup'].forEach(clearError);
     document.getElementById('agreeError').classList.remove('visible');
+    clearSubmitError();
+    if (TURNSTILE_SITE_KEY && window.turnstile) window.turnstile.reset();
+    turnstileToken = null;
+    busy = false;
     submitLabel.textContent = 'Submit Wallpaper';
     submitBtn.disabled = false;
   }
