@@ -334,7 +334,7 @@
          HTML ON EVERY WINDOWS RELEASE. ***
      ----------------------------------------------------------- */
   var FALLBACK_WIN_INSTALLER =
-    'https://github.com/sunnyskyess420/frogpaper/releases/download/v1.8.0/FrogPaper-Setup-1.8.0.exe';
+    'https://github.com/sunnyskyess420/frogpaper/releases/download/v1.9.0/FrogPaper-Setup-1.9.0.exe';
 
   var releaseLinks = document.querySelectorAll('[data-release-tag]');
   var windowsDownloadSpots = document.querySelectorAll('[data-windows-downloads]');
