@@ -753,6 +753,10 @@ sha256sum FrogPaper-release-signed.apk</code></pre>
           <div class="faq-answer"><p>Download the latest installer and run it over your existing install. That's it. From source, extract the update zip over your project folder and allow replacing all files.</p></div>
         </details>
         <details class="faq-item">
+          <summary>Hugging Face says my token is invalid &mdash; why?</summary>
+          <div class="faq-answer"><p>Hugging Face needs one extra permission before a token may generate images. If you created a <strong>fine-grained</strong> token, edit it at huggingface.co/settings/tokens and tick <strong>&ldquo;Make calls to Inference Providers&rdquo;</strong>; a classic <em>Read</em> token works as-is. Without that permission the token signs in perfectly but every image is refused &mdash; that is Hugging Face's rule, not a FrogPaper fault, and the app now says so instead of blaming your plan. Note that this provider generates <strong>square</strong> images (1024&times;1024): its free queue drops wide requests, and your size setting returns when you switch to another provider.</p></div>
+        </details>
+        <details class="faq-item">
           <summary>Does the Android app work offline?</summary>
           <div class="faq-answer"><p>Yes. It works offline from the copies on your phone, and automatic wallpapers use the engine you picked. If a run fails, the app tells you when it will retry.</p></div>
         </details>
