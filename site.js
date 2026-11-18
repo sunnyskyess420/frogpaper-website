@@ -40,7 +40,7 @@
      Each cache key is namespaced under "fp:api:" so clearing FrogPaper
      data doesn't wipe unrelated localStorage.
      ----------------------------------------------------------- */
-  var API_CACHE_PREFIX = 'fp:api:v1.8.1:';
+  var API_CACHE_PREFIX = 'fp:api:v1.8.3:';
   var API_CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
 
   function readCache(key) {
@@ -259,16 +259,36 @@
   var androidDownloadSpots = document.querySelectorAll('[data-android-downloads]');
   var androidShaSpots = document.querySelectorAll('[data-android-sha256]');
   if (!isLighthouse && (versionSpots.length || sizeSpots.length || androidDownloadSpots.length || androidShaSpots.length)) {
+    // A cached GitHub reply can be up to an hour old (cachedFetch keeps it in
+    // localStorage and Ctrl+F5 does not clear it). If that stale reply names
+    // an older release than the one already printed in the markup, keep the
+    // markup: without this the page shows the new version, then a moment
+    // later the old cached answer overwrites it.
+    function versionRank(text) {
+      var match = String(text || '').match(/(\d+)\.(\d+)\.(\d+)/);
+      return match
+        ? Number(match[1]) * 1000000 + Number(match[2]) * 1000 + Number(match[3])
+        : -1;
+    }
+
+    function currentVersionText() {
+      return versionSpots.length ? versionSpots[0].textContent : '';
+    }
+
     function applyAndroidInfo(release) {
       var tag = release && release.tag_name ? String(release.tag_name) : '';
+      var fresh = false;
       if (tag) {
         var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
-        versionSpots.forEach(function (el) { el.textContent = version; });
+        fresh = versionRank(version) >= versionRank(currentVersionText());
+        if (fresh) {
+          versionSpots.forEach(function (el) { el.textContent = version; });
+        }
       }
       var apk = (release && release.assets ? release.assets : []).filter(function (asset) {
         return /\.apk$/i.test(asset.name || '');
       })[0];
-      if (apk && apk.size) {
+      if (apk && apk.size && fresh) {
         var mb = Math.round(apk.size / 1048576);
         sizeSpots.forEach(function (el) { el.textContent = mb + ' MB'; });
       }
@@ -279,7 +299,7 @@
       }
       // Prefer the asset digest from the API; otherwise keep the verified
       // SHA-256 baked into the markup so the field is never empty.
-      if (apk) {
+      if (apk && fresh) {
         var digest = String(apk.digest || '').replace(/^sha256:/i, '');
         if (digest) {
           androidShaSpots.forEach(function (el) { el.textContent = digest.toUpperCase(); });

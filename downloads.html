@@ -88,7 +88,7 @@
 }
 </script>
 <!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7292ab4fccc549d88be72903c30429f0"}'></script><!-- End Cloudflare Web Analytics -->
-<script src="site.js?v=1.8.2"></script>
+<script src="site.js?v=1.8.3"></script>
 </head>
 <body class="min-h-screen">
 
@@ -275,7 +275,7 @@
     { key: 'android', label: 'Android', api: 'https://api.github.com/repos/sunnyskyess420/frogpaper-mobile/releases' }
   ];
 
-  var CACHE_KEY = 'fp:downloads:v1.8.0';
+  var CACHE_KEY = 'fp:downloads:v1.8.3';
   var CACHE_TTL = 60 * 60 * 1000; // 1 hour
   var POLL_MS = 10 * 60 * 1000;   // 2 requests per poll, keeps us well under 60/hour
   var MAX_CARDS = 100;
@@ -404,13 +404,24 @@
     });
   }
 
+  // A cached GitHub reply can be an hour old; never let it replace a newer
+  // version already printed in the markup.
+  function versionRank(text) {
+    var match = String(text || '').match(/(\d+)\.(\d+)\.(\d+)/);
+    return match
+      ? Number(match[1]) * 1000000 + Number(match[2]) * 1000 + Number(match[3])
+      : -1;
+  }
+
   function applyAndroid(releases) {
     var release = newestRelease(releases);
     if (!release) return;
 
     var tag = release.tag_name ? String(release.tag_name) : '';
+    var current = droidVersionEls.length ? droidVersionEls[0].textContent : '';
     if (tag) {
       var version = tag.charAt(0) === 'v' ? tag : 'v' + tag;
+      if (versionRank(version) < versionRank(current)) return;
       droidVersionEls.forEach(function (el) { el.textContent = version; });
     }
 
