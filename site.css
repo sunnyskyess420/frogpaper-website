@@ -1755,3 +1755,59 @@ details.version-block:not([open]) > .version-block-summary::after {
     width: 40%;
   }
 }
+
+/* -------------------------------------------------------------
+   App screenshots band (Android)
+   ------------------------------------------------------------- */
+.screens-band {
+  margin-top: 56px;
+}
+.screenshot-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 36px;
+}
+.screenshot-row figure {
+  margin: 0;
+  text-align: center;
+}
+.phone.phone-large {
+  width: min(220px, 38vw);
+  padding: 8px;
+  border-radius: 30px;
+  border-color: #365367;
+}
+.phone.phone-large::before {
+  top: 13px;
+  width: 74px;
+  height: 9px;
+}
+.phone.phone-large img {
+  border-radius: 22px;
+  object-fit: cover;
+}
+.screenshot-row figcaption {
+  margin-top: 16px;
+  color: var(--mint);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.screenshot-row .shot-note {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted, #9fb3c8);
+  font-size: 12px;
+  font-weight: 500;
+}
+@media (max-width: 560px) {
+  .screenshot-row {
+    gap: 24px;
+  }
+  .phone.phone-large {
+    width: 150px;
+  }
+}
